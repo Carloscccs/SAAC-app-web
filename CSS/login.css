@@ -1,0 +1,48 @@
+body{
+    /*background-color: #aed0ea;*/
+    margin:0;
+    text-align: center;
+    /*margin-right:5%;
+    margin-left: 5%;*/
+    
+}
+/*+++++++ LOGIN ++++++*/
+#pagina{
+    width:380px;
+    height:255px;
+    margin:0 auto;
+    margin-top: 5%;
+}
+#login{
+    background: url(../login.png) no-repeat center;
+    width:380px;
+    height:255px;
+}
+#entradas
+{
+    position:relative;
+    float:left;
+    margin-top:27%;
+    margin-left:15%;
+    /*background: red;*/
+}
+#msj{
+    /*display:none;*/
+    position:relative;
+    margin-top:2%;
+    float:left;
+    color:red;
+    margin-left:2%;
+    /*display:none;*/
+}
+#clave
+{
+    margin-top: 14px;
+}
+#btn1
+{
+    font-size:13px;
+    float:right;
+    margin-top:2%;
+    margin-right:25%;
+}
