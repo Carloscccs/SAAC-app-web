@@ -21,5 +21,53 @@ No hay restriccion para el tipo de herramienta, se puede utilizar la que le sea 
 
 
 ### Normas de desarrollo
-´Pendientes de definir´
+
+__Variables__
+
+El nombre de la variable tendrá que ver con el contenido que esta llevara (Rut, Nombre, etc.), y para escribirla se usara del UpperCamelCase, el cual consiste en comenzar con mayúscula la primera letra de cada palabra, si es una palabra compuesta (Contiene dos o más términos) a cada inicio de la palabra se le colocara mayúscula.
+
+Ejemplo:
+
+```javascript
+var EjemploDeUpperCamelCase = '' ;
+```
+
+__Funciones__
+
+Se ocupara la misma forma como se declaran las variables, siempre con un nombre que fácil de identificar la función y si son palabras compuestas cada primera letra de cada palabra se escribirá con mayúscula y sin espacio.
+
+Ejemplo:
+
+```PHP
+function ValidaUsuario(){}
+```
+
+#### Políticas para comentarios
+
+__Variables__
+
+Se comentara una breve descripción a lo que está referido el nombre de esa variable, se harán arriba de la variables, y solo se hará una vez, cuando se crea la variables.
+
+Ejemplo:
+
+```javascript
+/*Este es el nombre del alumno que viene de la base de datos*/
+var NombreAlumno = ‘’;
+```
+
+__Funciones__
+
+Cuando se haya creado una función y ya esté terminada, se hará un breve comentario encima de esta describiendo que es lo que hará, para que sea más fácil para el resto del equipo conocer las funciones.
+
+Ejemplo:
+
+
+```PHP
+/*Esta función Mostrara un mensaje cada vez que se ingrese a la aplicación*/
+function SaludarUsuario(){
+	echo “Hola usuario”;
+}
+```
+
+
 
