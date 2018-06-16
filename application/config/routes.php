@@ -54,3 +54,6 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 $route['CVL']= 'welcome/CargarVistaLogin';
 $route['login']= 'welcome/validaUsuario';
+$route['CVR']= 'welcome/CargarVistaReportes';
+$route['CVA']= 'welcome/CargarVistaAlumnos';
+$route['CVC']= 'welcome/CargarVistaContenidos';

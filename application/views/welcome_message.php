@@ -44,14 +44,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
         <div class="my-3 py-3">
           <h2 class="display-5">Another headline</h2>
-          <p class="lead">And an even wittier subheading.</p>
+          <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ut orci tortor. Sed nisi eros, interdum non mi sit amet, accumsan pretium tellus. Pellentesque quam dolor, ultricies vel semper nec.</p>
         </div>
         <div class="bg-light box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
       </div>
       <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
         <div class="my-3 p-3">
           <h2 class="display-5">Another headline</h2>
-          <p class="lead">And an even wittier subheading.</p>
+          <p class="lead">Enlightenment hope law right deceptions disgust salvation virtues philosophy snare battle. Gains ultimate grandeur holiest strong. Evil philosophy against ocean against against ocean pinnacle ubermensch madness. Intentions horror free ultimate.</p>
         </div>
         <div class="bg-dark box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
       </div>

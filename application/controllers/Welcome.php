@@ -16,7 +16,19 @@ class Welcome extends CI_Controller {
 	public function CargarVistaLogin()
 	{
 		$this->load->view('VistaLogin');
-	}
+    }
+    
+    public function CargarVistaReportes(){
+        $this->load->view('VistaDocenteReportes');
+    }
+
+    public function CargarVistaAlumnos(){
+        $this->load->view('VistaDocenteAlumnos');
+    }
+
+    public function CargarVistaContenidos(){
+        $this->load->view('VistaDocenteContenidos');
+    }
 
     /*
     Metodo que busca a el usuario en la base de datos, si existe muestra la vista docente, en caso contrario,
@@ -50,7 +62,7 @@ class Welcome extends CI_Controller {
             $data['Nombre'] = $this->session->userdata('nombre');
             $data['Descripcion'] = $this->session->userdata("Descripcion");
             //Carga la vista del docente
-            $this->load->view("VistaDocente");
+            $this->load->view("VistaDocenteAlumnos");
         }else{
             //Manda un mensaje y vuelve a cargar la vista de login
             $data['error'] = "Datos incorrectos o no existen";
