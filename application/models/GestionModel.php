@@ -19,7 +19,7 @@ class gestionModel extends CI_Model {
         $this->db->where("RutDocente",$Rut);
         return $this->db->get();
     }
-    function ColsutarAlumno($Curso){
+    function ConsultarAlumno($Curso){
         $this->db->select("Rut, Nombre, Edad, Descripcion, Estado");
         $this->db->from("alumno");
         $this->db->where("idCurso",$Curso);
@@ -39,16 +39,32 @@ class gestionModel extends CI_Model {
         return $this->db->get()->result();
     }
 
-    function IngresarAlumno($rut,$nombre,$edad,$descripcion,$curso){
+    function IngresarAlumno($rut,$nombre,$edad,$descripcion,$estado,$curso){
         $data = array(
             "Rut"=>$rut,
             "Nombre"=>$nombre,
              "Edad"=>$edad,
              "Descripcion"=>$descripcion,
-             "Curso"=>$curso
+             "Estado" => $estado,
+             "idCurso"=>$curso
         );
-        $this->db->insert("alumno",$data);
-            return $datos->num_rows();
+        if($this->db->insert("alumno",$data)){
+            $resultado = "1";
+        }else{
+            $resultado= "-1";
+        }
+            return $resultado;
+    }
+    function EliminarAlumno($rut){
+        $this->db->where("Rut",$rut);
+        $this->db->set("Estado","Inactivo");
+        $respuesta = "Error inesperado";
+        if($this->db->update("alumno")){
+            $respuesta = "Usuario eliminado";
+        }else{
+            $respuesta = "Error al eliminar usuario";
+        }
+        return $respuesta;
     }
 
 }

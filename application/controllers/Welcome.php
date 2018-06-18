@@ -35,20 +35,12 @@ class Welcome extends CI_Controller {
         $data['Curso'] = $this->session->userdata("NombreCurso");
         $this->load->view('VistaDocenteContenidos',$data);
     }
-
-    /*
-    Metodo que busca a el usuario en la base de datos, si existe muestra la vista docente, en caso contrario,
-    Manda un mensaje de error
-    */
-    function MostrarCurso(){
-        $Docente = $this->session->userdata("Rut");
-        $Curso = $this->GestionModel->ConsultaCurso($docente);
-        $this->load->view('VistaDocenteAlumnos', $Curso);
-    }
     function CargarAlumnos(){
-        $Docente = $this->session->userdata("Rut");
-        $Curso = $this->GestionModel->ConsultaCurso($docente);
-        $Alumnos = $this->GestionModel->ColsutarAlumno($Curso);
+        echo json_encode($this->GestionModel->ConsultarAlumno($this->session->userdata("idCurso")));
+    }
+    function EliminarAlumno(){
+        $rut = $this->input->post("rut");
+        echo json_encode($this->GestionModel->EliminarAlumno($rut));
 
     }
     function IngresarAlumnos(){
@@ -56,10 +48,15 @@ class Welcome extends CI_Controller {
         $nombre = $this->input->post("IngrNombre");
         $edad = $this->input->post("IngrEdad");
         $descripcion = $this->input->post("IngrDescripcion");
-        $curso = $this->input->post("IngrCurso");
+        $estado = $this->input->post("IngrEstado");
+        $curso = $this->session->userdata("idCurso");
 
-        $respuesta = $this->modelo->IngresarAlumno($rut,$nombre,$edad,$descripcion,$curso);
-        
+        $respuesta = $this->GestionModel->IngresarAlumno($rut,$nombre,$edad,$descripcion,$estado,$curso);
+        if ($respuesta == "1") {
+            $data['Rut'] = $this->session->userdata('Rut');
+            $data['Curso'] = $this->session->userdata("NombreCurso");
+            $this->load->view("VistaDocenteAlumnos", $data);
+        }
 
     }
 	function validaUsuario(){
