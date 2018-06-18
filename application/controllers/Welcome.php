@@ -24,6 +24,7 @@ class Welcome extends CI_Controller {
 
     public function CargarVistaAlumnos(){
         $this->load->view('VistaDocenteAlumnos');
+        $this->MostrarCurso();
     }
 
     public function CargarVistaContenidos(){
@@ -34,6 +35,26 @@ class Welcome extends CI_Controller {
     Metodo que busca a el usuario en la base de datos, si existe muestra la vista docente, en caso contrario,
     Manda un mensaje de error
     */
+    function MostrarCurso(){
+        $Docente = $this->session->userdata("Rut");
+        $Curso = $this->GestionModel->ConsultaCurso($docente);
+        $this->load->view('VistaDocenteAlumnos', $Curso);
+    }
+    function CargarAlumnos(){
+        $Docente = $this->session->userdata("Rut");
+        $Curso = $this->GestionModel->ConsultaCurso($docente);
+        $Alumnos = $this->GestionModel->ColsutarAlumno($Curso);
+
+    }
+    function IngresarAlumnos(){
+        $rut = $this->input->post("IngrRut");
+        $nombre = $this->input->post("IngrNombre");
+        $edad = $this->input->post("IngrEdad");
+        $descripcion = $this->input->post("IngrDescripcion");
+        $curso = $this->input->post("IngrCurso");
+
+
+    }
 	function validaUsuario(){
         //Recibe los datos del formulario
         $usuario = $this->input->post("rut");
@@ -57,12 +78,17 @@ class Welcome extends CI_Controller {
                 'logged_in' => TRUE,
                 'Descripcion' => $Descripcion
             );
+            
             //Lineas pendientes de revision
-        $this->session->set_userdata($data);
-            $data['Nombre'] = $this->session->userdata('nombre');
-            $data['Descripcion'] = $this->session->userdata("Descripcion");
+            //$data['Nombre'] = $this->session->userdata('nombre');
+            //$data['Descripcion'] = $this->session->userdata("Descripcion");
+            $this->session->set_userdata($data);
+           //Se carga el curso con el rut guardado en sesion
+            $Docente = $this->session->userdata("Rut");
+            $Curso = $this->GestionModel->ConsultaCurso($Docente); 
+
             //Carga la vista del docente
-            $this->load->view("VistaDocenteAlumnos");
+            $this->load->view("VistaDocenteAlumnos", 'Curso', $Curso);
         }else{
             //Manda un mensaje y vuelve a cargar la vista de login
             $data['error'] = "Datos incorrectos o no existen";
