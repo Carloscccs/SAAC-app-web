@@ -59,3 +59,4 @@ $route['CVA']= 'welcome/CargarVistaAlumnos';
 $route['CVC']= 'welcome/CargarVistaContenidos';
 $route['GC']= 'welcome/GetCategorias';
 $route['GPC']= "welcome/GetPictogramasCategoria";
+$route['ingrAlumno']= 'welcome/IngresarAlumnos';

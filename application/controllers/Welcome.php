@@ -40,6 +40,26 @@ class Welcome extends CI_Controller {
     Metodo que busca a el usuario en la base de datos, si existe muestra la vista docente, en caso contrario,
     Manda un mensaje de error
     */
+    function MostrarCurso(){
+        $Docente = $this->session->userdata("Rut");
+        $Curso = $this->GestionModel->ConsultaCurso($docente);
+        $this->load->view('VistaDocenteAlumnos', $Curso);
+    }
+    function CargarAlumnos(){
+        $Docente = $this->session->userdata("Rut");
+        $Curso = $this->GestionModel->ConsultaCurso($docente);
+        $Alumnos = $this->GestionModel->ColsutarAlumno($Curso);
+
+    }
+    function IngresarAlumnos(){
+        $rut = $this->input->post("IngrRut");
+        $nombre = $this->input->post("IngrNombre");
+        $edad = $this->input->post("IngrEdad");
+        $descripcion = $this->input->post("IngrDescripcion");
+        $curso = $this->input->post("IngrCurso");
+
+
+    }
 	function validaUsuario(){
         //Recibe los datos del formulario
         $usuario = $this->input->post("rut");
@@ -72,6 +92,7 @@ class Welcome extends CI_Controller {
                 'NombreCurso' => $NombreCurso,
                 'idColegio' => $idColegio
             );
+            
             //Lineas pendientes de revision
         $this->session->set_userdata($data);
             $data['Rut'] = $this->session->userdata('Rut');
