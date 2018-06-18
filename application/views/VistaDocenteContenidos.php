@@ -77,20 +77,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</div>
 						<div class="tab-pane fade" id="pills-Pictogramas" role="tabpanel" aria-labelledby="pills-profile-tab">
 							<div class="row">
-
-							</div>
-							<div class="row">
 								<div class="col-4">
 									<select id="selectcategorias" class="custom-select-lg">
 										<option value="" disabled="true" selected>Seleccione una categoria</option>
 									</select>
 									<p></p>
 								</div>
+								<div class="col-4 offset-4">
+
+								</div>
 							</div>
 							<div class="row">
 								<table class="table table-bordered col-12">
 									<thead>
-										<th>Pictogramas existentes</th>
+										<th colspan="3" class="text-center" >Pictogramas existentes</th>
 									</thead>
 									<tbody id="tbodyPictogramas"></tbody>
 								</table>
@@ -137,8 +137,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						$.each(JSON.parse(obj), function (i, o) {
 							var image = new Image();
 							image.src = o.img;
-							x += "<td>" + image.outerHTML + "<p>" + o.Nombre + "</p></td>";
-							i++;
+							image.setAttribute("class","img-thumbnail");
+							image.setAttribute("width","200px");
+							image.setAttribute("heigth","200px");
+							x += "<td class='text-center'>" + image.outerHTML + "<p class=''>" + o.Nombre + "</p></td>";
+							i = i+1;
 							if (i == 3) {
 								x += "</tr><tr>";
 								i = 1;
