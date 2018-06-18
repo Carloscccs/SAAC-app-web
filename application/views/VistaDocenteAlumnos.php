@@ -68,13 +68,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
          <label for="IngrRut">Rut</label>
          <input type="text" class="form-control" name="IngrRut" required id="txtRut" placeholder="Rut...">
         <br>
-        <label>Nombre :</label>
+        <label>Nombre </label>
           <input type="text" class="form-control" name="IngrNombre" required id="txtNombre" placeholder="Nombre...">
         <br>
-        <label >Edad :</label>
+        <label >Edad </label>
           <input type="text" class="form-control" name="IngrEdad" required id="txtEdad" placeholder="Edad...">
         <br>
-        <label >Descripcion :</label>
+        <label >Descripcion </label>
           <input type="text" class="form-control" name="IngrDescripcion" required id="txtDescripcion" placeholder="Descripcion...">
           <input type="hidden" name="IngrEstado" id="txtEstado" value="Activo">
       </div>
@@ -105,7 +105,38 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <button type="submit" class="btn btn-primary" id="btnEliminarSi">Si</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
       </div>
-      </form>
+    </div>
+  </div>
+</div>
+
+      <div id="ModalActualizar" class="modal fade" role="dialog" tabindex="-1" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" >Actualizar</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="idocultoActualizar">
+        <label >Rut </label>
+          <input type="text" disabled class="form-control" name="ActRut" id="txtActRut"/>
+        </br>
+        <label >Nombre </label>
+          <input type="text" class="form-control" name="ActNombre" id="txtActNombre"/>
+          </br>
+        <label >Edad </label>
+          <input type="text" class="form-control" name="ActEdad" id="txtActEdad"/>
+          </br>
+        <label >Descripcion </label>
+          <input type="text" class="form-control" name="ActDecripcion" id="txtActDescripcion"/>
+          </br>
+        <label >Estado </label>
+          <input type="text" class="form-control" name="ActEstado" id="txtActEstado"/>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-warning" id="btnActualizarSi">Actualizar</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+      </div>
     </div>
   </div>
 </div>
@@ -166,7 +197,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                   $("#btnEliminarSi").click(function () {
                     var rut = $("#idoculto").val();
-                    alert(rut);
                     $.ajax({
                      url: "<?php echo site_url()?>/EliminarAlumno",
                      type: "POST",
@@ -182,4 +212,40 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     });
                   });
 
+                  $("#TablaAlumnos").on("click", "#Edit", function (e) {
+                    e.preventDefault();
+                    var datos = $(this).val();
+                    var fila = datos.split(",")
+                    $("#txtActRut").val(fila[0]);
+                    $("#txtActNombre").val(fila[1]);
+                    $("#txtActEdad").val(fila[2]);
+                    $("#txtActDescripcion").val(fila[3]);
+                    $("#txtActEstado").val(fila[4]);
+                    $("#ModalActualizar").modal("show");
+                });
+              $("#btnActualizarSi").click(function () {
+                    var rut = $("#txtActRut").val();
+                    var nombre = $("#txtActNombre").val();
+                    var edad = $("#txtActEdad").val();
+                    var descripcion = $("#txtActDescripcion").val();
+                    var estado = $("#txtActEstado").val();
+                   
+                    $.ajax({
+                     url: "<?php echo site_url()?>/ActualizarAlumno",
+                     type: "POST",
+                     datatype: "json",
+                      data: {
+                       "rut": rut,
+                       "nombre": nombre,
+                       "edad": edad,
+                       "descripcion": descripcion,
+                       "estado": estado
+                      }
+                    }).done(function (obj) {
+                      alert(obj);
+                      
+                      //$("#ModalEliminar").modal("hidde");
+                      location.reload();
+                    });
+                  });
 </script>

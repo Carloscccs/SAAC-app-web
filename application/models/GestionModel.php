@@ -66,5 +66,22 @@ class gestionModel extends CI_Model {
         }
         return $respuesta;
     }
+    function ActualizarAlumno($rut,$nombre,$edad,$descripcion,$estado,$curso){
+        $this->db->where("Rut",$rut);
+        $datos = array(
+            "Nombre"=>$nombre,
+            "Edad"=>$edad,
+            "Descripcion"=>$descripcion,
+            "Estado"=>$estado,
+            "idCurso"=>$curso
+        );
+        $respuesta = "error inesperado";
+        if($this->db->update("alumno",$datos)){
+            $respuesta = "Alumno modificado";
+        }else{
+            $respuesta = "Error al modificar el alumno";
+        }
+        return $respuesta;
+    }
 
 }

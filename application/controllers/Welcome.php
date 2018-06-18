@@ -43,6 +43,16 @@ class Welcome extends CI_Controller {
         echo json_encode($this->GestionModel->EliminarAlumno($rut));
 
     }
+    function ActualizarAlumno(){
+        $rut = $this->input->post("rut");
+        $nombre = $this->input->post("nombre");
+        $edad = $this->input->post("edad");
+        $descripcion = $this->input->post("descripcion");
+        $estado = $this->input->post("estado");
+        $curso = $this->session->userdata("idCurso");
+
+        echo json_encode($this->GestionModel->ActualizarAlumno($rut, $nombre, $edad, $descripcion, $estado, $curso));
+    }
     function IngresarAlumnos(){
         $rut = $this->input->post("IngrRut");
         $nombre = $this->input->post("IngrNombre");
