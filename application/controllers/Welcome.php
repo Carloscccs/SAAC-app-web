@@ -58,6 +58,8 @@ class Welcome extends CI_Controller {
         $descripcion = $this->input->post("IngrDescripcion");
         $curso = $this->input->post("IngrCurso");
 
+        $respuesta = $this->modelo->IngresarAlumno($rut,$nombre,$edad,$descripcion,$curso);
+        
 
     }
 	function validaUsuario(){
