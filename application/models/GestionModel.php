@@ -18,13 +18,24 @@ class gestionModel extends CI_Model {
         $this->db->from("Curso");
         $this->db->where("RutDocente",$Rut);
         return $this->db->get();
-
     }
     function ColsutarAlumno($Curso){
         $this->db->select("Rut, Nombre, Edad, Descripcion, Estado");
         $this->db->from("alumno");
         $this->db->where("idCurso",$Curso);
         return $this->db->get()->result();
+    }
+
+    function IngresarAlumno($rut,$nombre,$edad,$descripcion,$curso){
+        $data = array(
+            "Rut"=>$rut,
+            "Nombre"=>$nombre,
+             "Edad"=>$edad,
+             "Descripcion"=>$descripcion,
+             "Curso"=>$curso
+        );
+        $this->db->insert("alumno",$data);
+            return $datos->num_rows();
     }
 
 }
