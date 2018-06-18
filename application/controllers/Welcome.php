@@ -19,15 +19,21 @@ class Welcome extends CI_Controller {
     }
     
     public function CargarVistaReportes(){
-        $this->load->view('VistaDocenteReportes');
+        $data['Rut'] = $this->session->userdata('Rut');
+        $data['Curso'] = $this->session->userdata("NombreCurso");
+        $this->load->view('VistaDocenteReportes',$data);
     }
 
     public function CargarVistaAlumnos(){
-        $this->load->view('VistaDocenteAlumnos');
+        $data['Rut'] = $this->session->userdata('Rut');
+        $data['Curso'] = $this->session->userdata("NombreCurso");
+        $this->load->view('VistaDocenteAlumnos',$data);
     }
 
     public function CargarVistaContenidos(){
-        $this->load->view('VistaDocenteContenidos');
+        $data['Rut'] = $this->session->userdata('Rut');
+        $data['Curso'] = $this->session->userdata("NombreCurso");
+        $this->load->view('VistaDocenteContenidos',$data);
     }
 
     /*
@@ -44,29 +50,47 @@ class Welcome extends CI_Controller {
         if($valor == 1){
             //Extraer los datos de la consulta a un arreglo
             $res = $this->GestionModel->ConsultaDocente($usuario,$clave)->result();
+            $curso = $this->GestionModel->ConsultaCurso($usuario)->result();
             //Se extraen los datos del arreglo y se asignan a variables
             foreach ($res as $row) {
                 $Rut = $row->Rut;
 				$Nombre = $row->Nombre;
 				$Descripcion = $row->Descripcion;
             }
+            foreach($curso as $row){
+                $idCurso = $row->idCurso;
+                $NombreCurso = $row->Nombre;
+                $idColegio = $row->idColegio;
+            }
             //Se preparan los datos para guardarlos en la session (Pendiente de revision en logged_in)
             $data   =   array(
                 'Rut'  => $Rut,
                 'nombre'    => $Nombre,
                 'logged_in' => TRUE,
-                'Descripcion' => $Descripcion
+                'Descripcion' => $Descripcion,
+                'idCurso' => $idCurso,
+                'NombreCurso' => $NombreCurso,
+                'idColegio' => $idColegio
             );
             //Lineas pendientes de revision
         $this->session->set_userdata($data);
-            $data['Nombre'] = $this->session->userdata('nombre');
-            $data['Descripcion'] = $this->session->userdata("Descripcion");
+            $data['Rut'] = $this->session->userdata('Rut');
+            $data['Curso'] = $this->session->userdata("NombreCurso");
             //Carga la vista del docente
-            $this->load->view("VistaDocenteAlumnos");
+            $this->load->view("VistaDocenteAlumnos",$data);
         }else{
             //Manda un mensaje y vuelve a cargar la vista de login
             $data['error'] = "Datos incorrectos o no existen";
             $this->load->view('VistaLogin',$data);
 		}
-	}
+    }
+    
+    public function GetCategorias(){
+        echo json_encode($this->GestionModel->ConsultarCategorias());
+    }
+
+    public function GetPictogramasCategoria(){
+        $idCategoria = $this->input->post("id");
+        echo json_encode($this->GestionModel->ObtenerPictogramasCategoria($idCategoria));
+    }
 }

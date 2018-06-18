@@ -57,3 +57,5 @@ $route['login']= 'welcome/validaUsuario';
 $route['CVR']= 'welcome/CargarVistaReportes';
 $route['CVA']= 'welcome/CargarVistaAlumnos';
 $route['CVC']= 'welcome/CargarVistaContenidos';
+$route['GC']= 'welcome/GetCategorias';
+$route['GPC']= "welcome/GetPictogramasCategoria";

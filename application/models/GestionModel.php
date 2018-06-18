@@ -20,4 +20,17 @@ class gestionModel extends CI_Model {
         return $this->db->get();
     }
 
+    function ConsultarCategorias(){
+        $this->db->select("*");
+        $this->db->from("Categoria");
+        return $this->db->get()->result();
+    }
+
+    function ObtenerPictogramasCategoria($id){
+        $this->db->select("*");
+        $this->db->from("Pictograma");
+        $this->db->where("idCategoria",$id);
+        return $this->db->get()->result();
+    }
+
 }
