@@ -44,8 +44,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<a class="nav-link" href="<?php echo site_url();?>/CVC">Gestion de contenidos</a>
 					</li>
 				</ul>
-				<form class="form-inline mt-2 mt-md-0">
-					<button class="btn btn-outline-warning my-2 my-sm-0" type="submit">Salir</button>
+				<form class="form-inline mt-2 mt-md-0" action="<?php echo site_url();?>/CS">
+					<button class="btn btn-outline-danger my-2 my-sm-0" type="submit" >Salir</button>
 				</form>
 			</div>
 		</nav>

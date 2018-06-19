@@ -60,3 +60,4 @@ $route['CVC']= 'welcome/CargarVistaContenidos';
 $route['GC']= 'welcome/GetCategorias';
 $route['GPC']= "welcome/GetPictogramasCategoria";
 $route['AP'] = "welcome/AgregarPictograma";
+$route['CS'] = "welcome/cerrarSesion";

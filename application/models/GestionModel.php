@@ -51,4 +51,9 @@ class gestionModel extends CI_Model {
         return $Respuesta;
     }
 
+    function cerrarSesion(){
+        $this->session->sess_destroy();
+        header("Location:".site_url());
+    }
+
 }
