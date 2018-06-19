@@ -93,4 +93,14 @@ class Welcome extends CI_Controller {
         $idCategoria = $this->input->post("id");
         echo json_encode($this->GestionModel->ObtenerPictogramasCategoria($idCategoria));
     }
+
+    public function AgregarPictograma(){
+        $Nombre = $this->input->post("Nombre");
+        $Descripcion = $this->input->post("Descripcion");
+        $Ejemplo = $this->input->post("Ejemplo");
+        $Tags = $this->input->post("Tags");
+        $imgB64 = $this->input->post("imgB64");
+        $idCategoria = $this->input->post("idCategoria");
+        echo json_encode($this->GestionModel->AgregarPictograma($Nombre,$Descripcion,$Ejemplo,$Tags,$imgB64,$idCategoria));
+    }
 }
