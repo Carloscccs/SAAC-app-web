@@ -67,19 +67,18 @@ class Welcome extends CI_Controller {
         echo json_encode($this->GestionModel->ActualizarAlumno($rut, $nombre, $edad, $descripcion, $estado, $curso));
     }
     function IngresarAlumnos(){
-        $rut = $this->input->post("IngrRut");
-        $nombre = $this->input->post("IngrNombre");
-        $edad = $this->input->post("IngrEdad");
-        $descripcion = $this->input->post("IngrDescripcion");
-        $estado = $this->input->post("IngrEstado");
+        $rut = $this->input->post("rut");
+        $nombre = $this->input->post("nombre");
+        $edad = $this->input->post("edad");
+        $descripcion = $this->input->post("descripcion");
+        $estado = $this->input->post("estado");
         $curso = $this->session->userdata("idCurso");
 
-        $respuesta = $this->GestionModel->IngresarAlumno($rut,$nombre,$edad,$descripcion,$estado,$curso);
-        if ($respuesta == "1") {
+        echo json_encode($this->GestionModel->IngresarAlumno($rut,$nombre,$edad,$descripcion,$estado,$curso));
             $data['Rut'] = $this->session->userdata('Rut');
             $data['Curso'] = $this->session->userdata("NombreCurso");
             $this->load->view("VistaDocenteAlumnos", $data);
-        }
+        
 
     }
 	function validaUsuario(){

@@ -62,7 +62,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <h4 class="modal-title" >Ingresar Alumno</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
-      <form id="formulario" method="post" action="<?php echo site_url();?>/ingrAlumno">
+      <form id="formulario">
       <div class="modal-body">
          <label for="IngrRut">Rut</label>
          <input type="text" class="form-control" name="IngrRut" required id="txtRut" placeholder="Rut...">
@@ -193,6 +193,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     $("#idoculto").val($(this).val());
                     $("#ModalEliminar").modal("show");
                 });
+                 
 
                   $("#btnEliminarSi").click(function () {
                     var rut = $("#idoculto").val();
@@ -222,6 +223,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     $("#txtActEstado").val(fila[4]);
                     $("#ModalActualizar").modal("show");
                 });
+                   $("#btnIngresar").click(function () {
+                    var rut = $("#txtRut").val();
+                    var nombre = $("#txtNombre").val();
+                    var edad = $("#txtEdad").val();
+                    var descripcion = $("#txtDescripcion").val();
+                    var estado = $("#txtEstado").val();
+                    $.ajax({
+                     url: "<?php echo site_url()?>/ingrAlumno",
+                     type: "POST",
+                     datatype: "json",
+                      data: {
+                       "rut": rut,
+                       "nombre": nombre,
+                       "edad": edad,
+                       "descripcion": descripcion,
+                       "estado": estado
+                      }
+                    }).done(function (obj) {
+                      
+                      
+                      //$("#ModalEliminar").modal("hidde");
+                      location.reload();
+                    });
+                  });
               $("#btnActualizarSi").click(function () {
                     var rut = $("#txtActRut").val();
                     var nombre = $("#txtActNombre").val();

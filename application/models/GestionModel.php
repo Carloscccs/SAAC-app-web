@@ -72,9 +72,9 @@ class gestionModel extends CI_Model {
              "idCurso"=>$curso
         );
         if($this->db->insert("alumno",$data)){
-            $resultado = "1";
+            $resultado = "Alumno Igresado";
         }else{
-            $resultado= "-1";
+            $resultado= "Alumno no Ingresado";
         }
             return $resultado;
     }
