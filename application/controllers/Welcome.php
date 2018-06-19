@@ -19,21 +19,34 @@ class Welcome extends CI_Controller {
     }
     
     public function CargarVistaReportes(){
-        $data['Rut'] = $this->session->userdata('Rut');
-        $data['Curso'] = $this->session->userdata("NombreCurso");
-        $this->load->view('VistaDocenteReportes',$data);
+        if($this->session->userdata("logged_in")){
+            $data['Rut'] = $this->session->userdata('Rut');
+            $data['Curso'] = $this->session->userdata("NombreCurso");
+            $this->load->view('VistaDocenteReportes',$data);
+        }else{
+            $this->load->view('VistaLogin');
+        }
+        
     }
 
     public function CargarVistaAlumnos(){
-        $data['Rut'] = $this->session->userdata('Rut');
-        $data['Curso'] = $this->session->userdata("NombreCurso");
-        $this->load->view('VistaDocenteAlumnos',$data);
+        if($this->session->userdata("logged_in")){
+            $data['Rut'] = $this->session->userdata('Rut');
+            $data['Curso'] = $this->session->userdata("NombreCurso");
+            $this->load->view('VistaDocenteAlumnos',$data);
+        }else{
+            $this->load->view('VistaLogin');
+        }
     }
 
     public function CargarVistaContenidos(){
-        $data['Rut'] = $this->session->userdata('Rut');
-        $data['Curso'] = $this->session->userdata("NombreCurso");
-        $this->load->view('VistaDocenteContenidos',$data);
+        if($this->session->userdata("logged_in")){
+            $data['Rut'] = $this->session->userdata('Rut');
+            $data['Curso'] = $this->session->userdata("NombreCurso");
+            $this->load->view('VistaDocenteContenidos',$data);
+        }else{
+            $this->load->view('VistaLogin');
+        }
     }
     function CargarAlumnos(){
         echo json_encode($this->GestionModel->ConsultarAlumno($this->session->userdata("idCurso")));
@@ -132,5 +145,9 @@ class Welcome extends CI_Controller {
         $imgB64 = $this->input->post("imgB64");
         $idCategoria = $this->input->post("idCategoria");
         echo json_encode($this->GestionModel->AgregarPictograma($Nombre,$Descripcion,$Ejemplo,$Tags,$imgB64,$idCategoria));
+    }
+
+    public function cerrarSesion() {
+        $this->GestionModel->cerrarSesion();
     }
 }
