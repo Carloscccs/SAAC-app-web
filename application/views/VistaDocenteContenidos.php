@@ -47,8 +47,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<a class="nav-link" href="<?php echo site_url();?>/CVC">Gestion de contenidos</a>
 					</li>
 				</ul>
-				<form class="form-inline mt-2 mt-md-0" action="<?php echo site_url();?>/CS">
-					<button class="btn btn-outline-danger my-2 my-sm-0" type="submit" id="btnCerrarSesion" >Salir</button>
+				<form class="form-inline mt-2 mt-md-0">
+					<button class="btn btn-outline-warning my-2 my-sm-0" type="submit">Salir</button>
 				</form>
 			</div>
 		</nav>
@@ -77,18 +77,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<div class="col-12">
 					<div class="tab-content" id="pills-tabContent">
 						<div class="tab-pane fade show active" id="pills-Actividades" role="tabpanel" aria-labelledby="pills-home-tab">
-							<div class="row">
-								
-							</div>
-							<div class="row">
-								<div class="col-12">
-									<table class="table table-bordered">
-										<thead><th>Oracion</th><th>Pictogramas vista</th><th>Pictogramas opciones</th><th>Posicion respuesta</th><th>Deshabilitar</th></thead>
-										<tbody id="tbodyactividades"></tbody>
-									</table>
-								</div>
-							</div>
-
+							<h2>Contenidos actividades</h2>
 						</div>
 						<div class="tab-pane fade" id="pills-Pictogramas" role="tabpanel" aria-labelledby="pills-profile-tab">
 							<div class="row">
@@ -322,9 +311,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					}, milisec);
 				}
 
-				
-
-				
 			});
 
 		</script>
