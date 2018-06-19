@@ -289,7 +289,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				});
 
 				$("#filePictoImg").change(function () {
-					$("#btnSubir").attr("disabled", "true");
+					$("#btnSubir").attr("disabled","true");
 					MostrarMensaje("Procesando imagen...", 2000);
 					var formData = new FormData();
 					formData.append('File', $('#filePictoImg')[0].files[0], 'z.PNG');
@@ -302,7 +302,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						success: function (data) {
 							console.log(data);
 							IMGB64 += "" + data.Files[0].FileData;
-							$("#btnSubir").attr("disabled", "false");
+							$("#btnSubir").removeAttr("disabled");
 							MostrarMensaje("Imagen lista :)", 3000);
 						}
 					});
