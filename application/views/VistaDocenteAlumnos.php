@@ -20,42 +20,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	</head>
 
 	<body>
-        <nav class="navbar navbar-expand-md navbar-light fixed-top bg-warning">
-      <a class="navbar-brand" href="#">
-        <img src="<?php echo base_url();?>img/logo-temporal.png" height="35px" width="80px" class="bg-light" style="border-style: solid;"
-        />
-      </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
-      aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="<?php echo site_url();?>/CVA">Alumnos
-              <span class="sr-only">(current)</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="<?php echo site_url();?>/CVR">Reportes</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="<?php echo site_url();?>/CVC">Gestion de contenidos</a>
-          </li>
-        </ul>
-        <form class="form-inline mt-2 mt-md-0">
-          <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">Salir</button>
-        </form>
-      </div>
-    </nav>
-    <main role="main" class="container" >
-      <div class="row">
-        <div class="col-5" >
-          <h2 id="lbCurso">Curso: <?=$Curso ?></h2>
-        </div>
-      <div class="col-3 offset-4">
-        <button id="btnAgregarAlumno" value="" class="btn btn-success" data-toggle="modal" data-target="#InsertAlumnos" >Agregar alumno</button>
-
 		<nav class="navbar navbar-expand-md navbar-light fixed-top bg-warning">
 			<a class="navbar-brand" href="#">
 				<img src="<?php echo base_url();?>img/logo-temporal.png" height="35px" width="80px" class="bg-light" style="border-style: solid;"
@@ -84,6 +48,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				</form>
 			</div>
 		</nav>
+        <main role="main" class="container" >
+      <div class="row">
+        <div class="col-5" >
+          <h2 id="lbCurso">Curso: <?=$Curso ?></h2>
+        </div>
+      <div class="col-3 offset-4">
+        <button id="btnAgregarAlumno" value="" class="btn btn-success" data-toggle="modal" data-target="#InsertAlumnos" >Agregar alumno</button>
 <div id="InsertAlumnos" class="modal fade" role="dialog" tabindex="-1" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
