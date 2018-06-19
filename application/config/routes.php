@@ -61,3 +61,7 @@ $route['GC']= 'welcome/GetCategorias';
 $route['GPC']= "welcome/GetPictogramasCategoria";
 $route['AP'] = "welcome/AgregarPictograma";
 $route['CS'] = "welcome/cerrarSesion";
+$route['ingrAlumno']= 'welcome/IngresarAlumnos';
+$route['MostrarAlumnos']= 'welcome/CargarAlumnos';
+$route['EliminarAlumno']= 'welcome/EliminarAlumno';
+$route['ActualizarAlumno']= 'welcome/ActualizarAlumno';

@@ -19,6 +19,12 @@ class gestionModel extends CI_Model {
         $this->db->where("RutDocente",$Rut);
         return $this->db->get();
     }
+    function ConsultarAlumno($Curso){
+        $this->db->select("Rut, Nombre, Edad, Descripcion, Estado");
+        $this->db->from("alumno");
+        $this->db->where("idCurso",$Curso);
+        return $this->db->get()->result();
+    }
 
     function ConsultarCategorias(){
         $this->db->select("*");
@@ -54,6 +60,51 @@ class gestionModel extends CI_Model {
     function cerrarSesion(){
         $this->session->sess_destroy();
         header("Location:".site_url());
+    }
+
+    function IngresarAlumno($rut,$nombre,$edad,$descripcion,$estado,$curso){
+        $data = array(
+            "Rut"=>$rut,
+            "Nombre"=>$nombre,
+             "Edad"=>$edad,
+             "Descripcion"=>$descripcion,
+             "Estado" => $estado,
+             "idCurso"=>$curso
+        );
+        if($this->db->insert("alumno",$data)){
+            $resultado = "1";
+        }else{
+            $resultado= "-1";
+        }
+            return $resultado;
+    }
+    function EliminarAlumno($rut){
+        $this->db->where("Rut",$rut);
+        $this->db->set("Estado","Inactivo");
+        $respuesta = "Error inesperado";
+        if($this->db->update("alumno")){
+            $respuesta = "Usuario eliminado";
+        }else{
+            $respuesta = "Error al eliminar usuario";
+        }
+        return $respuesta;
+    }
+    function ActualizarAlumno($rut,$nombre,$edad,$descripcion,$estado,$curso){
+        $this->db->where("Rut",$rut);
+        $datos = array(
+            "Nombre"=>$nombre,
+            "Edad"=>$edad,
+            "Descripcion"=>$descripcion,
+            "Estado"=>$estado,
+            "idCurso"=>$curso
+        );
+        $respuesta = "error inesperado";
+        if($this->db->update("alumno",$datos)){
+            $respuesta = "Alumno modificado";
+        }else{
+            $respuesta = "Error al modificar el alumno";
+        }
+        return $respuesta;
     }
 
 }

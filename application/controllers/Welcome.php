@@ -48,11 +48,40 @@ class Welcome extends CI_Controller {
             $this->load->view('VistaLogin');
         }
     }
+    function CargarAlumnos(){
+        echo json_encode($this->GestionModel->ConsultarAlumno($this->session->userdata("idCurso")));
+    }
+    function EliminarAlumno(){
+        $rut = $this->input->post("rut");
+        echo json_encode($this->GestionModel->EliminarAlumno($rut));
 
-    /*
-    Metodo que busca a el usuario en la base de datos, si existe muestra la vista docente, en caso contrario,
-    Manda un mensaje de error
-    */
+    }
+    function ActualizarAlumno(){
+        $rut = $this->input->post("rut");
+        $nombre = $this->input->post("nombre");
+        $edad = $this->input->post("edad");
+        $descripcion = $this->input->post("descripcion");
+        $estado = $this->input->post("estado");
+        $curso = $this->session->userdata("idCurso");
+
+        echo json_encode($this->GestionModel->ActualizarAlumno($rut, $nombre, $edad, $descripcion, $estado, $curso));
+    }
+    function IngresarAlumnos(){
+        $rut = $this->input->post("IngrRut");
+        $nombre = $this->input->post("IngrNombre");
+        $edad = $this->input->post("IngrEdad");
+        $descripcion = $this->input->post("IngrDescripcion");
+        $estado = $this->input->post("IngrEstado");
+        $curso = $this->session->userdata("idCurso");
+
+        $respuesta = $this->GestionModel->IngresarAlumno($rut,$nombre,$edad,$descripcion,$estado,$curso);
+        if ($respuesta == "1") {
+            $data['Rut'] = $this->session->userdata('Rut');
+            $data['Curso'] = $this->session->userdata("NombreCurso");
+            $this->load->view("VistaDocenteAlumnos", $data);
+        }
+
+    }
 	function validaUsuario(){
         //Recibe los datos del formulario
         $usuario = $this->input->post("rut");
@@ -85,6 +114,7 @@ class Welcome extends CI_Controller {
                 'NombreCurso' => $NombreCurso,
                 'idColegio' => $idColegio
             );
+            
             //Lineas pendientes de revision
         $this->session->set_userdata($data);
             $data['Rut'] = $this->session->userdata('Rut');
