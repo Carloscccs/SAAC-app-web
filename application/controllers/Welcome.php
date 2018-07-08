@@ -142,12 +142,29 @@ class Welcome extends CI_Controller {
         $Descripcion = $this->input->post("Descripcion");
         $Ejemplo = $this->input->post("Ejemplo");
         $Tags = $this->input->post("Tags");
-        $imgB64 = $this->input->post("imgB64");
-        $idCategoria = $this->input->post("idCategoria");
-        echo json_encode($this->GestionModel->AgregarPictograma($Nombre,$Descripcion,$Ejemplo,$Tags,$imgB64,$idCategoria));
+        $idCategoria = $this->input->post("Categoria");
+        $config['upload_path'] = './Pictograma/';
+        $config['allowed_types'] = 'gif|jpg|png';
+        $config['max_size'] = 2048;
+        $config['file_name'] = $Nombre;
+        $this->load->library('upload', $config);
+        if (!$this->upload->do_upload('Imagen')) { #Aquí me refiero a "foto", el nombre que pusimos en FormData
+            $error = array('error' => $this->upload->display_errors());
+            echo json_encode($error);
+        } else {
+            $UpImgName = $this->upload->data('file_name');
+            $ImgRuta = "".base_url()."Pictograma/".$UpImgName;
+            $resultado = $this->GestionModel->AgregarPictograma($Nombre,$Descripcion,$Ejemplo,$Tags,$ImgRuta,$idCategoria);
+            echo json_encode($resultado);
+        }
+        /*
+        
+        */
     }
 
     public function cerrarSesion() {
         $this->GestionModel->cerrarSesion();
     }
+
+
 }

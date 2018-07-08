@@ -48,7 +48,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					</li>
 				</ul>
 				<form class="form-inline mt-2 mt-md-0" action="<?php echo site_url();?>/CS">
-					<button class="btn btn-outline-danger my-2 my-sm-0" type="submit" id="btnCerrarSesion" >Salir</button>
+					<button class="btn btn-outline-danger my-2 my-sm-0" type="submit" id="btnCerrarSesion">Salir</button>
 				</form>
 			</div>
 		</nav>
@@ -78,12 +78,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<div class="tab-content" id="pills-tabContent">
 						<div class="tab-pane fade show active" id="pills-Actividades" role="tabpanel" aria-labelledby="pills-home-tab">
 							<div class="row">
-								
+
 							</div>
 							<div class="row">
 								<div class="col-12">
 									<table class="table table-bordered">
-										<thead><th>Oracion</th><th>Pictogramas vista</th><th>Pictogramas opciones</th><th>Posicion respuesta</th><th>Deshabilitar</th></thead>
+										<thead>
+											<th>Oracion</th>
+											<th>Pictogramas vista</th>
+											<th>Pictogramas opciones</th>
+											<th>Posicion respuesta</th>
+											<th>Deshabilitar</th>
+										</thead>
 										<tbody id="tbodyactividades"></tbody>
 									</table>
 								</div>
@@ -175,6 +181,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			</div>
 		</div>
 
+		
+
 
 
 		<!-- Bootstrap core JavaScript
@@ -253,59 +261,47 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					var Ejemplo = $("#txtEjemPicto").val();
 					var Tags = $("#txtTagsPicto").val();
 					var categoria = $("#selCatPicto").val();
-					$.ajax({
-						url: "<?php echo site_url(); ?>/AP",
-						type: "POST",
-						dataType: "json",
-						data: {
-							"Nombre": Nombre,
-							"Descripcion": Descripcion,
-							"Ejemplo": Ejemplo,
-							"Tags": Tags,
-							"idCategoria": categoria,
-							"imgB64": IMGB64
-						}
-					}).done(function (obj) {
-						alert("Agregado");
-						location.reload();
-					}).fail(function (jqXHR, textStatus, errorThrown) {
-						if (jqXHR.status === 0) {
-							alert('Not connect: Verify Network.');
-						} else if (jqXHR.status == 404) {
-							alert('Requested page not found [404]');
-						} else if (jqXHR.status == 500) {
-							alert('Internal Server Error [500].');
-						} else if (textStatus === 'parsererror') {
-							alert('Requested JSON parse failed.');
-						} else if (textStatus === 'timeout') {
-							alert('Time out error.');
-						} else if (textStatus === 'abort') {
-							alert('Ajax request aborted.');
-						} else {
-							alert('Uncaught Error: ' + jqXHR.responseText);
-						}
-					});
+					var imagen = $("#filePictoImg");
+					var archivos = imagen[0].files;
+					if (archivos.length > 0 && Nombre.length > 0 && Descripcion.length > 0 && Ejemplo.length > 0 && Tags.length > 0 && categoria != "0") {
+						var foto = archivos[0]; //Sólo queremos la primera imagen, ya que el usuario pudo seleccionar más
+						var lector = new FileReader();
+						//Ojo: En este caso 'foto' será el nombre con el que recibiremos el archivo en el servidor
+						var formData = new FormData();
+						formData.append("Imagen", foto);
+						formData.append("Nombre", Nombre);
+						formData.append("Descripcion", Descripcion);
+						formData.append("Ejemplo", Ejemplo);
+						formData.append("Tags", Tags);
+						formData.append("Categoria", categoria);
 
-				});
 
-				$("#filePictoImg").change(function () {
-					$("#btnSubir").attr("disabled", "true");
-					MostrarMensaje("Procesando imagen...", 2000);
-					var formData = new FormData();
-					formData.append('File', $('#filePictoImg')[0].files[0], 'z.PNG');
-					$.ajax({
-						url: 'https://v2.convertapi.com/png/to/jpg?Secret=uGHT20S3Tlii8Lxj',
-						data: formData,
-						processData: false,
-						contentType: false,
-						method: 'POST',
-						success: function (data) {
-							console.log(data);
-							IMGB64 += "" + data.Files[0].FileData;
-							$("#btnSubir").attr("disabled", "false");
-							MostrarMensaje("Imagen lista :)", 3000);
-						}
-					});
+						$.ajax({
+							url: "<?php echo site_url()?>/AP",
+							data: formData,
+							type: 'POST',
+							contentType: false,
+							processData: false,
+							success: function (resultados) {
+								console.log("Petición terminada. Resultados", resultados);
+								$('#exampleModal').modal('hide')
+								MostrarMensaje("Pictograma agregado", 4000);
+								$("#txtNombrePicto").val("");
+								$("#txtDescPicto").val("");
+								$("#txtEjemPicto").val("");
+								$("#txtTagsPicto").val("");
+								$("#selCatPicto").val(0);
+								$("#filePictoImg").val(null);
+								$("#selectcategorias").change();
+							}
+
+						});
+
+					}else{
+						MostrarMensaje("No deben de haber campos vacios.",3000)
+					}
+
+
 				});
 
 				function MostrarMensaje(msg, milisec) {
@@ -322,9 +318,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					}, milisec);
 				}
 
-				
 
-				
+
+
 			});
 
 		</script>

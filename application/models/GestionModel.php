@@ -39,20 +39,20 @@ class gestionModel extends CI_Model {
         return $this->db->get()->result();
     }
 
-    function AgregarPictograma($Nombre,$Descripcion,$Ejemplo,$Tags,$imgB64,$idCategoria){
+    function AgregarPictograma($Nombre,$Descripcion,$Ejemplo,$Tags,$imgRuta,$idCategoria){
         $datos = array(
             "Nombre"=>$Nombre,
             "Descripcion"=>$Descripcion,
             "Ejemplo"=>$Ejemplo,
             "Tags"=>$Tags,
-            "img"=>$imgB64,
+            "img"=>$imgRuta,
             "idCategoria"=>$idCategoria
         );
         $Respuesta = "Error desconocido";
         if($this->db->insert("Pictograma",$datos)){
-            $Respuesta = "Agregado correctamente";
+            $Respuesta = "SI";
         }else{
-            $Respuesta = "Error al agregar";
+            $Respuesta = "NO";
         }
         return $Respuesta;
     }
