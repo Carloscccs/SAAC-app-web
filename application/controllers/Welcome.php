@@ -153,7 +153,7 @@ class Welcome extends CI_Controller {
             echo json_encode($error);
         } else {
             $UpImgName = $this->upload->data('file_name');
-            $ImgRuta = "".base_url()."Pictograma/".$UpImgName;
+            $ImgRuta = "Pictograma/".$UpImgName;
             $resultado = $this->GestionModel->AgregarPictograma($Nombre,$Descripcion,$Ejemplo,$Tags,$ImgRuta,$idCategoria);
             echo json_encode($resultado);
         }
