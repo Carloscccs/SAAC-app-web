@@ -223,7 +223,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						var x = "<tr>";
 						$.each(JSON.parse(obj), function (i, o) {
 							var image = new Image();
-							image.src = o.img;
+							image.src = "<?php echo base_url(); ?>"+o.img;
 							image.setAttribute("class", "img-thumbnail");
 							image.setAttribute("width", "200px");
 							image.setAttribute("heigth", "200px");
