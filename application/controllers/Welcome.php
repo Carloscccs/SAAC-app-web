@@ -162,6 +162,23 @@ class Welcome extends CI_Controller {
         */
     }
 
+    function getActividades(){
+        $Res = $this->GestionModel->ObtenerActividades()->Result();
+        $vistas = array();
+        foreach ($Res as $row) {
+            $vistarutas = array();
+            $arrjson = json_decode($row->PicsVista,true);
+            for ($i=0; $i < count($arrjson); $i++) {
+                $n = $i + 1; 
+                $ruta = $this->GestionModel->ObtenerRutaPictograma($arrjson['pic'.$n]);
+                $vistarutas[] = $ruta;
+            }
+            $vistas = ["IdActividad"=> $row->Id,"Vista" => $vistarutas];
+        }
+        $Res[] = ["Vistas" => $vistas];
+        echo json_encode($Res);
+    }
+
     public function cerrarSesion() {
         $this->GestionModel->cerrarSesion();
     }

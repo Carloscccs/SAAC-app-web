@@ -85,9 +85,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									<table class="table table-bordered">
 										<thead>
 											<th>Oracion</th>
-											<th>Pictogramas vista</th>
-											<th>Pictogramas opciones</th>
-											<th>Posicion respuesta</th>
+											<th>Ver detalles</th>
+											<th>Modificar</th>
 											<th>Deshabilitar</th>
 										</thead>
 										<tbody id="tbodyactividades"></tbody>

@@ -107,4 +107,30 @@ class gestionModel extends CI_Model {
         return $respuesta;
     }
 
+    function ObtenerRutaPictograma($idPictograma){
+        $this->db->select("img");
+        $this->db->from("Pictograma");
+        $this->db->where("idPictograma",$idPictograma);
+        return $this->db->get()->result();
+    }
+
+    function ObtenerActividades(){
+        $this->db->select("a.idActividad as 'Id',a.oracion as 'Oracion',
+        COLUMN_JSON(a.PicsVista) as 'PicsVista',
+        p1.nombre as 'pic1nombre',
+        p1.img as 'pic1',
+        p2.nombre as 'pic2nombre',
+        p2.img as 'pic2',
+        p3.nombre as 'pic3nombre',
+        p3.img as 'pic3',
+        p4.nombre as 'pic4nombre',
+        p4.img as 'pic4'");
+        $this->db->from("actividad a");
+        $this->db->join("pictograma p1","p1.idPictograma = a.idPic1");
+        $this->db->join("pictograma p2","p2.idPictograma = a.idPic2");
+        $this->db->join("pictograma p3","p3.idPictograma = a.idPic3");
+        $this->db->join("pictograma p4","p4.idPictograma = a.idPic4");
+        return $this->db->get();
+    }
+
 }

@@ -65,3 +65,4 @@ $route['ingrAlumno']= 'welcome/IngresarAlumnos';
 $route['MostrarAlumnos']= 'welcome/CargarAlumnos';
 $route['EliminarAlumno']= 'welcome/EliminarAlumno';
 $route['ActualizarAlumno']= 'welcome/ActualizarAlumno';
+$route['GA'] = 'welcome/getActividades';
