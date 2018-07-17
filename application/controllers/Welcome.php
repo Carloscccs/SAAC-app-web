@@ -97,6 +97,7 @@ class Welcome extends CI_Controller {
                 $Rut = $row->Rut;
 				$Nombre = $row->Nombre;
 				$Descripcion = $row->Descripcion;
+                $Estado = $row->Estado;
             }
             foreach($curso as $row){
                 $idCurso = $row->idCurso;
@@ -111,15 +112,21 @@ class Welcome extends CI_Controller {
                 'Descripcion' => $Descripcion,
                 'idCurso' => $idCurso,
                 'NombreCurso' => $NombreCurso,
-                'idColegio' => $idColegio
+                'idColegio' => $idColegio,
+                'Estado' => $Estado
             );
             
             //Lineas pendientes de revision
         $this->session->set_userdata($data);
             $data['Rut'] = $this->session->userdata('Rut');
             $data['Curso'] = $this->session->userdata("NombreCurso");
-            //Carga la vista del docente
+            //Carga la vista del Administrador descomentar
+            //if ($Estado='Administrador') {
+            //$this->load->view("VistaDocenteAlumnosAdministrador", $data);
+            //}else{
+                //Cargar vista docente
             $this->load->view("VistaDocenteAlumnos",$data);
+        //}
         }else{
             //Manda un mensaje y vuelve a cargar la vista de login
             $data['error'] = "Datos incorrectos o no existen";

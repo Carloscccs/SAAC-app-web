@@ -20,7 +20,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	</head>
 
 	<body>
-		<nav class="navbar navbar-expand-md navbar-light fixed-top bg-warning">
+		<nav class="navbar navbar-expand-md navbar-light fixed-top bg-warning" id="navAd">
 			<a class="navbar-brand" href="#">
 				<img src="<?php echo base_url();?>img/logo-temporal.png" height="35px" width="80px" class="bg-light" style="border-style: solid;"
 				/>
@@ -65,13 +65,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <form id="formulario">
       <div class="modal-body">
          <label for="IngrRut">Rut</label>
-         <input type="text" class="form-control" name="IngrRut" required id="txtRut" placeholder="Rut...">
+         <input type="text" class="form-control" name="IngrRut" required id="txtRut" placeholder="Rut sin guion ni puntos" onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 0 || event.charCode == 32'>
         <br>
         <label>Nombre </label>
-          <input type="text" class="form-control" name="IngrNombre" required id="txtNombre" placeholder="Nombre...">
+          <input type="text" class="form-control" name="IngrNombre" required id="txtNombre" placeholder="Juanito Perez">
         <br>
         <label >Edad </label>
-          <input type="text" class="form-control" name="IngrEdad" required id="txtEdad" placeholder="Edad...">
+          <input type="text" class="form-control" name="IngrEdad" required id="txtEdad" placeholder="Edad..." onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 0 || event.charCode == 32'>
         <br>
         <label >Descripcion </label>
           <input type="text" class="form-control" name="IngrDescripcion" required id="txtDescripcion" placeholder="Descripcion...">
@@ -124,7 +124,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <input type="text" class="form-control" name="ActNombre" id="txtActNombre"/>
           </br>
         <label >Edad </label>
-          <input type="text" class="form-control" name="ActEdad" id="txtActEdad"/>
+          <input type="text" class="form-control" name="ActEdad" id="txtActEdad" onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 0 || event.charCode == 32'/>
           </br>
         <label >Descripcion </label>
           <input type="text" class="form-control" name="ActDecripcion" id="txtActDescripcion"/>
@@ -166,7 +166,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   </body>
 </html>
 <script type="text/javascript">
-
                  $(function(){
                   
                   cargarUsuarios();
@@ -186,7 +185,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         });
                     });
                 }
-                 });
+                 
 
                  $("#TablaAlumnos").on("click", "#Delete", function (e) {
                     e.preventDefault();
@@ -253,8 +252,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     var edad = $("#txtActEdad").val();
                     var descripcion = $("#txtActDescripcion").val();
                     var estado = $("#txtActEstado").val();
-                   
-                    $.ajax({
+                   if (rut.length > 0 && nombre.length > 0 && descripcion.length > 0 && estado.length > 0)
+                    {
+                     $.ajax({
                      url: "<?php echo site_url()?>/ActualizarAlumno",
                      type: "POST",
                      datatype: "json",
@@ -264,12 +264,38 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                        "edad": edad,
                        "descripcion": descripcion,
                        "estado": estado
-                      }
-                    }).done(function (obj) {
-                      alert(obj);
-                      
-                      //$("#ModalEliminar").modal("hidde");
+                      },
+                      contentType: false,
+                      processData: false,
+                      success: function (resultados) {
+                      console.log("Petición terminada. Resultado", resultados);
+                      $("#ModalActualizar").modal('hide');
+                      MostrarMensaje("Alumno Actualizado", 4000);
+                      $("#txtActRut").val("");
+                      $("#txtActNombre").val("");
+                      $("#txtActEdad").val("");
+                      $("#txtActDescripcion").val("");
+                      $("#txtActEstado").val("");
                       location.reload();
-                    });
+                      }
                   });
+                   }else{
+                    MostrarMensaje("No deben de haber campos vacios.",3000)
+                   }
+                });
+
+              function MostrarMensaje(msg, milisec) {
+          // Get the snackbar DIV
+          var x = document.getElementById("snackbar");
+          x.innerHTML = "" + msg;
+
+          // Add the "show" class to DIV
+          x.className = "show";
+
+          // After 3 seconds, remove the show class from DIV
+          setTimeout(function () {
+            x.className = x.className.replace("show", "");
+          }, milisec);
+        }
+        });
 </script>
