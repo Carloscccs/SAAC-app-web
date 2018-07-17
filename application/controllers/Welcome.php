@@ -77,7 +77,7 @@ class Welcome extends CI_Controller {
         echo json_encode($this->GestionModel->IngresarAlumno($rut,$nombre,$edad,$descripcion,$estado,$curso));
             $data['Rut'] = $this->session->userdata('Rut');
             $data['Curso'] = $this->session->userdata("NombreCurso");
-            $this->load->view("VistaDocenteAlumnos", $data);
+            
         
 
     }
@@ -126,6 +126,7 @@ class Welcome extends CI_Controller {
             //}else{
                 //Cargar vista docente
             $this->load->view("VistaDocenteAlumnos",$data);
+            
         //}
         }else{
             //Manda un mensaje y vuelve a cargar la vista de login

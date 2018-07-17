@@ -17,6 +17,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 		<!-- Custom styles for this template -->
 		<link href="<?php echo base_url();?>lib/css/navbar-top-fixed.css" rel="stylesheet">
+    <link href="<?php echo base_url();?>lib/css/snackbar.css" rel="stylesheet">
 	</head>
 
 	<body>
@@ -62,7 +63,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <h4 class="modal-title" >Ingresar Alumno</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
-      <form id="formulario">
+      
       <div class="modal-body">
          <label for="IngrRut">Rut</label>
          <input type="text" class="form-control" name="IngrRut" required id="txtRut" placeholder="Rut sin guion ni puntos" onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 0 || event.charCode == 32'>
@@ -81,7 +82,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <button type="submit" class="btn btn-success" id="btnIngresar">ingresar</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
-      </form>
+      
     </div>
   </div>
 </div>
@@ -156,6 +157,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           </table>
         </div>
       </div>
+      <div id="snackbar" style="position: absolute;z-index: 200"></div>
     </main>
 		<!-- Bootstrap core JavaScript
     ================================================== -->
@@ -203,11 +205,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       data: {
                        "rut": rut
                       }
+
                     }).done(function (obj) {
-                      alert(obj);
+                       MostrarMensaje("Alumno inactivo", 3000);
+                      cargarUsuarios();
+                      $("#ModalEliminar").modal("hide");
                       
-                      //$("#ModalEliminar").modal("hidde");
-                      location.reload();
                     });
                   });
 
@@ -228,6 +231,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     var edad = $("#txtEdad").val();
                     var descripcion = $("#txtDescripcion").val();
                     var estado = $("#txtEstado").val();
+                    if (rut.length > 0 && nombre.length > 0 && descripcion.length > 0 && estado.length > 0)
+                    {
                     $.ajax({
                      url: "<?php echo site_url()?>/ingrAlumno",
                      type: "POST",
@@ -239,13 +244,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                        "descripcion": descripcion,
                        "estado": estado
                       }
-                    }).done(function (obj) {
+                     }).done(function (obj) {
+                      console.log("Petición terminada. Resultado", obj);
+                      $("#InsertAlumnos").modal('hide');
+                      $("#txtRut").val("");
+                      $("#txtNombre").val("");
+                      $("#txtEdad").val("");
+                      $("#txtDescripcion").val("");
+                      $("#txtEstado").val("");
+                      MostrarMensaje("Alumno Ingresado", 3000);
+                      cargarUsuarios();
+
                       
-                      
-                      //$("#ModalEliminar").modal("hidde");
-                      location.reload();
                     });
-                  });
+                  
+                  }else{
+                    MostrarMensaje("No deben de haber campos vacios.",3000)
+                  }
+                    });
+                  
               $("#btnActualizarSi").click(function () {
                     var rut = $("#txtActRut").val();
                     var nombre = $("#txtActNombre").val();
@@ -254,6 +271,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     var estado = $("#txtActEstado").val();
                    if (rut.length > 0 && nombre.length > 0 && descripcion.length > 0 && estado.length > 0)
                     {
+                      
                      $.ajax({
                      url: "<?php echo site_url()?>/ActualizarAlumno",
                      type: "POST",
@@ -265,23 +283,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                        "descripcion": descripcion,
                        "estado": estado
                       },
-                      contentType: false,
-                      processData: false,
                       success: function (resultados) {
                       console.log("Petición terminada. Resultado", resultados);
                       $("#ModalActualizar").modal('hide');
-                      MostrarMensaje("Alumno Actualizado", 4000);
                       $("#txtActRut").val("");
                       $("#txtActNombre").val("");
                       $("#txtActEdad").val("");
                       $("#txtActDescripcion").val("");
                       $("#txtActEstado").val("");
-                      location.reload();
+                      MostrarMensaje("Alumno Actualizado", 3000);
+                      cargarUsuarios();
                       }
                   });
                    }else{
                     MostrarMensaje("No deben de haber campos vacios.",3000)
                    }
+
                 });
 
               function MostrarMensaje(msg, milisec) {
