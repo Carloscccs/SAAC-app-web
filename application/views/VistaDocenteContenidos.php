@@ -19,6 +19,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<link href="<?php echo base_url();?>lib/css/navbar-top-fixed.css" rel="stylesheet">
 
 		<link href="<?php echo base_url();?>lib/css/snackbar.css" rel="stylesheet">
+		<link href="<?php echo base_url();?>lib/css/image-picker.css" rel="stylesheet">
+		<link href="<?php echo base_url();?>lib/css/personal.css" rel="stylesheet">
+
 
 	</head>
 
@@ -84,9 +87,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<div class="col-12">
 									<table class="table table-bordered">
 										<thead>
+											<th>Id</th>
 											<th>Oracion</th>
-											<th>Ver detalles</th>
-											<th>Modificar</th>
+											<th>Vista</th>
+											<th>Alternativas</th>
 											<th>Deshabilitar</th>
 										</thead>
 										<tbody id="tbodyactividades"></tbody>
@@ -175,12 +179,51 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
 						<button type="button" class="btn btn-primary" id="btnSubir">Subir</button>
 					</div>
-					<div id="snackbar" style="position: absolute;z-index: 200"></div>
+
+				</div>
+			</div>
+			<div id="snackbar" style="position: absolute;z-index: 200"></div>
+		</div>
+
+		<div class="modal fade" id="modalVista1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalCenterTitle">Vista oracion</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+					<select id="selectvistaOracion"></select>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+					</div>
 				</div>
 			</div>
 		</div>
 
-		
+		<div class="modal fade" id="modalVista2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalCenterTitle">Vista alternativas</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+					<select id="selectvistaAltern"></select>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
 
 
 
@@ -190,9 +233,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<script src="<?php echo base_url();?>lib/js/jquery-3.1.1.min.js"></script>
 		<script src="<?php echo base_url();?>lib/js/popper.min.js"></script>
 		<script src="<?php echo base_url();?>lib/js/bootstrap.min.js"></script>
+		<script src="<?php echo base_url();?>lib/js/image-picker.min.js"></script>
 		<script>
 			$(function () {
 				CargarPictogramasCategoria();
+				CargarActividades();
+				$("#selectvistaOracion").imagepicker({
+					hide_select: false
+				});
 				var IMGB64 = "data:image/jpeg;base64,";
 
 
@@ -222,7 +270,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						var x = "<tr>";
 						$.each(JSON.parse(obj), function (i, o) {
 							var image = new Image();
-							image.src = "<?php echo base_url(); ?>"+o.img;
+							image.src = "<?php echo base_url(); ?>" + o.img;
 							image.setAttribute("class", "img-thumbnail");
 							image.setAttribute("width", "200px");
 							image.setAttribute("heigth", "200px");
@@ -262,7 +310,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					var categoria = $("#selCatPicto").val();
 					var imagen = $("#filePictoImg");
 					var archivos = imagen[0].files;
-					if (archivos.length > 0 && Nombre.length > 0 && Descripcion.length > 0 && Ejemplo.length > 0 && Tags.length > 0 && categoria != "0") {
+					if (archivos.length > 0 && Nombre.length > 0 && Descripcion.length > 0 && Ejemplo.length > 0 && Tags.length >
+						0 && categoria != "0") {
 						var foto = archivos[0]; //Sólo queremos la primera imagen, ya que el usuario pudo seleccionar más
 						var lector = new FileReader();
 						//Ojo: En este caso 'foto' será el nombre con el que recibiremos el archivo en el servidor
@@ -296,8 +345,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						});
 
-					}else{
-						MostrarMensaje("No deben de haber campos vacios.",3000)
+					} else {
+						MostrarMensaje("No deben de haber campos vacios.", 3000)
 					}
 
 
@@ -317,8 +366,80 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					}, milisec);
 				}
 
+				function CargarActividades() {
+					$("#tbodyactividades").empty();
+					var url = "<?php echo site_url(); ?>/GA";
+					$.getJSON(url, function (res) {
+						$.each(res, function (i, o) {
+							var x = "<tr><td>" + o.idActividad + "</td>";
+							x += "<td>" + o.Oracion + "</td>";
+							x += '<td> <button id="Vista" value="' + o.idActividad + '" class="btn">Vista</button></ td>';
+							x += '<td> <button id="Altern" value="' + o.idActividad + '" class="btn">Alternativas</button></td>';
+							x += '<td> <button id="Desah" value="' + o.idActividad + '" class="btn">Deshabilitar</button></td></tr>';
+							$("#tbodyactividades").append(x);
+						});
+					});
+				}
 
+				$("#tbodyactividades").on("click", "#Altern", function (e) {
+					e.preventDefault();
+					$("#selectvistaAltern").empty();
+					var id = $(this).val();
+					$.ajax({
+						url: "<?php echo site_url()?>/GRA",
+						type: "POST",
+						datatype: "json",
+						data: {
+							"Id": id
+						}
+					}).done(function (obj) {
+						console.log(obj);
+						var x = "";
+						$.each(JSON.parse(obj), function (i, o) {
+							//console.log(i);
+							var src1 = "<?php echo base_url(); ?>" + o['pic1'];
+							var src2 = "<?php echo base_url(); ?>" + o['pic2'];
+							var src3 = "<?php echo base_url(); ?>" + o['pic3'];
+							var src4 = "<?php echo base_url(); ?>" + o['pic4'];
+							var nombre1 = o['pic1nombre'];
+							var nombre2 = o['pic2nombre'];
+							var nombre3 = o['pic3nombre'];
+							var nombre4 = o['pic4nombre'];
+							x += "<option data-img-src='" + src1 + "' value='1' data-img-class='selectimage1' >"+nombre1+"</option>";
+							x += "<option data-img-src='" + src2 + "' value='2' data-img-class='selectimage1' >"+nombre2+"</option>";
+							x += "<option data-img-src='" + src3 + "' value='3' data-img-class='selectimage1' >"+nombre3+"</option>";
+							x += "<option data-img-src='" + src4 + "' value='4' data-img-class='selectimage1' >"+nombre4+"</option>";
+						});
+						$("#selectvistaAltern").append(x);
+						$("#selectvistaAltern").imagepicker({show_label: true});
+					});
+					$("#modalVista2").modal("show");
+				});
 
+				$("#tbodyactividades").on("click", "#Vista", function (e) {
+					e.preventDefault();
+					$("#selectvistaOracion").empty();
+					var id = $(this).val();
+					$.ajax({
+						url: "<?php echo site_url()?>/GVA",
+						type: "POST",
+						datatype: "json",
+						data: {
+							"Id": id
+						}
+					}).done(function (obj) {
+						//console.log(obj);
+						var x = "";
+						$.each(JSON.parse(obj), function (i, o) {
+							console.log(i);
+							var src = "<?php echo base_url(); ?>" + o[0].img;
+							x += "<option data-img-src='" + src + "' value='"+i+"' data-img-class='selectimage1 ' >"+i+"</option>";
+						});
+						$("#selectvistaOracion").append(x);
+						$("#selectvistaOracion").imagepicker();
+					});
+					$("#modalVista1").modal("show");
+				});
 
 			});
 

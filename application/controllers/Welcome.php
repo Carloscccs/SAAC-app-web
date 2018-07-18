@@ -163,25 +163,30 @@ class Welcome extends CI_Controller {
     }
 
     function getActividades(){
-        $Res = $this->GestionModel->ObtenerActividades()->Result();
-        $vistas = array();
-        foreach ($Res as $row) {
-            $vistarutas = array();
-            $arrjson = json_decode($row->PicsVista,true);
-            for ($i=0; $i < count($arrjson); $i++) {
-                $n = $i + 1; 
-                $ruta = $this->GestionModel->ObtenerRutaPictograma($arrjson['pic'.$n]);
-                $vistarutas[] = $ruta;
-            }
-            $vistas = ["IdActividad"=> $row->Id,"Vista" => $vistarutas];
+        echo json_encode($this->GestionModel->ObtenerActividades()->Result());
+    }
+
+    function getVistaActividad(){
+        $idActividad = $this->input->post("Id");
+        $vistasjson = $this->GestionModel->ObtenerVistaActividad($idActividad)->Result();
+        $arrjson = json_decode($vistasjson[0]->PicsVista, true);
+        $vistarutas = array();
+        for ($i=0; $i < count($arrjson); $i++) { 
+            $n = $i + 1;
+            $ruta = $this->GestionModel->ObtenerRutaPictograma($arrjson['pic'.$n]);
+            $vistarutas[] = $ruta;
         }
-        $Res[] = ["Vistas" => $vistas];
-        echo json_encode($Res);
+        echo json_encode($vistarutas);
     }
 
     public function cerrarSesion() {
         $this->GestionModel->cerrarSesion();
     }
 
+    function getRespuestasActividad(){
+        $idActividad = $this->input->post("Id");
+        $res = $this->GestionModel->ObtenerRespuestasActividad(1)->Result();
+        echo json_encode($res);
+    }
 
 }

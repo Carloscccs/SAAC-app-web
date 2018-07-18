@@ -115,16 +115,28 @@ class gestionModel extends CI_Model {
     }
 
     function ObtenerActividades(){
-        $this->db->select("a.idActividad as 'Id',a.oracion as 'Oracion',
-        COLUMN_JSON(a.PicsVista) as 'PicsVista',
-        p1.nombre as 'pic1nombre',
+        $this->db->select("idActividad,Oracion");
+        $this->db->from("actividad");
+        return $this->db->get();
+    }
+
+    function ObtenerVistaActividad($idActividad){
+        $this->db->select("COLUMN_JSON(PicsVista) as 'PicsVista'");
+        $this->db->from("actividad");
+        $this->db->where("idActividad",$idActividad);
+        return $this->db->get();
+    }
+
+    function ObtenerRespuestasActividad($idActividad){
+        $this->db->select("p1.nombre as 'pic1nombre',
         p1.img as 'pic1',
         p2.nombre as 'pic2nombre',
         p2.img as 'pic2',
         p3.nombre as 'pic3nombre',
         p3.img as 'pic3',
         p4.nombre as 'pic4nombre',
-        p4.img as 'pic4'");
+        p4.img as 'pic4',
+        a.PosRespuesta");
         $this->db->from("actividad a");
         $this->db->join("pictograma p1","p1.idPictograma = a.idPic1");
         $this->db->join("pictograma p2","p2.idPictograma = a.idPic2");
