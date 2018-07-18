@@ -12,6 +12,11 @@ class gestionModel extends CI_Model {
         $this->db->where("Clave",$Clave);
         return $this->db->get();
     }
+    function ConsultaDocenteAdministrador(){
+        $this->db->select("*");
+        $this->db->from("Docente");
+        return $this->db->get()->result();
+    }
 
     function ConsultaCurso($Rut){
         $this->db->select("*");
@@ -26,9 +31,20 @@ class gestionModel extends CI_Model {
         return $this->db->get()->result();
     }
 
+    function ConsultarAlumnoAdministrador(){
+        $this->db->select("Rut, Nombre, Edad, Descripcion, Estado");
+        $this->db->from("alumno");
+        return $this->db->get()->result();
+    }
+
     function ConsultarCategorias(){
         $this->db->select("*");
         $this->db->from("Categoria");
+        return $this->db->get()->result();
+    }
+    function ConsultarCursos(){
+        $this->db->select("idCurso, Nombre");
+        $this->db->from("curso");
         return $this->db->get()->result();
     }
 
@@ -36,6 +52,12 @@ class gestionModel extends CI_Model {
         $this->db->select("*");
         $this->db->from("Pictograma");
         $this->db->where("idCategoria",$id);
+        return $this->db->get()->result();
+    }
+    function ObtenerAlumnoCurso($id){
+        $this->db->select("*");
+        $this->db->from("Alumno");
+        $this->db->where("idCurso",$id);
         return $this->db->get()->result();
     }
 
@@ -89,6 +111,17 @@ class gestionModel extends CI_Model {
         }
         return $respuesta;
     }
+    function EliminarProfesor($rut){
+        $this->db->where("Rut",$rut);
+        $this->db->set("Estado","Inactivo");
+        $respuesta = "Error inesperado";
+        if($this->db->update("docente")){
+            $respuesta = "Usuario Inactivo";
+        }else{
+            $respuesta = "Error al eliminar usuario";
+        }
+        return $respuesta;
+    }
     function ActualizarAlumno($rut,$nombre,$edad,$descripcion,$estado,$curso){
         $this->db->where("Rut",$rut);
         $datos = array(
@@ -107,4 +140,19 @@ class gestionModel extends CI_Model {
         return $respuesta;
     }
 
+    function ActualizarProfesor($rut,$nombre,$descripcion,$estado){
+        $this->db->where("Rut",$rut);
+        $datos = array(
+            "Nombre"=>$nombre,
+            "Descripcion"=>$descripcion,
+            "Estado"=>$estado
+        );
+        $respuesta = "error inesperado";
+        if($this->db->update("docente",$datos)){
+            $respuesta = "Docente Modificado";
+        }else{
+            $respuesta = "Error al modificar el alumno";
+        }
+        return $respuesta;
+    }
 }

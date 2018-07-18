@@ -28,12 +28,31 @@ class Welcome extends CI_Controller {
         }
         
     }
+    public function CargarVistaReportesAdministrador(){
+        if($this->session->userdata("logged_in")){
+            $data['Rut'] = $this->session->userdata('Rut');
+            $data['Curso'] = $this->session->userdata("NombreCurso");
+            $this->load->view('VistaDocenteReportesAdministrador',$data);
+        }else{
+            $this->load->view('VistaLogin');
+        }
+        
+    }
 
     public function CargarVistaAlumnos(){
         if($this->session->userdata("logged_in")){
             $data['Rut'] = $this->session->userdata('Rut');
             $data['Curso'] = $this->session->userdata("NombreCurso");
             $this->load->view('VistaDocenteAlumnos',$data);
+        }else{
+            $this->load->view('VistaLogin');
+        }
+    }
+    public function CargarVistaAlumnosAdministrador(){
+        if($this->session->userdata("logged_in")){
+            $data['Rut'] = $this->session->userdata('Rut');
+            $data['Curso'] = $this->session->userdata("NombreCurso");
+            $this->load->view('VistaDocenteAlumnosAdministrador',$data);
         }else{
             $this->load->view('VistaLogin');
         }
@@ -48,23 +67,53 @@ class Welcome extends CI_Controller {
             $this->load->view('VistaLogin');
         }
     }
+    public function CargarVistaContenidosAdministrador(){
+        if($this->session->userdata("logged_in")){
+            $data['Rut'] = $this->session->userdata('Rut');
+            $data['Curso'] = $this->session->userdata("NombreCurso");
+            $this->load->view('VistaDocenteContenidosAdministrador',$data);
+        }else{
+            $this->load->view('VistaLogin');
+        }
+    }
     function CargarAlumnos(){
         echo json_encode($this->GestionModel->ConsultarAlumno($this->session->userdata("idCurso")));
+    }
+    function CargarAlumnosAdministrador(){
+        echo json_encode($this->GestionModel->ConsultarAlumnoAdministrador());
+    }
+    function CargarDocenteAdministrador(){
+        echo json_encode($this->GestionModel->ConsultaDocenteAdministrador());
     }
     function EliminarAlumno(){
         $rut = $this->input->post("rut");
         echo json_encode($this->GestionModel->EliminarAlumno($rut));
-
     }
+
+    function EliminarProfesor(){
+        $rut = $this->input->post("rut");
+        echo json_encode($this->GestionModel->EliminarProfesor($rut));
+    }
+
     function ActualizarAlumno(){
         $rut = $this->input->post("rut");
         $nombre = $this->input->post("nombre");
         $edad = $this->input->post("edad");
         $descripcion = $this->input->post("descripcion");
         $estado = $this->input->post("estado");
-        $curso = $this->session->userdata("idCurso");
+        $curso = $this->input->post("idCurso");
 
         echo json_encode($this->GestionModel->ActualizarAlumno($rut, $nombre, $edad, $descripcion, $estado, $curso));
+    }
+
+    function ActualizarProfesor(){
+        $rut = $this->input->post("rut");
+        $nombre = $this->input->post("nombre");
+        $descripcion = $this->input->post("descripcion");
+        $estado = $this->input->post("estado");
+        
+
+        echo json_encode($this->GestionModel->ActualizarProfesor($rut, $nombre, $descripcion, $estado));
     }
     function IngresarAlumnos(){
         $rut = $this->input->post("rut");
@@ -72,7 +121,7 @@ class Welcome extends CI_Controller {
         $edad = $this->input->post("edad");
         $descripcion = $this->input->post("descripcion");
         $estado = $this->input->post("estado");
-        $curso = $this->session->userdata("idCurso");
+        $curso = $this->input->post("idCurso");
 
         echo json_encode($this->GestionModel->IngresarAlumno($rut,$nombre,$edad,$descripcion,$estado,$curso));
             $data['Rut'] = $this->session->userdata('Rut');
@@ -121,13 +170,13 @@ class Welcome extends CI_Controller {
             $data['Rut'] = $this->session->userdata('Rut');
             $data['Curso'] = $this->session->userdata("NombreCurso");
             //Carga la vista del Administrador descomentar
-            //if ($Estado='Administrador') {
-            //$this->load->view("VistaDocenteAlumnosAdministrador", $data);
-            //}else{
+            if ($Estado == 100) {
+            $this->load->view("VistaDocenteAlumnosAdministrador", $data);
+            }else{
                 //Cargar vista docente
             $this->load->view("VistaDocenteAlumnos",$data);
             
-        //}
+        }
         }else{
             //Manda un mensaje y vuelve a cargar la vista de login
             $data['error'] = "Datos incorrectos o no existen";
@@ -138,10 +187,17 @@ class Welcome extends CI_Controller {
     public function GetCategorias(){
         echo json_encode($this->GestionModel->ConsultarCategorias());
     }
+    public function GetCurso(){
+        echo json_encode($this->GestionModel->ConsultarCursos());
+    }
 
     public function GetPictogramasCategoria(){
         $idCategoria = $this->input->post("id");
         echo json_encode($this->GestionModel->ObtenerPictogramasCategoria($idCategoria));
+    }
+    public function GetAlumnoCurso(){
+        $idCurso = $this->input->post("id");
+        echo json_encode($this->GestionModel->ObtenerAlumnoCurso($idCurso));
     }
 
     public function AgregarPictograma(){
