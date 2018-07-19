@@ -87,7 +87,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									</button>
 								</div>
 							</div>
-							<div class="row"><p></p></div>
+							<div class="row">
+								<p></p>
+							</div>
 							<div class="row">
 								<div class="col-12">
 									<table class="table table-bordered">
@@ -145,25 +147,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<div class="modal-body">
 						<div class="container">
 							<div class="form-group">
-								<div class="row">
+								<div class="col-12">
 									<label for="txtOracion">Oracion</label>
-									<input type="text" class="form-control" id="txtOracion" placeholder="Nombre">
+									<input type="text" class="form-control" id="txtOracion" placeholder="Ingrese la oracion">
 								</div>
 							</div>
 							<div class="form-group">
-								<div class="row">
+								<div class="col-12">
 									<label for="txtbuspict">Pictograma</label>
-									<input type="text" class="form-control" id="txtbuspict" placeholder="Nombre picto">
+									<input type="text" class="form-control" id="txtbuspict" placeholder="busque los pictogramas">
 								</div>
-								<div class="row">
+								<div class="col-12">
 									<div class="col-3 offset-9">
-										<br>
-										<button class="btn btn-secondary">Agregar</button>
+										<p></p>
+										<button class="btn btn-secondary" id="btnAgregaraSelect">Agregar</button>
+										<p></p>
 									</div>
 								</div>
-								<div class="row">
-									<br>
-									<select id="selectCreaVista" size="6"></select>
+								<div class="col-12">
+									<select id="selectCreaVista" size="6" style="width:100%;"></select>
 								</div>
 							</div>
 						</div>
@@ -189,7 +191,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-success">Agregar</button>
+						<button type="button" class="btn btn-success" id="btnAgregarActividad">Agregar</button>
 					</div>
 				</div>
 			</div>
@@ -641,6 +643,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					autocomplete(document.getElementById("txtPic3"));
 					autocomplete(document.getElementById("txtPic4"));
 					$('#AgregarActividad').modal('show');
+				});
+
+				$("#btnAgregaraSelect").click(function () {
+					var picto = $("#txtbuspict").val();
+					var x = "";
+					$.each(infopic, function (i, o) {
+						var nombre = o.Nombre;
+						if (nombre == picto)
+							x += "<option value='" + o.idPictograma + "' >" + o.Nombre + "</option>";
+					});
+					$("#selectCreaVista").append(x);
+				});
+
+				$("#btnAgregarActividad").click(function () {
+					var oracion = $("#txtOracion").val();
+					var selectPictog = $.map($('#selectCreaVista option'), function(e) { return e.value; });
+					console.log(selectPictog);
+					var nompic1 = $("#txtPic1").val();
+					var nompic2 = $("#txtPic2").val();
+					var nompic3 = $("#txtPic3").val();
+					var nompic4 = $("#txtPic4").val();
+					if (oracion.length > 0 && selectPictog != [] && nompic1.length > 0 && nompic2.length > 0 && nompic3.length >
+						0 &&
+						nompic4.length > 0) {
+						console.log("ENTRA");
+					} else {
+						console.log("NO ENTRA");
+					}
 				});
 
 			});
