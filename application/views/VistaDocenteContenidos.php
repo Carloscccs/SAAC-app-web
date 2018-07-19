@@ -81,8 +81,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<div class="tab-content" id="pills-tabContent">
 						<div class="tab-pane fade show active" id="pills-Actividades" role="tabpanel" aria-labelledby="pills-home-tab">
 							<div class="row">
-
+								<div class="col-3 offset-9">
+									<button type="button" class="btn btn-primary" data-toggle="modal" id="btnModalAgregarAct">
+										Agregar actividad
+									</button>
+								</div>
 							</div>
+							<div class="row"><p></p></div>
 							<div class="row">
 								<div class="col-12">
 									<table class="table table-bordered">
@@ -126,6 +131,69 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				</div>
 			</div>
 		</main>
+
+		<!-- Modal -->
+		<div class="modal fade" id="AgregarActividad" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel1">Agregar actividad</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="container">
+							<div class="form-group">
+								<div class="row">
+									<label for="txtOracion">Oracion</label>
+									<input type="text" class="form-control" id="txtOracion" placeholder="Nombre">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="row">
+									<label for="txtbuspict">Pictograma</label>
+									<input type="text" class="form-control" id="txtbuspict" placeholder="Nombre picto">
+								</div>
+								<div class="row">
+									<div class="col-3 offset-9">
+										<br>
+										<button class="btn btn-secondary">Agregar</button>
+									</div>
+								</div>
+								<div class="row">
+									<br>
+									<select id="selectCreaVista" size="6"></select>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-3">
+									<label for="txtPic1">Opcion 1</label>
+									<input type="text" class="form-control" id="txtPic1" placeholder="opcion 1">
+								</div>
+								<div class="col-3">
+									<label for="txtPic2">Opcion 2</label>
+									<input type="text" class="form-control" id="txtPic2" placeholder="opcion 2">
+								</div>
+								<div class="col-3">
+									<label for="txtPic3">Opcion 3</label>
+									<input type="text" class="form-control" id="txtPic3" placeholder="opcion 3">
+								</div>
+								<div class="col-3">
+									<label for="txtPic1">Opcion 4</label>
+									<input type="text" class="form-control" id="txtPic4" placeholder="opcion 4">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-success">Agregar</button>
+					</div>
+				</div>
+			</div>
+		</div>
 
 		<!-- Modal -->
 		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -195,7 +263,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</button>
 					</div>
 					<div class="modal-body">
-					<select id="selectvistaOracion"></select>
+						<select id="selectvistaOracion"></select>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -214,7 +282,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</button>
 					</div>
 					<div class="modal-body">
-					<select id="selectvistaAltern"></select>
+						<select id="selectvistaAltern"></select>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -236,12 +304,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<script src="<?php echo base_url();?>lib/js/image-picker.min.js"></script>
 		<script>
 			$(function () {
-				CargarPictogramasCategoria();
+				CargarArrays();
 				CargarActividades();
+				CargarPictogramasCategoria();
 				$("#selectvistaOracion").imagepicker({
 					hide_select: false
 				});
 				var IMGB64 = "data:image/jpeg;base64,";
+				var nombresP = [];
+				var infopic = [];
 
 
 				function CargarPictogramasCategoria() {
@@ -405,13 +476,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							var nombre2 = o['pic2nombre'];
 							var nombre3 = o['pic3nombre'];
 							var nombre4 = o['pic4nombre'];
-							x += "<option data-img-src='" + src1 + "' value='1' data-img-class='selectimage1' >"+nombre1+"</option>";
-							x += "<option data-img-src='" + src2 + "' value='2' data-img-class='selectimage1' >"+nombre2+"</option>";
-							x += "<option data-img-src='" + src3 + "' value='3' data-img-class='selectimage1' >"+nombre3+"</option>";
-							x += "<option data-img-src='" + src4 + "' value='4' data-img-class='selectimage1' >"+nombre4+"</option>";
+							x += "<option data-img-src='" + src1 + "' value='1' data-img-class='selectimage1' >" + nombre1 +
+								"</option>";
+							x += "<option data-img-src='" + src2 + "' value='2' data-img-class='selectimage1' >" + nombre2 +
+								"</option>";
+							x += "<option data-img-src='" + src3 + "' value='3' data-img-class='selectimage1' >" + nombre3 +
+								"</option>";
+							x += "<option data-img-src='" + src4 + "' value='4' data-img-class='selectimage1' >" + nombre4 +
+								"</option>";
 						});
 						$("#selectvistaAltern").append(x);
-						$("#selectvistaAltern").imagepicker({show_label: true});
+						$("#selectvistaAltern").imagepicker({
+							show_label: true
+						});
 					});
 					$("#modalVista2").modal("show");
 				});
@@ -433,12 +510,137 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						$.each(JSON.parse(obj), function (i, o) {
 							console.log(i);
 							var src = "<?php echo base_url(); ?>" + o[0].img;
-							x += "<option data-img-src='" + src + "' value='"+i+"' data-img-class='selectimage1 ' >"+i+"</option>";
+							x += "<option data-img-src='" + src + "' value='" + i + "' data-img-class='selectimage1 ' >" + i +
+								"</option>";
 						});
 						$("#selectvistaOracion").append(x);
 						$("#selectvistaOracion").imagepicker();
 					});
 					$("#modalVista1").modal("show");
+				});
+
+				function CargarArrays() {
+					var url = "<?php echo site_url(); ?>/GIP";
+					$.getJSON(url, function (res) {
+						$.each(res, function (i, o) {
+							nombresP[i] = o.Nombre;
+							infopic[i] = o;
+
+						});
+					});
+				}
+
+				function autocomplete(inp) {
+					var arr = nombresP;
+					console.log(arr);
+					/*the autocomplete function takes two arguments,
+					the text field element and an array of possible autocompleted values:*/
+					var currentFocus;
+					/*execute a function when someone writes in the text field:*/
+					inp.addEventListener("input", function (e) {
+						var a, b, i, val = this.value;
+						/*close any already open lists of autocompleted values*/
+						closeAllLists();
+						if (!val) {
+							return false;
+						}
+						currentFocus = -1;
+						/*create a DIV element that will contain the items (values):*/
+						a = document.createElement("DIV");
+						a.setAttribute("id", this.id + "autocomplete-list");
+						a.setAttribute("class", "autocomplete-items");
+						/*append the DIV element as a child of the autocomplete container:*/
+						this.parentNode.appendChild(a);
+						/*for each item in the array...*/
+						for (i = 0; i < arr.length; i++) {
+							/*check if the item starts with the same letters as the text field value:*/
+							if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+								/*create a DIV element for each matching element:*/
+								b = document.createElement("DIV");
+								/*make the matching letters bold:*/
+								b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+								b.innerHTML += arr[i].substr(val.length);
+								/*insert a input field that will hold the current array item's value:*/
+								b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+								/*execute a function when someone clicks on the item value (DIV element):*/
+								b.addEventListener("click", function (e) {
+									/*insert the value for the autocomplete text field:*/
+									inp.value = this.getElementsByTagName("input")[0].value;
+									/*close the list of autocompleted values,
+									(or any other open lists of autocompleted values:*/
+									closeAllLists();
+								});
+								a.appendChild(b);
+							}
+						}
+					});
+					/*execute a function presses a key on the keyboard:*/
+					inp.addEventListener("keydown", function (e) {
+						var x = document.getElementById(this.id + "autocomplete-list");
+						if (x) x = x.getElementsByTagName("div");
+						if (e.keyCode == 40) {
+							/*If the arrow DOWN key is pressed,
+							increase the currentFocus variable:*/
+							currentFocus++;
+							/*and and make the current item more visible:*/
+							addActive(x);
+						} else if (e.keyCode == 38) { //up
+							/*If the arrow UP key is pressed,
+							decrease the currentFocus variable:*/
+							currentFocus--;
+							/*and and make the current item more visible:*/
+							addActive(x);
+						} else if (e.keyCode == 13) {
+							/*If the ENTER key is pressed, prevent the form from being submitted,*/
+							e.preventDefault();
+							if (currentFocus > -1) {
+								/*and simulate a click on the "active" item:*/
+								if (x) x[currentFocus].click();
+							}
+						}
+					});
+
+					function addActive(x) {
+						/*a function to classify an item as "active":*/
+						if (!x) return false;
+						/*start by removing the "active" class on all items:*/
+						removeActive(x);
+						if (currentFocus >= x.length) currentFocus = 0;
+						if (currentFocus < 0) currentFocus = (x.length - 1);
+						/*add class "autocomplete-active":*/
+						x[currentFocus].classList.add("autocomplete-active");
+					}
+
+					function removeActive(x) {
+						/*a function to remove the "active" class from all autocomplete items:*/
+						for (var i = 0; i < x.length; i++) {
+							x[i].classList.remove("autocomplete-active");
+						}
+					}
+
+					function closeAllLists(elmnt) {
+						/*close all autocomplete lists in the document,
+						except the one passed as an argument:*/
+						var x = document.getElementsByClassName("autocomplete-items");
+						for (var i = 0; i < x.length; i++) {
+							if (elmnt != x[i] && elmnt != inp) {
+								x[i].parentNode.removeChild(x[i]);
+							}
+						}
+					}
+					/*execute a function when someone clicks in the document:*/
+					document.addEventListener("click", function (e) {
+						closeAllLists(e.target);
+					});
+				}
+
+				$("#btnModalAgregarAct").click(function () {
+					autocomplete(document.getElementById("txtbuspict"));
+					autocomplete(document.getElementById("txtPic1"));
+					autocomplete(document.getElementById("txtPic2"));
+					autocomplete(document.getElementById("txtPic3"));
+					autocomplete(document.getElementById("txtPic4"));
+					$('#AgregarActividad').modal('show');
 				});
 
 			});

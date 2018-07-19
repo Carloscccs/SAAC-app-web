@@ -189,4 +189,9 @@ class Welcome extends CI_Controller {
         echo json_encode($res);
     }
 
+    function getInfoPictogramas(){
+        $res = $this->GestionModel->ObtenerInfoPictoramas()->Result();
+        echo json_encode($res);
+    }
+
 }

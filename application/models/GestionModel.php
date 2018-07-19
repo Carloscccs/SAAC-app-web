@@ -145,4 +145,10 @@ class gestionModel extends CI_Model {
         return $this->db->get();
     }
 
+    function ObtenerInfoPictoramas(){
+        $this->db->select("idPictograma,Nombre");
+        $this->db->from("pictograma");
+        return $this->db->get();
+    }
+
 }

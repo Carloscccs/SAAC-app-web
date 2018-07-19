@@ -68,3 +68,4 @@ $route['ActualizarAlumno']= 'welcome/ActualizarAlumno';
 $route['GA'] = 'welcome/getActividades';
 $route['GVA'] = 'welcome/getVistaActividad';
 $route['GRA'] = 'welcome/getRespuestasActividad';
+$route['GIP'] = 'welcome/getInfoPictogramas';
