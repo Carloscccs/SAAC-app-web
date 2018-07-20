@@ -141,12 +141,75 @@ class Welcome extends CI_Controller {
         $Descripcion = $this->input->post("Descripcion");
         $Ejemplo = $this->input->post("Ejemplo");
         $Tags = $this->input->post("Tags");
-        $imgB64 = $this->input->post("imgB64");
-        $idCategoria = $this->input->post("idCategoria");
-        echo json_encode($this->GestionModel->AgregarPictograma($Nombre,$Descripcion,$Ejemplo,$Tags,$imgB64,$idCategoria));
+        $idCategoria = $this->input->post("Categoria");
+        $config['upload_path'] = './Pictograma/';
+        $config['allowed_types'] = 'gif|jpg|png';
+        $config['max_size'] = 2048;
+        $config['file_name'] = $Nombre;
+        $this->load->library('upload', $config);
+        if (!$this->upload->do_upload('Imagen')) { #Aquí me refiero a "foto", el nombre que pusimos en FormData
+            $error = array('error' => $this->upload->display_errors());
+            echo json_encode($error);
+        } else {
+            $UpImgName = $this->upload->data('file_name');
+            $ImgRuta = "Pictograma/".$UpImgName;
+            $resultado = $this->GestionModel->AgregarPictograma($Nombre,$Descripcion,$Ejemplo,$Tags,$ImgRuta,$idCategoria);
+            echo json_encode($resultado);
+        }
+        /*
+        
+        */
+    }
+
+    function getActividades(){
+        echo json_encode($this->GestionModel->ObtenerActividades()->Result());
+    }
+
+    function getVistaActividad(){
+        $idActividad = $this->input->post("Id");
+        $vistasjson = $this->GestionModel->ObtenerVistaActividad($idActividad)->Result();
+        $arrjson = json_decode($vistasjson[0]->PicsVista, true);
+        $vistarutas = array();
+        for ($i=0; $i < count($arrjson); $i++) { 
+            $n = $i + 1;
+            $ruta = $this->GestionModel->ObtenerRutaPictograma($arrjson['pic'.$n]);
+            $vistarutas[] = $ruta;
+        }
+        echo json_encode($vistarutas);
     }
 
     public function cerrarSesion() {
         $this->GestionModel->cerrarSesion();
     }
+
+    function getRespuestasActividad(){
+        $idActividad = $this->input->post("Id");
+        $res = $this->GestionModel->ObtenerRespuestasActividad($idActividad)->Result();
+        echo json_encode($res);
+    }
+
+    function getInfoPictogramas(){
+        $res = $this->GestionModel->ObtenerInfoPictoramas()->Result();
+        echo json_encode($res);
+    }
+
+    function AgregarActividad(){
+        $Oracion = $this->input->post("oracion");
+        $vistaarr = $this->input->post("vistarr");
+        $Pic1 = $this->input->post("pic1");
+        $Pic2 = $this->input->post("pic2");
+        $Pic3 = $this->input->post("pic3");
+        $Pic4 = $this->input->post("pic4");
+        $PosRes = $this->input->post("PosRes");
+        $vistadecode = json_decode($vistaarr);
+        $res = $this->GestionModel->AgregarActividad($Oracion,$vistadecode,$Pic1,$Pic2,$Pic3,$Pic4,$PosRes);
+        echo json_encode($res);
+    }
+
+    function DeshabilitarActividadE(){
+        $id = $this->input->post("id");
+        $res = $this->GestionModel->DeshabilitarActividad($id);
+        echo json_encode($res);
+    }
+
 }
