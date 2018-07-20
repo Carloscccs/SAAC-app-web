@@ -7,20 +7,20 @@ class gestionModel extends CI_Model {
     
     function ConsultaDocente($Rut,$Clave){
         $this->db->select("*");
-        $this->db->from("Docente");
+        $this->db->from("docente");
         $this->db->where("Rut",$Rut);
         $this->db->where("Clave",$Clave);
         return $this->db->get();
     }
     function ConsultaDocenteAdministrador(){
         $this->db->select("*");
-        $this->db->from("Docente");
+        $this->db->from("docente");
         $this->db->where("Nombre !=","administrador");
         return $this->db->get()->result();
     }
     function ConsultaDocenteAdministradorSe(){
         $this->db->select("Rut, Nombre");
-        $this->db->from("Docente");
+        $this->db->from("docente");
         $this->db->where("Nombre !=", "administrador");
         return $this->db->get()->result();
     }
@@ -33,7 +33,7 @@ class gestionModel extends CI_Model {
 
     function ConsultaCurso($Rut){
         $this->db->select("*");
-        $this->db->from("Curso");
+        $this->db->from("curso");
         $this->db->where("RutDocente",$Rut);
         return $this->db->get();
     }
@@ -52,6 +52,7 @@ class gestionModel extends CI_Model {
         $this->db->select("Rut, Nombre, Edad, Descripcion, Estado");
         $this->db->from("alumno");
         $this->db->where("idCurso",$Curso);
+        $this->db->where("Estado !=","Inactivo");
         return $this->db->get()->result();
     }
 
@@ -63,7 +64,7 @@ class gestionModel extends CI_Model {
 
     function ConsultarCategorias(){
         $this->db->select("*");
-        $this->db->from("Categoria");
+        $this->db->from("categoria");
         return $this->db->get()->result();
     }
     function ConsultarCursos(){
@@ -87,13 +88,13 @@ function ConsultaCursoAdministrador(){
     }
     function ObtenerPictogramasCategoria($id){
         $this->db->select("*");
-        $this->db->from("Pictograma");
+        $this->db->from("pictograma");
         $this->db->where("idCategoria",$id);
         return $this->db->get()->result();
     }
     function ObtenerAlumnoCurso($id){
         $this->db->select("*");
-        $this->db->from("Alumno");
+        $this->db->from("alumno");
         $this->db->where("idCurso",$id);
         return $this->db->get()->result();
     }
@@ -108,7 +109,7 @@ function ConsultaCursoAdministrador(){
             "idCategoria"=>$idCategoria
         );
         $Respuesta = "Error desconocido";
-        if($this->db->insert("Pictograma",$datos)){
+        if($this->db->insert("pictograma",$datos)){
             $Respuesta = "SI";
         }else{
             $Respuesta = "NO";
@@ -131,7 +132,7 @@ function ConsultaCursoAdministrador(){
              "idCurso"=>$curso
         );
         if($this->db->insert("alumno",$data)){
-            $resultado = "Alumno Igresado";
+            $resultado = "Alumno Ingresado";
         }else{
             $resultado= "Alumno no Ingresado";
         }
@@ -240,7 +241,7 @@ function ConsultaCursoAdministrador(){
   
     function ObtenerRutaPictograma($idPictograma){
         $this->db->select("img");
-        $this->db->from("Pictograma");
+        $this->db->from("pictograma");
         $this->db->where("idPictograma",$idPictograma);
         return $this->db->get()->result();
     }
@@ -317,8 +318,8 @@ function ConsultaCursoAdministrador(){
         if($this->db->simple_query($sql)){
             return "SI";
         }else{
-            //return $this->db->error();
-            return $sql;
+            return $this->db->error();
+            //return $sql;
         }
 
     }

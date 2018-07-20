@@ -449,7 +449,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						});
 
 					} else {
-						MostrarMensaje("No deben de haber campos vacios.", 3000)
+						MostrarMensaje("No deben de haber campos vacios.", 3000);
+                        alert("No deben de haber campos vacios");
 					}
 				});
 
@@ -748,7 +749,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									$("#txtPic3").val("");
 									$("#txtPic4").val("");
 									$("#txtPosRes").val("");
-									$("##selectCreaVista").empty();
+									$("#selectCreaVista").empty();
 									$('#AgregarActividad').modal('hide')
 									MostrarMensaje("Actividad agregada", 3000);
 								}

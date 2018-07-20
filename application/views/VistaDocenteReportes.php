@@ -71,7 +71,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <thead>
               <th scope="col">Tiempo</th>
               <th scope="col">Estado</th>
-              <th scope="col">Activid</th>
+              <th scope="col">Actividad</th>
             </thead>
             <tbody id="TablaContenido"></tbody>
           </table>
