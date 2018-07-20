@@ -454,9 +454,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						MostrarMensaje("No deben de haber campos vacios.", 3000)
 					}
 
-
-				});
-
 				function MostrarMensaje(msg, milisec) {
 					// Get the snackbar DIV
 					var x = document.getElementById("snackbar");
