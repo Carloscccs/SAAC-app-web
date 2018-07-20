@@ -56,6 +56,7 @@ class gestionModel extends CI_Model {
         $this->db->select("Rut, Nombre, Edad, Descripcion, Estado");
         $this->db->from("alumno");
         $this->db->where("idCurso",$Curso);
+        $this->db->where("Estado !=","Inactivo");
         return $this->db->get()->result();
     }
 

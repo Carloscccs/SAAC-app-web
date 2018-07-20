@@ -121,7 +121,7 @@ function BuscarAlumno(){
         $edad = $this->input->post("edad");
         $descripcion = $this->input->post("descripcion");
         $estado = $this->input->post("estado");
-        $curso = $this->input->post("idCurso");
+        $curso = $this->session->userdata('idCurso');
 
         echo json_encode($this->GestionModel->ActualizarAlumno($rut, $nombre, $edad, $descripcion, $estado, $curso));
     }
@@ -148,7 +148,7 @@ function BuscarAlumno(){
         $edad = $this->input->post("edad");
         $descripcion = $this->input->post("descripcion");
         $estado = $this->input->post("estado");
-        $curso = $this->input->post("idCurso");
+        $curso = $this->session->userdata('idCurso');
 
         echo json_encode($this->GestionModel->IngresarAlumno($rut,$nombre,$edad,$descripcion,$estado,$curso));
             $data['Rut'] = $this->session->userdata('Rut');
