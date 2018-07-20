@@ -185,12 +185,25 @@ class Welcome extends CI_Controller {
 
     function getRespuestasActividad(){
         $idActividad = $this->input->post("Id");
-        $res = $this->GestionModel->ObtenerRespuestasActividad(1)->Result();
+        $res = $this->GestionModel->ObtenerRespuestasActividad($idActividad)->Result();
         echo json_encode($res);
     }
 
     function getInfoPictogramas(){
         $res = $this->GestionModel->ObtenerInfoPictoramas()->Result();
+        echo json_encode($res);
+    }
+
+    function AgregarActividad(){
+        $Oracion = $this->input->post("oracion");
+        $vistaarr = $this->input->post("vistarr");
+        $Pic1 = $this->input->post("pic1");
+        $Pic2 = $this->input->post("pic2");
+        $Pic3 = $this->input->post("pic3");
+        $Pic4 = $this->input->post("pic4");
+        $PosRes = $this->input->post("PosRes");
+        $vistadecode = json_decode($vistaarr);
+        $res = $this->GestionModel->AgregarActividad($Oracion,$vistadecode,$Pic1,$Pic2,$Pic3,$Pic4,$PosRes);
         echo json_encode($res);
     }
 

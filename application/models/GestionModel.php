@@ -142,6 +142,7 @@ class gestionModel extends CI_Model {
         $this->db->join("pictograma p2","p2.idPictograma = a.idPic2");
         $this->db->join("pictograma p3","p3.idPictograma = a.idPic3");
         $this->db->join("pictograma p4","p4.idPictograma = a.idPic4");
+        $this->db->where("a.idActividad",$idActividad);
         return $this->db->get();
     }
 
@@ -149,6 +150,45 @@ class gestionModel extends CI_Model {
         $this->db->select("idPictograma,Nombre");
         $this->db->from("pictograma");
         return $this->db->get();
+    }
+
+    function AgregarActividad($oracion,$arrvista,$pic1,$pic2,$pic3,$pic4,$posres){
+        $PicsVista = "COLUMN_CREATE(";
+        for ($i=0; $i < count($arrvista); $i++) { 
+            $a = $i + 1; 
+            if($i == count($arrvista)-1){
+                $PicsVista = $PicsVista."'pic".$a."',".$arrvista[$i].")";
+            }else{
+                $PicsVista = $PicsVista."'pic".$a."',".$arrvista[$i].",";
+            }
+        }
+        $data = array(
+            "Oracion"=>$oracion,
+            "PicsVista"=>$PicsVista,
+            "idPic1"=>$pic1,
+            "idPic2"=>$pic2,
+            "idPic3" =>$pic3,
+            "idPic4"=>$pic4,
+            "PosRespuesta"=>$posres
+        );
+        /*
+        $resultado = "Error: ";
+        if($this->db->insert("actividad",$data)){
+            $resultado = "Si";
+        }else{
+            $resultado= "No";
+        }
+        return $resultado;
+        */
+        $sql = "INSERT into actividad(Oracion,PicsVista,idPic1,idPic2,idPic3,idPic4,PosRespuesta) values ('".$oracion."',".$PicsVista.",'".$pic1."','".$pic2."','".$pic3."','".$pic4."','".$posres."')";
+        // return $sql = $this->db->set($data)->get_compiled_insert('actividad');
+        if($this->db->simple_query($sql)){
+            return "SI";
+        }else{
+            //return $this->db->error();
+            return $sql;
+        }
+
     }
 
 }

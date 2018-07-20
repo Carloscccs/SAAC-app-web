@@ -189,6 +189,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>
 							</div>
 						</div>
+						<div class="form-group">
+							<div class="col-12">
+								<label for="txtPosRes">Posicion de la respuesta</label>
+								<input type="number" min="1" max="4" class="form-control" id="txtPosRes" placeholder="Opcion">
+							</div>
+						</div>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-success" id="btnAgregarActividad">Agregar</button>
@@ -466,7 +472,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							"Id": id
 						}
 					}).done(function (obj) {
-						console.log(obj);
 						var x = "";
 						$.each(JSON.parse(obj), function (i, o) {
 							//console.log(i);
@@ -510,7 +515,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						//console.log(obj);
 						var x = "";
 						$.each(JSON.parse(obj), function (i, o) {
-							console.log(i);
 							var src = "<?php echo base_url(); ?>" + o[0].img;
 							x += "<option data-img-src='" + src + "' value='" + i + "' data-img-class='selectimage1 ' >" + i +
 								"</option>";
@@ -658,18 +662,65 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 				$("#btnAgregarActividad").click(function () {
 					var oracion = $("#txtOracion").val();
-					var selectPictog = $.map($('#selectCreaVista option'), function(e) { return e.value; });
-					console.log(selectPictog);
+					var selectPictog = $.map($('#selectCreaVista option'), function (e) {
+						return e.value;
+					});
 					var nompic1 = $("#txtPic1").val();
 					var nompic2 = $("#txtPic2").val();
 					var nompic3 = $("#txtPic3").val();
 					var nompic4 = $("#txtPic4").val();
-					if (oracion.length > 0 && selectPictog != [] && nompic1.length > 0 && nompic2.length > 0 && nompic3.length >
-						0 &&
-						nompic4.length > 0) {
+					var posres = $("#txtPosRes").val();
+					if (oracion.length > 0 && selectPictog != [] && nompic1.length > 0 && nompic2.length > 0 && nompic3.length > 0 &&
+						nompic4.length > 0 && posres.length > 0) {
 						console.log("ENTRA");
+						var pic1 = 0;
+						var pic2 = 0;
+						var pic3 = 0;
+						var pic4 = 0;
+						var encontrados = true;
+						$.each(infopic, function(i,o){
+							var nombre = o.Nombre;
+							if(nombre == nompic1){
+								pic1 = o.idPictograma;
+							}else if(nombre == nompic2){
+								pic2 = o.idPictograma;
+							}else if(nombre == nompic3){
+								pic3 = o.idPictograma;
+							}else if(nombre == nompic4){
+								pic4 = o.idPictograma;
+							}else{
+								//encontrados = false;
+							}
+						});
+						if (posres > 0 && posres <= 4 && encontrados == true) {
+							var jsonVista = JSON.stringify(selectPictog);
+							var formData = new FormData();
+							formData.append("oracion", oracion);
+							formData.append("vistarr", jsonVista);
+							formData.append("pic1", pic1);
+							formData.append("pic2", pic2);
+							formData.append("pic3", pic3);
+							formData.append("pic4", pic4);
+							formData.append("PosRes", posres);
+							$.ajax({
+								url: "<?php echo site_url()?>/AA",
+								data: formData,
+								type: 'POST',
+								contentType: false,
+								processData: false,
+								success: function (resultados) {
+									console.log(resultados);
+									$('#AgregarActividad').modal('hide')
+									MostrarMensaje("Actividad agregada", 4000);
+								}
+
+							});
+						} else {
+							alert("Posicion de respuesta fuera de los valores o nombres de las opciones incorrectos")
+						}
 					} else {
 						console.log("NO ENTRA");
+						MostrarMensaje("Faltan datos", 3000);
 					}
 				});
 
