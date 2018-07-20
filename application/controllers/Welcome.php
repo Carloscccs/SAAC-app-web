@@ -154,6 +154,7 @@ function BuscarAlumno(){
             $data['Rut'] = $this->session->userdata('Rut');
             $data['Curso'] = $this->session->userdata("NombreCurso");
     }
+  
     function IngresarCurso(){
         $nombre = $this->input->post("nombre");
         $descripcion = $this->input->post("descripcion");
@@ -165,6 +166,7 @@ function BuscarAlumno(){
             $data['Rut'] = $this->session->userdata('Rut');
             $data['Curso'] = $this->session->userdata("NombreCurso");
     }
+  
 	function validaUsuario(){
         //Recibe los datos del formulario
         $usuario = $this->input->post("rut");
@@ -267,9 +269,55 @@ function BuscarAlumno(){
         */
     }
 
+    function getActividades(){
+        echo json_encode($this->GestionModel->ObtenerActividades()->Result());
+    }
+
+    function getVistaActividad(){
+        $idActividad = $this->input->post("Id");
+        $vistasjson = $this->GestionModel->ObtenerVistaActividad($idActividad)->Result();
+        $arrjson = json_decode($vistasjson[0]->PicsVista, true);
+        $vistarutas = array();
+        for ($i=0; $i < count($arrjson); $i++) { 
+            $n = $i + 1;
+            $ruta = $this->GestionModel->ObtenerRutaPictograma($arrjson['pic'.$n]);
+            $vistarutas[] = $ruta;
+        }
+        echo json_encode($vistarutas);
+    }
+
     public function cerrarSesion() {
         $this->GestionModel->cerrarSesion();
     }
 
+    function getRespuestasActividad(){
+        $idActividad = $this->input->post("Id");
+        $res = $this->GestionModel->ObtenerRespuestasActividad($idActividad)->Result();
+        echo json_encode($res);
+    }
+
+    function getInfoPictogramas(){
+        $res = $this->GestionModel->ObtenerInfoPictoramas()->Result();
+        echo json_encode($res);
+    }
+
+    function AgregarActividad(){
+        $Oracion = $this->input->post("oracion");
+        $vistaarr = $this->input->post("vistarr");
+        $Pic1 = $this->input->post("pic1");
+        $Pic2 = $this->input->post("pic2");
+        $Pic3 = $this->input->post("pic3");
+        $Pic4 = $this->input->post("pic4");
+        $PosRes = $this->input->post("PosRes");
+        $vistadecode = json_decode($vistaarr);
+        $res = $this->GestionModel->AgregarActividad($Oracion,$vistadecode,$Pic1,$Pic2,$Pic3,$Pic4,$PosRes);
+        echo json_encode($res);
+    }
+
+    function DeshabilitarActividadE(){
+        $id = $this->input->post("id");
+        $res = $this->GestionModel->DeshabilitarActividad($id);
+        echo json_encode($res);
+    }
 
 }
