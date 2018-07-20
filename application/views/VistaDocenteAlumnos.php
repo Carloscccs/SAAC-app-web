@@ -54,6 +54,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="col-5" >
           <h2 id="lbCurso">Curso: <?=$Curso ?></h2>
         </div>
+      </div>
+        <div class="row">
+          <div class="col-5"></div>
       <div class="col-3 offset-4">
         <button id="btnAgregarAlumno" value="" class="btn btn-success" data-toggle="modal" data-target="#InsertAlumnos" >Agregar alumno</button>
 <div id="InsertAlumnos" class="modal fade" role="dialog" tabindex="-1" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
@@ -86,9 +89,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
   </div>
 </div>
-
-
-      </div>
+</div>
+</div>
+      <!-- <div class="col-lg-6">
+    <div class="input-group">
+      <input type="text" class="form-control" id="txtBuscarAlumno" placeholder="Busca por Nombre">
+      <span class="input-group-btn">
+        <button class="btn btn-primary" type="button" id="btnBuscar">Buscar</button>
+      </span>
+    </div>
+  </div>
+-->
       </div>
       <div id="ModalEliminar" class="modal fade" role="dialog" tabindex="-1" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -169,7 +180,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </html>
 <script type="text/javascript">
                  $(function(){
-                  
+
                   cargarUsuarios();
                    function cargarUsuarios() {
                     var url = "<?php echo site_url(); ?>/MostrarAlumnos";
@@ -213,7 +224,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       
                     });
                   });
-
                   $("#TablaAlumnos").on("click", "#Edit", function (e) {
                     e.preventDefault();
                     var datos = $(this).val();
@@ -225,6 +235,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     $("#txtActEstado").val(fila[4]);
                     $("#ModalActualizar").modal("show");
                 });
+                  /*$("#btnBuscar").click(function(){
+                    var letra = $("#txtBuscarAlumno").val();
+
+                    if (letra.length > 0){
+                      $.ajax({
+                        url: "<?php echo site_url()?>/BuscarAlumno",
+                     type: "POST",
+                     datatype: "json",
+                      data: letra
+                      }).done(function(obj){
+                        <?php foreach ($obj as $row): ?>
+                          var x = "<tr><td>"+<?=$row->Rut?>+ "</td>";
+                            x += "<td>" +<?=$row->Nombre?>+ "</td>";
+                            x += "<td>" +<?=$row->Edad?> + "</td>";
+                            x += "<td>" +<?=$row->Descripcion?> + "</td>";
+                            x += "<td>" +<?=$row->Estado?> + "</td>";
+                            x += '<td> <button id="Edit" value="' + <?=$row->Rut?> + "," + <?=$row->Nombre?> + "," + <?=$row->Edad?> + "," + <?=$row->Descripcion?> + "," + <?=$row->Estado?>+'" class="btn btn-warning">Modificar</button>';
+                            x += '<td> <button id="Delete" value="'+<?=$row->Rut?>+'" class="btn btn-danger">Borrar</button></ td></tr>';
+                            $("#TablaAlumnos").append(x);
+                        <?php endforeach ?>
+                      });
+                    }else{
+                      cargarUsuarios();
+                    }
+                  });
+                  */
                    $("#btnIngresar").click(function () {
                     var rut = $("#txtRut").val();
                     var nombre = $("#txtNombre").val();

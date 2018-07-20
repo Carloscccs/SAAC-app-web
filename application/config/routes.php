@@ -83,3 +83,4 @@ $route['EliminarCurso']= 'welcome/EliminarCurso';
 $route['ActualizarAlumno']= 'welcome/ActualizarAlumno';
 $route['ActualizarProfesor']= 'welcome/ActualizarProfesor';
 $route['ActualizarCurso']= 'welcome/ActualizarCurso';
+$route['BuscarAlumno']= 'welcome/BuscarAlumno';

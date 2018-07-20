@@ -102,7 +102,10 @@ class Welcome extends CI_Controller {
         $rut = $this->input->post("rut");
         echo json_encode($this->GestionModel->EliminarAlumno($rut));
     }
-
+function BuscarAlumno(){
+        $letra = $this->input->post("letra");
+        echo json_encode($this->GestionModel->BuscarAlumno($letra));
+    }
     function EliminarProfesor(){
         $rut = $this->input->post("rut");
         echo json_encode($this->GestionModel->EliminarProfesor($rut));

@@ -42,6 +42,10 @@ class gestionModel extends CI_Model {
         $this->db->from("alumno");
         return $this->db->get()->result();
     }
+    function BuscarAlumno($letra){
+         $sql = "SELECT * FROM alumno where Nombre like '%".$letra."%'";
+        return $this->db->get()->result();
+    }
     function ConsultaContenido($rut){
         $this->db->select("Tiempo, Estado, idActividad");
         $this->db->from("actividad_alumno");
