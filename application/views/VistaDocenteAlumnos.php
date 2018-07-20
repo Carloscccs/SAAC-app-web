@@ -63,7 +63,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <h4 class="modal-title" >Ingresar Alumno</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
-      
       <div class="modal-body">
          <label for="IngrRut">Rut</label>
          <input type="text" class="form-control" name="IngrRut" required id="txtRut" placeholder="Rut sin guion ni puntos" onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 0 || event.charCode == 32'>
@@ -231,8 +230,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     var edad = $("#txtEdad").val();
                     var descripcion = $("#txtDescripcion").val();
                     var estado = $("#txtEstado").val();
-                    if (rut.length > 0 && nombre.length > 0 && descripcion.length > 0 && estado.length > 0)
-                    {
+                    if (rut.length > 0 && nombre.length > 0 && descripcion.length > 0 && estado.length > 0){
                     $.ajax({
                      url: "<?php echo site_url()?>/ingrAlumno",
                      type: "POST",
@@ -243,8 +241,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                        "edad": edad,
                        "descripcion": descripcion,
                        "estado": estado
-                      }
-                     }).done(function (obj) {
+                      }}).done(function (obj) {
                       console.log("Petición terminada. Resultado", obj);
                       $("#InsertAlumnos").modal('hide');
                       $("#txtRut").val("");
@@ -254,15 +251,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       $("#txtEstado").val("");
                       MostrarMensaje("Alumno Ingresado", 3000);
                       cargarUsuarios();
-
-                      
                     });
-                  
                   }else{
                     MostrarMensaje("No deben de haber campos vacios.",3000)
                   }
                     });
-                  
+
               $("#btnActualizarSi").click(function () {
                     var rut = $("#txtActRut").val();
                     var nombre = $("#txtActNombre").val();
