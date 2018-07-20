@@ -258,7 +258,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 				</div>
 			</div>
-			<div id="snackbar" style="position: absolute;z-index: 200"></div>
 		</div>
 
 		<div class="modal fade" id="modalVista1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -298,6 +297,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				</div>
 			</div>
 		</div>
+
+		<div class="modal" tabindex="-1" role="dialog" id="modaldeshactividad">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">¿Esta seguro?</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<input type="hidden" id="idActividadDesh">
+						<p>Esta accion
+							<b>NO SE PUEDE DESHACER</b>
+							<p>Los progresos de los alumnos seguiran ahi, pero esta actividad no volvera a aparecer en la aplicacion.</p>
+							<b>¿Desea continuar?</b>
+						</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+						<button type="button" class="btn btn-danger" id="btnDeshActividad">Si</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="snackbar" style="position: absolute;z-index: 200"></div>
 
 
 
@@ -419,6 +444,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								$("#txtTagsPicto").val("");
 								$("#selCatPicto").val(0);
 								$("#filePictoImg").val(null);
+								CargarArrays();
 								$("#selectcategorias").change();
 							}
 
@@ -523,6 +549,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						$("#selectvistaOracion").imagepicker();
 					});
 					$("#modalVista1").modal("show");
+				});
+
+				$("#tbodyactividades").on("click", "#Desah", function (e) {
+					e.preventDefault();
+					var id = $(this).val();
+					$("#idActividadDesh").val(id);
+					$("#modaldeshactividad").modal("show");
 				});
 
 				function CargarArrays() {
@@ -658,6 +691,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							x += "<option value='" + o.idPictograma + "' >" + o.Nombre + "</option>";
 					});
 					$("#selectCreaVista").append(x);
+					$("#txtbuspict").val("");
 				});
 
 				$("#btnAgregarActividad").click(function () {
@@ -678,17 +712,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						var pic3 = 0;
 						var pic4 = 0;
 						var encontrados = true;
-						$.each(infopic, function(i,o){
+						$.each(infopic, function (i, o) {
 							var nombre = o.Nombre;
-							if(nombre == nompic1){
+							if (nombre == nompic1) {
 								pic1 = o.idPictograma;
-							}else if(nombre == nompic2){
+							} else if (nombre == nompic2) {
 								pic2 = o.idPictograma;
-							}else if(nombre == nompic3){
+							} else if (nombre == nompic3) {
 								pic3 = o.idPictograma;
-							}else if(nombre == nompic4){
+							} else if (nombre == nompic4) {
 								pic4 = o.idPictograma;
-							}else{
+							} else {
 								//encontrados = false;
 							}
 						});
@@ -710,8 +744,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								processData: false,
 								success: function (resultados) {
 									console.log(resultados);
+									CargarActividades();
+									$("#txtPic1").val("");
+									$("#txtPic2").val("");
+									$("#txtPic3").val("");
+									$("#txtPic4").val("");
+									$("#txtPosRes").val("");
+									$("##selectCreaVista").empty();
 									$('#AgregarActividad').modal('hide')
-									MostrarMensaje("Actividad agregada", 4000);
+									MostrarMensaje("Actividad agregada", 3000);
 								}
 
 							});
@@ -722,6 +763,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						console.log("NO ENTRA");
 						MostrarMensaje("Faltan datos", 3000);
 					}
+				});
+
+				$("#btnDeshActividad").click(function () {
+					var idOculto = $("#idActividadDesh").val();
+					var formData = new FormData();
+					formData.append("id", idOculto);
+					$.ajax({
+						url: "<?php echo site_url()?>/DA",
+						data: formData,
+						type: 'POST',
+						contentType: false,
+						processData: false,
+						success: function (resultados) {
+							console.log(resultados);
+							CargarActividades();
+							$("#modaldeshactividad").modal("hide");
+							MostrarMensaje("Deshabilitada", 3000);
+						}
+
+					});
 				});
 
 			});

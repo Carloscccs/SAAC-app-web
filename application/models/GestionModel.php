@@ -117,6 +117,7 @@ class gestionModel extends CI_Model {
     function ObtenerActividades(){
         $this->db->select("idActividad,Oracion");
         $this->db->from("actividad");
+        $this->db->where("Estado !=","Inactivo");
         return $this->db->get();
     }
 
@@ -180,7 +181,7 @@ class gestionModel extends CI_Model {
         }
         return $resultado;
         */
-        $sql = "INSERT into actividad(Oracion,PicsVista,idPic1,idPic2,idPic3,idPic4,PosRespuesta) values ('".$oracion."',".$PicsVista.",'".$pic1."','".$pic2."','".$pic3."','".$pic4."','".$posres."')";
+        $sql = "INSERT into actividad(Oracion,PicsVista,idPic1,idPic2,idPic3,idPic4,PosRespuesta,Estado) values ('".$oracion."',".$PicsVista.",'".$pic1."','".$pic2."','".$pic3."','".$pic4."','".$posres."','Activo')";
         // return $sql = $this->db->set($data)->get_compiled_insert('actividad');
         if($this->db->simple_query($sql)){
             return "SI";
@@ -189,6 +190,16 @@ class gestionModel extends CI_Model {
             return $sql;
         }
 
+    }
+
+    function DeshabilitarActividad($id){
+        $this->db->where("idActividad",$id);
+        $datos = array("Estado"=>"Inactivo");
+        if($this->db->update("actividad",$datos)){
+            return "SI";
+        }else{
+            return $this->db->error();
+        }
     }
 
 }

@@ -207,4 +207,10 @@ class Welcome extends CI_Controller {
         echo json_encode($res);
     }
 
+    function DeshabilitarActividadE(){
+        $id = $this->input->post("id");
+        $res = $this->GestionModel->DeshabilitarActividad($id);
+        echo json_encode($res);
+    }
+
 }
