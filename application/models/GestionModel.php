@@ -15,6 +15,19 @@ class gestionModel extends CI_Model {
     function ConsultaDocenteAdministrador(){
         $this->db->select("*");
         $this->db->from("Docente");
+        $this->db->where("Nombre !=","administrador");
+        return $this->db->get()->result();
+    }
+    function ConsultaDocenteAdministradorSe(){
+        $this->db->select("Rut, Nombre");
+        $this->db->from("Docente");
+        $this->db->where("Nombre !=", "administrador");
+        return $this->db->get()->result();
+    }
+    function ConsultaColegioAdministradorSe(){
+        $this->db->select("*");
+        $this->db->from("colegio");
+        $this->db->where("Nombre !=", "administrador");
         return $this->db->get()->result();
     }
 
@@ -23,6 +36,17 @@ class gestionModel extends CI_Model {
         $this->db->from("Curso");
         $this->db->where("RutDocente",$Rut);
         return $this->db->get();
+    }
+    function ConsultaAlumnoContenido(){
+        $this->db->select("Rut, Nombre");
+        $this->db->from("alumno");
+        return $this->db->get()->result();
+    }
+    function ConsultaContenido($rut){
+        $this->db->select("Tiempo, Estado, idActividad");
+        $this->db->from("actividad_alumno");
+        $this->db->where("RutAlumno", $rut);
+        return $this->db->get()->result();
     }
     function ConsultarAlumno($Curso){
         $this->db->select("Rut, Nombre, Edad, Descripcion, Estado");
@@ -45,9 +69,22 @@ class gestionModel extends CI_Model {
     function ConsultarCursos(){
         $this->db->select("idCurso, Nombre");
         $this->db->from("curso");
+        $this->db->where("Nombre !=", "Administrador");
         return $this->db->get()->result();
     }
-
+function ConsultaCursoAdministrador(){
+        $this->db->select("*");
+        $this->db->from("curso");
+        $this->db->where("Nombre !=", "Administrador");
+        return $this->db->get()->result();
+        
+    }
+    function ConsultaColegioAdministrador(){
+        $this->db->select("*");
+        $this->db->from("colegio");
+        $this->db->where("Nombre !=", "Administrador");
+        return $this->db->get()->result();
+    }
     function ObtenerPictogramasCategoria($id){
         $this->db->select("*");
         $this->db->from("Pictograma");
@@ -100,6 +137,21 @@ class gestionModel extends CI_Model {
         }
             return $resultado;
     }
+    function IngresarCurso($nombre,$descripcion,$estado,$profesor,$colegio){
+        $data = array(
+            "Nombre"=>$nombre,
+             "Descripcion"=>$descripcion,
+             "Estado" => $estado,
+             "RutDocente"=>$profesor,
+             "idColegio" => $colegio
+        );
+        if($this->db->insert("curso",$data)){
+            $resultado = "Curso Igresado";
+        }else{
+            $resultado= "Curso no Ingresado";
+        }
+            return $resultado;
+    }
     function EliminarAlumno($rut){
         $this->db->where("Rut",$rut);
         $this->db->set("Estado","Inactivo");
@@ -117,6 +169,17 @@ class gestionModel extends CI_Model {
         $respuesta = "Error inesperado";
         if($this->db->update("docente")){
             $respuesta = "Usuario Inactivo";
+        }else{
+            $respuesta = "Error al eliminar usuario";
+        }
+        return $respuesta;
+    }
+    function EliminarCurso($id){
+        $this->db->where("idCurso",$id);
+        $this->db->set("Estado","Inactivo");
+        $respuesta = "Error inesperado";
+        if($this->db->update("curso")){
+            $respuesta = "Curso Inactivo";
         }else{
             $respuesta = "Error al eliminar usuario";
         }
@@ -152,6 +215,23 @@ class gestionModel extends CI_Model {
             $respuesta = "Docente Modificado";
         }else{
             $respuesta = "Error al modificar el alumno";
+        }
+        return $respuesta;
+    }
+    function ActualizarCurso($id,$nombre,$descripcion,$estado,$profesor,$colegio){
+        $this->db->where("idCurso",$id);
+        $datos = array(
+            "Nombre"=>$nombre,
+            "Descripcion"=>$descripcion,
+            "Estado"=>$estado,
+            "RutDocente"=>$profesor,
+            "idColegio"=>$colegio
+        );
+        $respuesta = "error inesperado";
+        if($this->db->update("curso",$datos)){
+            $respuesta = "curso Modificado";
+        }else{
+            $respuesta = "Error al modificar el curso";
         }
         return $respuesta;
     }

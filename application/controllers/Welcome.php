@@ -85,6 +85,19 @@ class Welcome extends CI_Controller {
     function CargarDocenteAdministrador(){
         echo json_encode($this->GestionModel->ConsultaDocenteAdministrador());
     }
+    function CargarDocenteAdministradorSe(){
+        echo json_encode($this->GestionModel->ConsultaDocenteAdministradorSe());
+    }
+    function CargarColegioAdministradorSe(){
+        echo json_encode($this->GestionModel->ConsultaColegioAdministradorSe());
+    }
+
+    function CargarCursoAdministrador(){
+        echo json_encode($this->GestionModel->ConsultaCursoAdministrador());
+    }
+    function CargarColegioAdministrador(){
+        echo json_encode($this->GestionModel->ConsultaColegioAdministrador());
+    }
     function EliminarAlumno(){
         $rut = $this->input->post("rut");
         echo json_encode($this->GestionModel->EliminarAlumno($rut));
@@ -93,6 +106,10 @@ class Welcome extends CI_Controller {
     function EliminarProfesor(){
         $rut = $this->input->post("rut");
         echo json_encode($this->GestionModel->EliminarProfesor($rut));
+    }
+    function EliminarCurso(){
+        $id = $this->input->post("idCurso");
+        echo json_encode($this->GestionModel->EliminarCurso($id));
     }
 
     function ActualizarAlumno(){
@@ -111,9 +128,16 @@ class Welcome extends CI_Controller {
         $nombre = $this->input->post("nombre");
         $descripcion = $this->input->post("descripcion");
         $estado = $this->input->post("estado");
-        
-
         echo json_encode($this->GestionModel->ActualizarProfesor($rut, $nombre, $descripcion, $estado));
+    }
+    function ActualizarCurso(){
+        $id = $this->input->post("idCurso");
+        $nombre = $this->input->post("nombre");
+        $descripcion = $this->input->post("descripcion");
+        $estado = $this->input->post("estado");
+        $profesor = $this->input->post("RutDocente");
+        $colegio = $this->input->post("idColegio");
+        echo json_encode($this->GestionModel->ActualizarCurso($id, $nombre, $descripcion, $estado,$profesor,$colegio));
     }
     function IngresarAlumnos(){
         $rut = $this->input->post("rut");
@@ -126,9 +150,17 @@ class Welcome extends CI_Controller {
         echo json_encode($this->GestionModel->IngresarAlumno($rut,$nombre,$edad,$descripcion,$estado,$curso));
             $data['Rut'] = $this->session->userdata('Rut');
             $data['Curso'] = $this->session->userdata("NombreCurso");
-            
-        
+    }
+    function IngresarCurso(){
+        $nombre = $this->input->post("nombre");
+        $descripcion = $this->input->post("descripcion");
+        $estado = $this->input->post("estado");
+        $profesor = $this->input->post("profesor");
+        $colegio = $this->input->post("colegio");
 
+        echo json_encode($this->GestionModel->IngresarCurso($nombre,$descripcion,$estado,$profesor,$colegio));
+            $data['Rut'] = $this->session->userdata('Rut');
+            $data['Curso'] = $this->session->userdata("NombreCurso");
     }
 	function validaUsuario(){
         //Recibe los datos del formulario
@@ -189,6 +221,13 @@ class Welcome extends CI_Controller {
     }
     public function GetCurso(){
         echo json_encode($this->GestionModel->ConsultarCursos());
+    }
+    public function GetAlumnos(){
+        echo json_encode($this->GestionModel->ConsultaAlumnoContenido());
+    }
+    public function GetContenido(){
+        $rut = $this->input->post("Rut");
+        echo json_encode($this->GestionModel->ConsultaContenido($rut));
     }
 
     public function GetPictogramasCategoria(){

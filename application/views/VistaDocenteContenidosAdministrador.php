@@ -48,7 +48,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					</li>
 				</ul>
 				<form class="form-inline mt-2 mt-md-0" action="<?php echo site_url();?>/CS">
-					<button class="btn btn-outline-danger my-2 my-sm-0" type="submit" id="btnCerrarSesion">Salir</button>
+					<button class="btn btn-danger my-2 my-sm-0" type="submit" id="btnCerrarSesion">Salir</button>
 				</form>
 			</div>
 		</nav>
