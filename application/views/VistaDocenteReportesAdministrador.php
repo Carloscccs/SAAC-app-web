@@ -21,7 +21,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 	<body>
 
-		<nav class="navbar navbar-expand-md navbar-light fixed-top bg-warning">
+		<nav class="navbar navbar-expand-md navbar-light fixed-top bg-primary">
 			<a class="navbar-brand" href="#">
 				<img src="<?php echo base_url();?>img/logo-temporal.png" height="35px" width="80px" class="bg-light" style="border-style: solid;"
 				/>
@@ -33,19 +33,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<div class="collapse navbar-collapse" id="navbarCollapse">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item">
-						<a class="nav-link" href="<?php echo site_url();?>/CVA">Alumnos</a>
+						<a class="nav-link" href="<?php echo site_url();?>/CVAA">Alumnos</a>
 					</li>
 					<li class="nav-item active">
-						<a class="nav-link" href="<?php echo site_url();?>/CVR">Reportes
+						<a class="nav-link" href="<?php echo site_url();?>/CVRA">Reportes
 							<span class="sr-only">(current)</span>
 						</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="<?php echo site_url();?>/CVC">Gestion de contenidos</a>
+						<a class="nav-link" href="<?php echo site_url();?>/CVCA">Gestion de contenidos</a>
 					</li>
 				</ul>
 				<form class="form-inline mt-2 mt-md-0" action="<?php echo site_url();?>/CS" >
-					<button class="btn btn-outline-danger my-2 my-sm-0" type="submit" >Salir</button>
+					<button class="btn btn-danger my-2 my-sm-0" type="submit" >Salir</button>
 				</form>
 			</div>
 		</nav>
@@ -122,3 +122,4 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     });
 		});
 	</script>
+

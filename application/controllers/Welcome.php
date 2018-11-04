@@ -28,12 +28,31 @@ class Welcome extends CI_Controller {
         }
         
     }
+    public function CargarVistaReportesAdministrador(){
+        if($this->session->userdata("logged_in")){
+            $data['Rut'] = $this->session->userdata('Rut');
+            $data['Curso'] = $this->session->userdata("NombreCurso");
+            $this->load->view('VistaDocenteReportesAdministrador',$data);
+        }else{
+            $this->load->view('VistaLogin');
+        }
+        
+    }
 
     public function CargarVistaAlumnos(){
         if($this->session->userdata("logged_in")){
             $data['Rut'] = $this->session->userdata('Rut');
             $data['Curso'] = $this->session->userdata("NombreCurso");
             $this->load->view('VistaDocenteAlumnos',$data);
+        }else{
+            $this->load->view('VistaLogin');
+        }
+    }
+    public function CargarVistaAlumnosAdministrador(){
+        if($this->session->userdata("logged_in")){
+            $data['Rut'] = $this->session->userdata('Rut');
+            $data['Curso'] = $this->session->userdata("NombreCurso");
+            $this->load->view('VistaDocenteAlumnosAdministrador',$data);
         }else{
             $this->load->view('VistaLogin');
         }
@@ -48,23 +67,77 @@ class Welcome extends CI_Controller {
             $this->load->view('VistaLogin');
         }
     }
+    public function CargarVistaContenidosAdministrador(){
+        if($this->session->userdata("logged_in")){
+            $data['Rut'] = $this->session->userdata('Rut');
+            $data['Curso'] = $this->session->userdata("NombreCurso");
+            $this->load->view('VistaDocenteContenidosAdministrador',$data);
+        }else{
+            $this->load->view('VistaLogin');
+        }
+    }
     function CargarAlumnos(){
         echo json_encode($this->GestionModel->ConsultarAlumno($this->session->userdata("idCurso")));
+    }
+    function CargarAlumnosAdministrador(){
+        echo json_encode($this->GestionModel->ConsultarAlumnoAdministrador());
+    }
+    function CargarDocenteAdministrador(){
+        echo json_encode($this->GestionModel->ConsultaDocenteAdministrador());
+    }
+    function CargarDocenteAdministradorSe(){
+        echo json_encode($this->GestionModel->ConsultaDocenteAdministradorSe());
+    }
+    function CargarColegioAdministradorSe(){
+        echo json_encode($this->GestionModel->ConsultaColegioAdministradorSe());
+    }
+
+    function CargarCursoAdministrador(){
+        echo json_encode($this->GestionModel->ConsultaCursoAdministrador());
+    }
+    function CargarColegioAdministrador(){
+        echo json_encode($this->GestionModel->ConsultaColegioAdministrador());
     }
     function EliminarAlumno(){
         $rut = $this->input->post("rut");
         echo json_encode($this->GestionModel->EliminarAlumno($rut));
-
     }
+
+    function EliminarProfesor(){
+        $rut = $this->input->post("rut");
+        echo json_encode($this->GestionModel->EliminarProfesor($rut));
+    }
+    function EliminarCurso(){
+        $id = $this->input->post("idCurso");
+        echo json_encode($this->GestionModel->EliminarCurso($id));
+    }
+
     function ActualizarAlumno(){
         $rut = $this->input->post("rut");
         $nombre = $this->input->post("nombre");
         $edad = $this->input->post("edad");
         $descripcion = $this->input->post("descripcion");
         $estado = $this->input->post("estado");
-        $curso = $this->session->userdata("idCurso");
+        $curso = $this->session->userdata('idCurso');
 
         echo json_encode($this->GestionModel->ActualizarAlumno($rut, $nombre, $edad, $descripcion, $estado, $curso));
+    }
+
+    function ActualizarProfesor(){
+        $rut = $this->input->post("rut");
+        $nombre = $this->input->post("nombre");
+        $descripcion = $this->input->post("descripcion");
+        $estado = $this->input->post("estado");
+        echo json_encode($this->GestionModel->ActualizarProfesor($rut, $nombre, $descripcion, $estado));
+    }
+    function ActualizarCurso(){
+        $id = $this->input->post("idCurso");
+        $nombre = $this->input->post("nombre");
+        $descripcion = $this->input->post("descripcion");
+        $estado = $this->input->post("estado");
+        $profesor = $this->input->post("RutDocente");
+        $colegio = $this->input->post("idColegio");
+        echo json_encode($this->GestionModel->ActualizarCurso($id, $nombre, $descripcion, $estado,$profesor,$colegio));
     }
     function IngresarAlumnos(){
         $rut = $this->input->post("rut");
@@ -72,15 +145,24 @@ class Welcome extends CI_Controller {
         $edad = $this->input->post("edad");
         $descripcion = $this->input->post("descripcion");
         $estado = $this->input->post("estado");
-        $curso = $this->session->userdata("idCurso");
-
+        $curso = $this->session->userdata('idCurso');
         echo json_encode($this->GestionModel->IngresarAlumno($rut,$nombre,$edad,$descripcion,$estado,$curso));
+        $data['Rut'] = $this->session->userdata('Rut');
+        $data['Curso'] = $this->session->userdata("NombreCurso");
+    }
+  
+    function IngresarCurso(){
+        $nombre = $this->input->post("nombre");
+        $descripcion = $this->input->post("descripcion");
+        $estado = $this->input->post("estado");
+        $profesor = $this->input->post("profesor");
+        $colegio = $this->input->post("colegio");
+
+        echo json_encode($this->GestionModel->IngresarCurso($nombre,$descripcion,$estado,$profesor,$colegio));
             $data['Rut'] = $this->session->userdata('Rut');
             $data['Curso'] = $this->session->userdata("NombreCurso");
-            $this->load->view("VistaDocenteAlumnos", $data);
-        
-
     }
+  
 	function validaUsuario(){
         //Recibe los datos del formulario
         $usuario = $this->input->post("rut");
@@ -97,6 +179,7 @@ class Welcome extends CI_Controller {
                 $Rut = $row->Rut;
 				$Nombre = $row->Nombre;
 				$Descripcion = $row->Descripcion;
+                $Estado = $row->Estado;
             }
             foreach($curso as $row){
                 $idCurso = $row->idCurso;
@@ -111,15 +194,22 @@ class Welcome extends CI_Controller {
                 'Descripcion' => $Descripcion,
                 'idCurso' => $idCurso,
                 'NombreCurso' => $NombreCurso,
-                'idColegio' => $idColegio
+                'idColegio' => $idColegio,
+                'Estado' => $Estado
             );
             
             //Lineas pendientes de revision
         $this->session->set_userdata($data);
             $data['Rut'] = $this->session->userdata('Rut');
             $data['Curso'] = $this->session->userdata("NombreCurso");
-            //Carga la vista del docente
+            //Carga la vista del Administrador descomentar
+            if ($Estado == 100) {
+            $this->load->view("VistaDocenteAlumnosAdministrador", $data);
+            }else{
+                //Cargar vista docente
             $this->load->view("VistaDocenteAlumnos",$data);
+            
+        }
         }else{
             //Manda un mensaje y vuelve a cargar la vista de login
             $data['error'] = "Datos incorrectos o no existen";
@@ -130,10 +220,24 @@ class Welcome extends CI_Controller {
     public function GetCategorias(){
         echo json_encode($this->GestionModel->ConsultarCategorias());
     }
+    public function GetCurso(){
+        echo json_encode($this->GestionModel->ConsultarCursos());
+    }
+    public function GetAlumnos(){
+        echo json_encode($this->GestionModel->ConsultaAlumnoContenido());
+    }
+    public function GetContenido(){
+        $rut = $this->input->post("Rut");
+        echo json_encode($this->GestionModel->ConsultaContenido($rut));
+    }
 
     public function GetPictogramasCategoria(){
         $idCategoria = $this->input->post("id");
         echo json_encode($this->GestionModel->ObtenerPictogramasCategoria($idCategoria));
+    }
+    public function GetAlumnoCurso(){
+        $idCurso = $this->input->post("id");
+        echo json_encode($this->GestionModel->ObtenerAlumnoCurso($idCurso));
     }
 
     public function AgregarPictograma(){

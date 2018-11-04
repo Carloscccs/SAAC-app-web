@@ -17,10 +17,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 		<!-- Custom styles for this template -->
 		<link href="<?php echo base_url();?>lib/css/navbar-top-fixed.css" rel="stylesheet">
+    <link href="<?php echo base_url();?>lib/css/snackbar.css" rel="stylesheet">
 	</head>
 
 	<body>
-		<nav class="navbar navbar-expand-md navbar-light fixed-top bg-warning">
+		<nav class="navbar navbar-expand-md navbar-light fixed-top bg-warning" id="navAd">
 			<a class="navbar-brand" href="#">
 				<img src="<?php echo base_url();?>img/logo-temporal.png" height="35px" width="80px" class="bg-light" style="border-style: solid;"
 				/>
@@ -62,16 +63,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <h4 class="modal-title" >Ingresar Alumno</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
-      <form id="formulario">
       <div class="modal-body">
          <label for="IngrRut">Rut</label>
-         <input type="text" class="form-control" name="IngrRut" required id="txtRut" placeholder="Rut...">
+         <input type="text" class="form-control" name="IngrRut" required id="txtRut" placeholder="Rut sin guion ni puntos" onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 0 || event.charCode == 32'>
         <br>
         <label>Nombre </label>
-          <input type="text" class="form-control" name="IngrNombre" required id="txtNombre" placeholder="Nombre...">
+          <input type="text" class="form-control" name="IngrNombre" required id="txtNombre" placeholder="Juanito Perez">
         <br>
         <label >Edad </label>
-          <input type="text" class="form-control" name="IngrEdad" required id="txtEdad" placeholder="Edad...">
+          <input type="text" class="form-control" name="IngrEdad" required id="txtEdad" placeholder="Edad..." onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 0 || event.charCode == 32'>
         <br>
         <label >Descripcion </label>
           <input type="text" class="form-control" name="IngrDescripcion" required id="txtDescripcion" placeholder="Descripcion...">
@@ -81,7 +81,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <button type="submit" class="btn btn-success" id="btnIngresar">ingresar</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
-      </form>
+      
     </div>
   </div>
 </div>
@@ -124,7 +124,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <input type="text" class="form-control" name="ActNombre" id="txtActNombre"/>
           </br>
         <label >Edad </label>
-          <input type="text" class="form-control" name="ActEdad" id="txtActEdad"/>
+          <input type="text" class="form-control" name="ActEdad" id="txtActEdad" onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 0 || event.charCode == 32'/>
           </br>
         <label >Descripcion </label>
           <input type="text" class="form-control" name="ActDecripcion" id="txtActDescripcion"/>
@@ -156,6 +156,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           </table>
         </div>
       </div>
+      <div id="snackbar" style="position: absolute;z-index: 200"></div>
     </main>
 		<!-- Bootstrap core JavaScript
     ================================================== -->
@@ -166,7 +167,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   </body>
 </html>
 <script type="text/javascript">
-
                  $(function(){
                   
                   cargarUsuarios();
@@ -186,7 +186,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         });
                     });
                 }
-                 });
+                 
 
                  $("#TablaAlumnos").on("click", "#Delete", function (e) {
                     e.preventDefault();
@@ -204,11 +204,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       data: {
                        "rut": rut
                       }
+
                     }).done(function (obj) {
-                      alert(obj);
+                       MostrarMensaje("Alumno inactivo", 3000);
+                      cargarUsuarios();
+                      $("#ModalEliminar").modal("hide");
                       
-                      //$("#ModalEliminar").modal("hidde");
-                      location.reload();
                     });
                   });
 
@@ -229,6 +230,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     var edad = $("#txtEdad").val();
                     var descripcion = $("#txtDescripcion").val();
                     var estado = $("#txtEstado").val();
+                    if (rut.length > 0 && nombre.length > 0 && descripcion.length > 0 && estado.length > 0){
                     $.ajax({
                      url: "<?php echo site_url()?>/ingrAlumno",
                      type: "POST",
@@ -239,22 +241,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                        "edad": edad,
                        "descripcion": descripcion,
                        "estado": estado
-                      }
-                    }).done(function (obj) {
-                      
-                      
-                      //$("#ModalEliminar").modal("hidde");
-                      location.reload();
+                      }}).done(function (obj) {
+                      console.log("Petición terminada. Resultado", obj);
+                      $("#InsertAlumnos").modal('hide');
+                      $("#txtRut").val("");
+                      $("#txtNombre").val("");
+                      $("#txtEdad").val("");
+                      $("#txtDescripcion").val("");
+                      $("#txtEstado").val("");
+                      MostrarMensaje("Alumno Ingresado", 3000);
+                      cargarUsuarios();
                     });
-                  });
+                  }else{
+                    MostrarMensaje("No deben de haber campos vacios.",3000)
+                  }
+                    });
+
               $("#btnActualizarSi").click(function () {
                     var rut = $("#txtActRut").val();
                     var nombre = $("#txtActNombre").val();
                     var edad = $("#txtActEdad").val();
                     var descripcion = $("#txtActDescripcion").val();
                     var estado = $("#txtActEstado").val();
-                   
-                    $.ajax({
+                   if (rut.length > 0 && nombre.length > 0 && descripcion.length > 0 && estado.length > 0)
+                    {
+                      
+                     $.ajax({
                      url: "<?php echo site_url()?>/ActualizarAlumno",
                      type: "POST",
                      datatype: "json",
@@ -264,12 +276,37 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                        "edad": edad,
                        "descripcion": descripcion,
                        "estado": estado
+                      },
+                      success: function (resultados) {
+                      console.log("Petición terminada. Resultado", resultados);
+                      $("#ModalActualizar").modal('hide');
+                      $("#txtActRut").val("");
+                      $("#txtActNombre").val("");
+                      $("#txtActEdad").val("");
+                      $("#txtActDescripcion").val("");
+                      $("#txtActEstado").val("");
+                      MostrarMensaje("Alumno Actualizado", 3000);
+                      cargarUsuarios();
                       }
-                    }).done(function (obj) {
-                      alert(obj);
-                      
-                      //$("#ModalEliminar").modal("hidde");
-                      location.reload();
-                    });
                   });
+                   }else{
+                    MostrarMensaje("No deben de haber campos vacios.",3000)
+                   }
+
+                });
+
+              function MostrarMensaje(msg, milisec) {
+          // Get the snackbar DIV
+          var x = document.getElementById("snackbar");
+          x.innerHTML = "" + msg;
+
+          // Add the "show" class to DIV
+          x.className = "show";
+
+          // After 3 seconds, remove the show class from DIV
+          setTimeout(function () {
+            x.className = x.className.replace("show", "");
+          }, milisec);
+        }
+        });
 </script>

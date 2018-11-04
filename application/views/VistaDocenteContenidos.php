@@ -426,8 +426,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						formData.append("Ejemplo", Ejemplo);
 						formData.append("Tags", Tags);
 						formData.append("Categoria", categoria);
-
-
 						$.ajax({
 							url: "<?php echo site_url()?>/AP",
 							data: formData,
@@ -451,8 +449,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						});
 
 					} else {
-						MostrarMensaje("No deben de haber campos vacios.", 3000)
+						MostrarMensaje("No deben de haber campos vacios.", 3000);
+                        alert("No deben de haber campos vacios");
 					}
+				});
 
 				function MostrarMensaje(msg, milisec) {
 					// Get the snackbar DIV
@@ -477,7 +477,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							x += "<td>" + o.Oracion + "</td>";
 							x += '<td> <button id="Vista" value="' + o.idActividad + '" class="btn">Vista</button></ td>';
 							x += '<td> <button id="Altern" value="' + o.idActividad + '" class="btn">Alternativas</button></td>';
-							x += '<td> <button id="Desah" value="' + o.idActividad + '" class="btn">Deshabilitar</button></td></tr>';
+							x += '<td> <button id="Desah" value="' + o.idActividad +
+								'" class="btn">Deshabilitar</button></td></tr>';
 							$("#tbodyactividades").append(x);
 						});
 					});
@@ -701,7 +702,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					var nompic3 = $("#txtPic3").val();
 					var nompic4 = $("#txtPic4").val();
 					var posres = $("#txtPosRes").val();
-					if (oracion.length > 0 && selectPictog != [] && nompic1.length > 0 && nompic2.length > 0 && nompic3.length > 0 &&
+					if (oracion.length > 0 && selectPictog != [] && nompic1.length > 0 && nompic2.length > 0 && nompic3.length >
+						0 &&
 						nompic4.length > 0 && posres.length > 0) {
 						console.log("ENTRA");
 						var pic1 = 0;
@@ -747,7 +749,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									$("#txtPic3").val("");
 									$("#txtPic4").val("");
 									$("#txtPosRes").val("");
-									$("##selectCreaVista").empty();
+									$("#selectCreaVista").empty();
 									$('#AgregarActividad').modal('hide')
 									MostrarMensaje("Actividad agregada", 3000);
 								}
@@ -778,7 +780,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							$("#modaldeshactividad").modal("hide");
 							MostrarMensaje("Deshabilitada", 3000);
 						}
-
 					});
 				});
 
