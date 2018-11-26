@@ -76,6 +76,17 @@ class Welcome extends CI_Controller {
             $this->load->view('VistaLogin');
         }
     }
+    
+    public function CargarVistaDPrincipal(){
+        if($this->session->userdata("logged_in")){
+            $data['Rut'] = $this->session->userdata('Rut');
+            $data['Curso'] = $this->session->userdata("NombreCurso");
+            $this->load->view('VistaDPrincipal',$data);
+        }else{
+            $this->load->view('VistaLogin');
+        }
+    }
+    
     function CargarAlumnos(){
         echo json_encode($this->GestionModel->ConsultarAlumno($this->session->userdata("idCurso")));
     }
