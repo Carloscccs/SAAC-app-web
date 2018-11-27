@@ -91,4 +91,5 @@ $route['AA'] = 'welcome/AgregarActividad';
 $route['DA'] = 'welcome/DeshabilitarActividadE';
 $route['CVDP'] = 'welcome/CargarVistaDPrincipal';
 $route['CVDA'] = 'welcome/CargarVistaDA';
-$route['CVDR'] = "welcome/CargarVistaDR";
+$route['CVDR'] = 'welcome/CargarVistaDR';
+$route['CVDC'] = 'welcome/CargarVistaDC';
