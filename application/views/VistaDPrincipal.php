@@ -11,7 +11,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link rel="stylesheet" href="<?php echo base_url();?>lib/css/fontawesome-all.min.css">
     <link rel="stylesheet" href="<?php echo base_url();?>lib/css/bootadmin.min.css">
 
-    <title>BootAdmin</title>
+    <title>Administrador SAAC Movil</title>
 </head>
 <body class="bg-light">
 
@@ -38,7 +38,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <div class="d-flex">
     <div class="sidebar sidebar-dark bg-secondary">
         <ul class="list-unstyled">
-            <li><a href="#"><i class="fa fa-fw fa-user"></i> Gestion de alumnos</a></li>
+            <li><a href="<?php echo site_url();?>/CVDA"><i class="fa fa-fw fa-user"></i> Gestion de alumnos</a></li>
             <!--CON SUB-ITEMS
             <li>
                 <a href="#sm_expand_1" data-toggle="collapse">
@@ -61,7 +61,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
         <div class="card mb-4">
             <div class="card-body">
-                <i>This is a blank page you can use as a starting point.</i>
+                <i>This is a blank page you can use as a starting point.</i><br>
+                <div class="text-center">
+                    <img src="<?php echo base_url();?>img/logo.png" class="" width="20%" heigth="20%"/>
+                </div>
                 <p class="font-weight-normal">Bienvenido al sistema de administracion de la aplicacion "SAAC movil", aqui
                 usted podra:</p>
                 <ul>

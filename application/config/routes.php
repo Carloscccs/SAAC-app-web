@@ -90,3 +90,4 @@ $route['GIP'] = 'welcome/getInfoPictogramas';
 $route['AA'] = 'welcome/AgregarActividad';
 $route['DA'] = 'welcome/DeshabilitarActividadE';
 $route['CVDP'] = 'welcome/CargarVistaDPrincipal';
+$route['CVDA'] = 'welcome/CargarVistaDA';
