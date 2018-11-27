@@ -248,7 +248,7 @@ class Welcome extends CI_Controller {
             $this->load->view("VistaDocenteAlumnosAdministrador", $data);
             }else{
                 //Cargar vista docente
-            $this->load->view("VistaDocenteAlumnos",$data);
+            $this->load->view("VistaDPrincipal",$data);
             
         }
         }else{
