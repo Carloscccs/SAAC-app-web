@@ -108,7 +108,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</div>
 						<div class="row">
 							<div class="col-12">
-								<table id="" class="table table-bordered">
+								<table id="" class="table table-bordered table-responsive">
 									<thead>
 										<th scope="col">Rut</th>
 										<th scope="col">Nombre</th>
