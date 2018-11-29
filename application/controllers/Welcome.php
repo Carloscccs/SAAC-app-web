@@ -76,6 +76,47 @@ class Welcome extends CI_Controller {
             $this->load->view('VistaLogin');
         }
     }
+    
+    public function CargarVistaDPrincipal(){
+        if($this->session->userdata("logged_in")){
+            $data['Rut'] = $this->session->userdata('Rut');
+            $data['Curso'] = $this->session->userdata("NombreCurso");
+            $this->load->view('VistaDPrincipal',$data);
+        }else{
+            $this->load->view('VistaLogin');
+        }
+    }
+
+    public function CargarVistaDA(){
+        if($this->session->userdata("logged_in")){
+            $data['Rut'] = $this->session->userdata('Rut');
+            $data['Curso'] = $this->session->userdata("NombreCurso");
+            $this->load->view('VistaDA',$data);
+        }else{
+            $this->load->view('VistaLogin');
+        }
+    }
+
+    public function CargarVistaDR(){
+        if($this->session->userdata("logged_in")){
+            $data['Rut'] = $this->session->userdata('Rut');
+            $data['Curso'] = $this->session->userdata("NombreCurso");
+            $this->load->view('VistaDR',$data);
+        }else{
+            $this->load->view('VistaLogin');
+        }
+    }
+
+    public function CargarVistaDC(){
+        if($this->session->userdata("logged_in")){
+            $data['Rut'] = $this->session->userdata('Rut');
+            $data['Curso'] = $this->session->userdata("NombreCurso");
+            $this->load->view('VistaDC',$data);
+        }else{
+            $this->load->view('VistaLogin');
+        }
+    }
+    
     function CargarAlumnos(){
         echo json_encode($this->GestionModel->ConsultarAlumno($this->session->userdata("idCurso")));
     }
@@ -207,7 +248,7 @@ class Welcome extends CI_Controller {
             $this->load->view("VistaDocenteAlumnosAdministrador", $data);
             }else{
                 //Cargar vista docente
-            $this->load->view("VistaDocenteAlumnos",$data);
+            $this->load->view("VistaDPrincipal",$data);
             
         }
         }else{
