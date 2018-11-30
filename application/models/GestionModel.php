@@ -99,14 +99,15 @@ function ConsultaCursoAdministrador(){
         return $this->db->get()->result();
     }
 
-    function AgregarPictograma($Nombre,$Descripcion,$Ejemplo,$Tags,$imgRuta,$idCategoria){
+    function AgregarPictograma($Nombre,$Descripcion,$Ejemplo,$Tags,$imgRuta,$idCategoria,$RutDocente){
         $datos = array(
             "Nombre"=>$Nombre,
             "Descripcion"=>$Descripcion,
             "Ejemplo"=>$Ejemplo,
             "Tags"=>$Tags,
             "img"=>$imgRuta,
-            "idCategoria"=>$idCategoria
+            "idCategoria"=>$idCategoria,
+            "RutDocente"=>$RutDocente
         );
         $Respuesta = "Error desconocido";
         if($this->db->insert("pictograma",$datos)){

@@ -298,7 +298,8 @@ class Welcome extends CI_Controller {
         } else {
             $UpImgName = $this->upload->data('file_name');
             $ImgRuta = "Pictograma/".$UpImgName;
-            $resultado = $this->GestionModel->AgregarPictograma($Nombre,$Descripcion,$Ejemplo,$Tags,$ImgRuta,$idCategoria);
+            $RutDocente = $this->session->userdata('Rut');
+            $resultado = $this->GestionModel->AgregarPictograma($Nombre,$Descripcion,$Ejemplo,$Tags,$ImgRuta,$idCategoria,$RutDocente);
             echo json_encode($resultado);
         }
         /*

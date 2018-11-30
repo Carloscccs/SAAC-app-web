@@ -11,8 +11,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<link rel="stylesheet" href="<?php echo base_url();?>lib/css/bootstrap.min.css">
 	<link rel="stylesheet" href="<?php echo base_url();?>lib/css/fontawesome-all.min.css">
 	<link rel="stylesheet" href="<?php echo base_url();?>lib/css/bootadmin.min.css">
+	<link href="<?php echo base_url();?>lib/css/snackbar.css" rel="stylesheet">
 
-	<title>Administrador SAAC Movil</title>
+	<title>Docente SAAC Movil</title>
 </head>
 
 <body class="bg-light">
@@ -335,6 +336,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	</div>
 
 	<script src="<?php echo base_url();?>lib/js/jquery-3.1.1.min.js"></script>
+	<script src="<?php echo base_url();?>lib/js/popper.min.js"></script>
 	<script src="<?php echo base_url();?>lib/js/bootstrap.bundle.min.js"></script>
 	<script src="<?php echo base_url();?>lib/js/bootadmin.min.js"></script>
 	<script src="<?php echo base_url();?>lib/js/image-picker.min.js"></script>
@@ -378,10 +380,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					$.each(JSON.parse(obj), function (i, o) {
 						var image = new Image();
 						image.src = "<?php echo base_url(); ?>" + o.img;
-						image.setAttribute("class", "img-thumbnail");
-						image.setAttribute("width", "200px");
-						image.setAttribute("heigth", "200px");
-						x += "<td class='text-center'>" + image.outerHTML + "<p class=''>" + o.Nombre + "</p></td>";
+						image.setAttribute("class", "card-img-top");
+						x += "<td class='text-center'><div class='card bg-light' style='width: 18rem;'>"+image.outerHTML+"<div class='card-body'><h5 class='card-title'>"+ o.Nombre+" </h5><p class='card-text'>"+o.Descripcion+"</p></div><div class='card-body'><a href='#' class='card-link text-light bg-dark'>"+o.RutDocente+"</a><a href='#' class='card-link text-danger'>Reportar</a></div></div></td>";
 						i = i + 1;
 						if (i == 3) {
 							x += "</tr><tr>";

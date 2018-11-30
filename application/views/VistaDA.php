@@ -11,6 +11,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<link rel="stylesheet" href="<?php echo base_url();?>lib/css/bootstrap.min.css">
 	<link rel="stylesheet" href="<?php echo base_url();?>lib/css/fontawesome-all.min.css">
 	<link rel="stylesheet" href="<?php echo base_url();?>lib/css/bootadmin.min.css">
+	<link href="<?php echo base_url();?>lib/css/snackbar.css" rel="stylesheet">
 
 	<title>Administrador SAAC Movil</title>
 </head>
