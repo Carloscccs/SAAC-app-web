@@ -334,4 +334,10 @@ function ConsultaCursoAdministrador(){
             return $this->db->error();
         }
     }
+
+    function ConsultaRepAlumnos(){
+        $this->db->select("idAlumno,idActividad,Tiempo,Estado");
+        $this->db->from("actividad_alumno");
+        return $this->db->get()->result();
+    }
 }

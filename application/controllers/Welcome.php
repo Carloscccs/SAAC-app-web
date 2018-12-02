@@ -358,4 +358,8 @@ class Welcome extends CI_Controller {
         echo json_encode($res);
     }
 
+    public function GetReporteAlumnos(){
+        echo json_encode($this->GestionModel->ConsultaRepAlumnos());
+    }
+
 }
