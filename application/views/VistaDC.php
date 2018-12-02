@@ -11,6 +11,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<link rel="stylesheet" href="<?php echo base_url();?>lib/css/bootstrap.min.css">
 	<link rel="stylesheet" href="<?php echo base_url();?>lib/css/fontawesome-all.min.css">
 	<link rel="stylesheet" href="<?php echo base_url();?>lib/css/bootadmin.min.css">
+	<link href="<?php echo base_url();?>lib/css/image-picker.css" rel="stylesheet">
 	<link href="<?php echo base_url();?>lib/css/snackbar.css" rel="stylesheet">
 
 	<title>Docente SAAC Movil</title>
@@ -296,7 +297,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										</button>
 									</div>
 									<div class="modal-body">
-										<select id="selectvistaAltern"></select>
+										<table class="table-responsive">
+											<thead><th class="text-center">1</th><th class="text-center">2</th><th class="text-center">3</th><th class="text-center">4</th></thead>
+											<tbody id="tbodyalternativas"></tbody>
+										</table>
 									</div>
 									<div class="modal-footer">
 										<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -382,7 +386,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						var image = new Image();
 						image.src = "<?php echo base_url(); ?>" + o.img;
 						image.setAttribute("class", "card-img-top");
-						x += "<td class='text-center'><div class='card bg-light' style='width: 18rem;'>" + image.outerHTML +
+						x += "<td class='text-center'><div class='card bg-light mx-auto' style='width: 18rem;'>" + image.outerHTML +
 							"<div class='card-body'><h5 class='card-title'>" + o.Nombre + " </h5><p class='card-text'>" + o.Descripcion +
 							"</p></div><div class='card-body'><a href='#' class='card-link text-light bg-dark'>" + o.RutDocente +
 							"</a><a href='#' class='card-link text-danger'>Reportar</a></div></div></td>";
@@ -514,6 +518,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						var nombre2 = o['pic2nombre'];
 						var nombre3 = o['pic3nombre'];
 						var nombre4 = o['pic4nombre'];
+						x = "<tr>";
+						x += "<td><img class='img-thumbnail' src='"+src1+"'/><p class='text-center'>"+nombre1+"</p></td>";
+						x += "<td><img class='img-thumbnail' src='"+src2+"'/><p class='text-center'>"+nombre2+"</p></td>";
+						x += "<td><img class='img-thumbnail' src='"+src3+"'/><p class='text-center'>"+nombre3+"</p></td>";
+						x += "<td><img class='img-thumbnail' src='"+src4+"'/><p class='text-center'>"+nombre4+"</p></td>";
+						x += "</tr>";
+						/*
 						x += "<option data-img-src='" + src1 + "' value='1' data-img-class='selectimage1' >" + nombre1 +
 							"</option>";
 						x += "<option data-img-src='" + src2 + "' value='2' data-img-class='selectimage1' >" + nombre2 +
@@ -522,11 +533,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							"</option>";
 						x += "<option data-img-src='" + src4 + "' value='4' data-img-class='selectimage1' >" + nombre4 +
 							"</option>";
+						*/
 					});
-					$("#selectvistaAltern").append(x);
-					$("#selectvistaAltern").imagepicker({
-						show_label: true
-					});
+					$("#tbodyalternativas").empty();
+					$("#tbodyalternativas").append(x);
 				});
 				$("#modalVista2").modal("show");
 			});
@@ -789,79 +799,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					}
 				});
 			});
-
-			function JSONToCSVConvertor(JSONData, ReportTitle, ShowLabel) {
-				//If JSONData is not an object then JSON.parse will parse the JSON string in an Object
-				var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData) : JSONData;
-
-				var CSV = '';
-				//Set Report title in first row or line
-
-				CSV += ReportTitle + '\r\n\n';
-
-				//This condition will generate the Label/Header
-				if (ShowLabel) {
-					var row = "";
-
-					//This loop will extract the label from 1st index of on array
-					for (var index in arrData[0]) {
-
-						//Now convert each value to string and comma-seprated
-						row += index + ',';
-					}
-
-					row = row.slice(0, -1);
-
-					//append Label row with line break
-					CSV += row + '\r\n';
-				}
-
-				//1st loop is to extract each row
-				for (var i = 0; i < arrData.length; i++) {
-					var row = "";
-
-					//2nd loop will extract each column and convert it in string comma-seprated
-					for (var index in arrData[i]) {
-						row += '"' + arrData[i][index] + '",';
-					}
-
-					row.slice(0, row.length - 1);
-
-					//add a line break after each row
-					CSV += row + '\r\n';
-				}
-
-				if (CSV == '') {
-					alert("Invalid data");
-					return;
-				}
-
-				//Generate a file name
-				var fileName = "MyReport_";
-				//this will remove the blank-spaces from the title and replace it with an underscore
-				fileName += ReportTitle.replace(/ /g, "_");
-
-				//Initialize file format you want csv or xls
-				var uri = 'data:text/csv;charset=utf-8,' + escape(CSV);
-
-				// Now the little tricky part.
-				// you can use either>> window.open(uri);
-				// but this will not work in some browsers
-				// or you will not get the correct file extension    
-
-				//this trick will generate a temp <a /> tag
-				var link = document.createElement("a");
-				link.href = uri;
-
-				//set the visibility hidden so it will not effect on your web-layout
-				link.style = "visibility:hidden";
-				link.download = fileName + ".csv";
-
-				//this part will append the anchor tag and remove it after automatic click
-				document.body.appendChild(link);
-				link.click();
-				document.body.removeChild(link);
-			}
 
 		});
 

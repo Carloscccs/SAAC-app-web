@@ -243,6 +243,7 @@ class Welcome extends CI_Controller {
         $this->session->set_userdata($data);
             $data['Rut'] = $this->session->userdata('Rut');
             $data['Curso'] = $this->session->userdata("NombreCurso");
+            $data['idCurso'] = $this->session->userdata("idCurso");
             //Carga la vista del Administrador descomentar
             if ($Estado == 100) {
             $this->load->view("VistaDocenteAlumnosAdministrador", $data);
@@ -359,7 +360,8 @@ class Welcome extends CI_Controller {
     }
 
     public function GetReporteAlumnos(){
-        echo json_encode($this->GestionModel->ConsultaRepAlumnos());
+        $idCurso = $this->session->userdata("idCurso");
+        echo json_encode($this->GestionModel->ConsultaRepAlumnos($idCurso));
     }
 
 }
