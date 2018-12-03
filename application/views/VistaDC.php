@@ -11,8 +11,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<link rel="stylesheet" href="<?php echo base_url();?>lib/css/bootstrap.min.css">
 	<link rel="stylesheet" href="<?php echo base_url();?>lib/css/fontawesome-all.min.css">
 	<link rel="stylesheet" href="<?php echo base_url();?>lib/css/bootadmin.min.css">
+	<link href="<?php echo base_url();?>lib/css/image-picker.css" rel="stylesheet">
+	<link href="<?php echo base_url();?>lib/css/snackbar.css" rel="stylesheet">
 
-	<title>Administrador SAAC Movil</title>
+	<title>Docente SAAC Movil</title>
 </head>
 
 <body class="bg-light">
@@ -66,7 +68,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 			<div class="card mb-4">
 				<div class="card-body">
-					<i>Gestiones las actividades que realizaran sus alumnos y aporte a la base de datos comunitaria de pictogramas: </i><br>
+					<i>Gestiones las actividades que realizaran sus alumnos y aporte a la base de datos comunitaria de pictogramas:
+					</i><br>
 					<div class="container">
 						<div class="row mt-2">
 							<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
@@ -274,7 +277,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										</button>
 									</div>
 									<div class="modal-body">
-										<select id="selectvistaOracion"></select>
+										<!-- <select id="selectvistaOracion"></select> -->
+										<table class="table-responsive">
+											<thead></thead>
+											<tbody id="tbodyvistaOracion"></tbody>
+										</table>
 									</div>
 									<div class="modal-footer">
 										<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -294,7 +301,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										</button>
 									</div>
 									<div class="modal-body">
-										<select id="selectvistaAltern"></select>
+										<table class="table-responsive">
+											<thead><th class="text-center">1</th><th class="text-center">2</th><th class="text-center">3</th><th class="text-center">4</th></thead>
+											<tbody id="tbodyalternativas"></tbody>
+										</table>
 									</div>
 									<div class="modal-footer">
 										<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -335,6 +345,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	</div>
 
 	<script src="<?php echo base_url();?>lib/js/jquery-3.1.1.min.js"></script>
+	<script src="<?php echo base_url();?>lib/js/popper.min.js"></script>
 	<script src="<?php echo base_url();?>lib/js/bootstrap.bundle.min.js"></script>
 	<script src="<?php echo base_url();?>lib/js/bootadmin.min.js"></script>
 	<script src="<?php echo base_url();?>lib/js/image-picker.min.js"></script>
@@ -378,10 +389,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					$.each(JSON.parse(obj), function (i, o) {
 						var image = new Image();
 						image.src = "<?php echo base_url(); ?>" + o.img;
-						image.setAttribute("class", "img-thumbnail");
-						image.setAttribute("width", "200px");
-						image.setAttribute("heigth", "200px");
-						x += "<td class='text-center'>" + image.outerHTML + "<p class=''>" + o.Nombre + "</p></td>";
+						image.setAttribute("class", "card-img-top");
+						x += "<td class='text-center'><div class='card bg-light mx-auto' style='width: 18rem;'>" + image.outerHTML +
+							"<div class='card-body'><h5 class='card-title'>" + o.Nombre + " </h5><p class='card-text'>" + o.Descripcion +
+							"</p></div><div class='card-body'><a href='#' class='card-link text-light bg-dark'>" + o.RutDocente +
+							"</a><a href='#' class='card-link text-danger'>Reportar</a></div></div></td>";
 						i = i + 1;
 						if (i == 3) {
 							x += "</tr><tr>";
@@ -510,6 +522,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						var nombre2 = o['pic2nombre'];
 						var nombre3 = o['pic3nombre'];
 						var nombre4 = o['pic4nombre'];
+						x = "<tr>";
+						x += "<td><img class='img-thumbnail' src='"+src1+"'/><p class='text-center'>"+nombre1+"</p></td>";
+						x += "<td><img class='img-thumbnail' src='"+src2+"'/><p class='text-center'>"+nombre2+"</p></td>";
+						x += "<td><img class='img-thumbnail' src='"+src3+"'/><p class='text-center'>"+nombre3+"</p></td>";
+						x += "<td><img class='img-thumbnail' src='"+src4+"'/><p class='text-center'>"+nombre4+"</p></td>";
+						x += "</tr>";
+						/*
 						x += "<option data-img-src='" + src1 + "' value='1' data-img-class='selectimage1' >" + nombre1 +
 							"</option>";
 						x += "<option data-img-src='" + src2 + "' value='2' data-img-class='selectimage1' >" + nombre2 +
@@ -518,11 +537,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							"</option>";
 						x += "<option data-img-src='" + src4 + "' value='4' data-img-class='selectimage1' >" + nombre4 +
 							"</option>";
+						*/
 					});
-					$("#selectvistaAltern").append(x);
-					$("#selectvistaAltern").imagepicker({
-						show_label: true
-					});
+					$("#tbodyalternativas").empty();
+					$("#tbodyalternativas").append(x);
 				});
 				$("#modalVista2").modal("show");
 			});
@@ -540,14 +558,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					}
 				}).done(function (obj) {
 					//console.log(obj);
-					var x = "";
+					var x = "<tr>";
 					$.each(JSON.parse(obj), function (i, o) {
 						var src = "<?php echo base_url(); ?>" + o[0].img;
-						x += "<option data-img-src='" + src + "' value='" + i + "' data-img-class='selectimage1 ' >" + i +
-							"</option>";
+						//x += "<option data-img-src='" + src + "' value='" + i + "' data-img-class='selectimage1 ' >" + i +"</option>";
+						x += "<td><p class='text-center'>"+(i+1)+"</p><img class='img-thumbnail' src='"+src+"' /><td>";
 					});
-					$("#selectvistaOracion").append(x);
-					$("#selectvistaOracion").imagepicker();
+					x += "</tr>";
+					$("#tbodyvistaOracion").empty();
+					$("#tbodyvistaOracion").append(x);
 				});
 				$("#modalVista1").modal("show");
 			});

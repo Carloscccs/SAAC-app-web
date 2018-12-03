@@ -243,6 +243,7 @@ class Welcome extends CI_Controller {
         $this->session->set_userdata($data);
             $data['Rut'] = $this->session->userdata('Rut');
             $data['Curso'] = $this->session->userdata("NombreCurso");
+            $data['idCurso'] = $this->session->userdata("idCurso");
             //Carga la vista del Administrador descomentar
             if ($Estado == 100) {
             $this->load->view("VistaDocenteAlumnosAdministrador", $data);
@@ -298,7 +299,8 @@ class Welcome extends CI_Controller {
         } else {
             $UpImgName = $this->upload->data('file_name');
             $ImgRuta = "Pictograma/".$UpImgName;
-            $resultado = $this->GestionModel->AgregarPictograma($Nombre,$Descripcion,$Ejemplo,$Tags,$ImgRuta,$idCategoria);
+            $RutDocente = $this->session->userdata('Rut');
+            $resultado = $this->GestionModel->AgregarPictograma($Nombre,$Descripcion,$Ejemplo,$Tags,$ImgRuta,$idCategoria,$RutDocente);
             echo json_encode($resultado);
         }
         /*
@@ -355,6 +357,11 @@ class Welcome extends CI_Controller {
         $id = $this->input->post("id");
         $res = $this->GestionModel->DeshabilitarActividad($id);
         echo json_encode($res);
+    }
+
+    public function GetReporteAlumnos(){
+        $idCurso = $this->session->userdata("idCurso");
+        echo json_encode($this->GestionModel->ConsultaRepAlumnos($idCurso));
     }
 
 }
