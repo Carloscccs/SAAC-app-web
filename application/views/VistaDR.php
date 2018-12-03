@@ -106,7 +106,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<script type="text/javascript">
 		$(function () {
 			SelectAlumnos();
-
+			var jsonAlumno = "";
+			var nombreAlumno = "";
 			function SelectAlumnos() {
 				var url = "<?php echo site_url(); ?>/MostrarAlumnos";
 				$.getJSON(url, function (res) {
@@ -118,6 +119,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			}
 			$("#selectAlumno").change(function () {
 				rut = $("#selectAlumno").val();
+				nombreAlumno = $("#selectAlumno option:selected").text();
 				$.ajax({
 					url: "<?php echo site_url()?>/GContenido",
 					type: "POST",
@@ -127,6 +129,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					}
 				}).done(function (obj) {
 					$("#TablaContenido").empty();
+					$("#btnDescargarSolo").prop( "disabled",false);
+					jsonAlumno = JSON.parse(obj);
 					$.each(JSON.parse(obj), function (i, o) {
 						var x = "<tr><td>" + o.Tiempo + "</td>";
 						x += "<td>" + o.Estado + "</td>";
@@ -152,6 +156,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					JSONToCSVConvertor(obj,"Reporte alumnos",true);
 					alert("Descargado");
 				});
+			});
+
+			$("#btnDescargarSolo").click(function () {
+				var nombre = "Reporte alumno: "+nombreAlumno;
+				JSONToCSVConvertor(jsonAlumno,nombre,true);
+				alert("Descargado");
 			});
 
 			function JSONToCSVConvertor(JSONData, ReportTitle, ShowLabel) {

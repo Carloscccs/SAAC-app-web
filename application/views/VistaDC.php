@@ -277,7 +277,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										</button>
 									</div>
 									<div class="modal-body">
-										<select id="selectvistaOracion"></select>
+										<!-- <select id="selectvistaOracion"></select> -->
+										<table class="table-responsive">
+											<thead></thead>
+											<tbody id="tbodyvistaOracion"></tbody>
+										</table>
 									</div>
 									<div class="modal-footer">
 										<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -554,14 +558,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					}
 				}).done(function (obj) {
 					//console.log(obj);
-					var x = "";
+					var x = "<tr>";
 					$.each(JSON.parse(obj), function (i, o) {
 						var src = "<?php echo base_url(); ?>" + o[0].img;
-						x += "<option data-img-src='" + src + "' value='" + i + "' data-img-class='selectimage1 ' >" + i +
-							"</option>";
+						//x += "<option data-img-src='" + src + "' value='" + i + "' data-img-class='selectimage1 ' >" + i +"</option>";
+						x += "<td><p class='text-center'>"+(i+1)+"</p><img class='img-thumbnail' src='"+src+"' /><td>";
 					});
-					$("#selectvistaOracion").append(x);
-					$("#selectvistaOracion").imagepicker();
+					x += "</tr>";
+					$("#tbodyvistaOracion").empty();
+					$("#tbodyvistaOracion").append(x);
 				});
 				$("#modalVista1").modal("show");
 			});
