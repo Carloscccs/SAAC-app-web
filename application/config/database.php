@@ -75,7 +75,7 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => '170.239.85.176',
+	'hostname' => 'localhost',
 	'username' => 'appweb',
 	'password' => 'appweb2018z',
 	'database' => 'saac',
