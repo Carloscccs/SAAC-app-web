@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'h7xe2knj2qb6kxal.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
-	'username' => 'v1n0dtaecvikn2u7',
-	'password' => 'u4cgfaqmav3gchyc',
-	'database' => 'd5kmtnh3j8258t5c',
+	'hostname' => '170.239.85.176',
+	'username' => 'appweb',
+	'password' => 'appweb2018z',
+	'database' => 'saac',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
