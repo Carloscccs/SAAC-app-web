@@ -1,6 +1,6 @@
 <?php
-require(APPPATH.'libraries\REST_Controller.php');
-require(APPPATH.'libraries\Format.php');
+require(APPPATH.'libraries/REST_Controller.php');
+require(APPPATH.'libraries/Format.php');
 use Restserver\Libraries\REST_Controller;
 class Api extends REST_Controller
 {
