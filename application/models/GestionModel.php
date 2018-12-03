@@ -105,14 +105,15 @@ function ConsultaCursoAdministrador(){
         return $this->db->get()->result();
     }
 
-    function AgregarPictograma($Nombre,$Descripcion,$Ejemplo,$Tags,$imgRuta,$idCategoria){
+    function AgregarPictograma($Nombre,$Descripcion,$Ejemplo,$Tags,$imgRuta,$idCategoria,$RutDocente){
         $datos = array(
             "Nombre"=>$Nombre,
             "Descripcion"=>$Descripcion,
             "Ejemplo"=>$Ejemplo,
             "Tags"=>$Tags,
             "img"=>$imgRuta,
-            "idCategoria"=>$idCategoria
+            "idCategoria"=>$idCategoria,
+            "RutDocente"=>$RutDocente
         );
         $Respuesta = "Error desconocido";
         if($this->db->insert("pictograma",$datos)){
@@ -301,6 +302,8 @@ function ConsultaCursoAdministrador(){
                 $PicsVista = $PicsVista."'pic".$a."',".$arrvista[$i].",";
             }
         }
+        $Estado = "Activa";
+        $idCurso = $this->session->userdata("idCurso");
         $data = array(
             "Oracion"=>$oracion,
             "PicsVista"=>$PicsVista,
@@ -308,7 +311,9 @@ function ConsultaCursoAdministrador(){
             "idPic2"=>$pic2,
             "idPic3" =>$pic3,
             "idPic4"=>$pic4,
-            "PosRespuesta"=>$posres
+            "PosRespuesta"=>$posres,
+            "Estado"=>$Estado,
+            "idCurso"=>$idCurso
         );
         /*
         $resultado = "Error: ";
@@ -319,7 +324,7 @@ function ConsultaCursoAdministrador(){
         }
         return $resultado;
         */
-        $sql = "INSERT into actividad(Oracion,PicsVista,idPic1,idPic2,idPic3,idPic4,PosRespuesta,Estado) values ('".$oracion."',".$PicsVista.",'".$pic1."','".$pic2."','".$pic3."','".$pic4."','".$posres."','Activo')";
+        $sql = "INSERT into actividad(Oracion,PicsVista,idPic1,idPic2,idPic3,idPic4,PosRespuesta,Estado,idCurso) values ('".$oracion."',".$PicsVista.",'".$pic1."','".$pic2."','".$pic3."','".$pic4."','".$posres."','Activo',".$idCurso.")";
         // return $sql = $this->db->set($data)->get_compiled_insert('actividad');
         if($this->db->simple_query($sql)){
             return "SI";
@@ -338,5 +343,13 @@ function ConsultaCursoAdministrador(){
         }else{
             return $this->db->error();
         }
+    }
+
+    function ConsultaRepAlumnos($idCurso){
+        $this->db->select("b.RutAlumno as 'RutAlumno',b.idActividad as 'idActividad',b.Tiempo as 'Tiempo',b.Estado as 'Estado'");
+        $this->db->from("actividad_alumno b");
+        $this->db->join("actividad a","a.idActividad = b.idActividad");
+        $this->db->where("a.idCurso",$idCurso);
+        return $this->db->get()->result();
     }
 }
