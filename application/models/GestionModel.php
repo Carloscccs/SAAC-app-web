@@ -352,4 +352,21 @@ function ConsultaCursoAdministrador(){
         $this->db->where("a.idCurso",$idCurso);
         return $this->db->get()->result();
     }
+
+    function AgregarReporte($Motivo,$idPictograma){
+        $Estado = "Pendiente";
+        $RutDocente = $this->session->userdata("Rut");
+        $data = array(
+            "Motivo"=>$Motivo,
+            "Estado"=>$Estado,
+            "idPictograma"=>$idPictograma,
+            "RutDocente"=>$RutDocente
+        );
+        if($this->db->insert("reporte",$data)){
+            $resultado = "Reporte agregado";
+        }else{
+            $resultado= "Reporte no Ingresado";
+        }
+            return $resultado;
+    }
 }

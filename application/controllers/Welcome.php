@@ -116,6 +116,36 @@ class Welcome extends CI_Controller {
             $this->load->view('VistaLogin');
         }
     }
+
+    public function CargarVistaAP(){
+        if($this->session->userdata("logged_in")){
+            $data['Rut'] = $this->session->userdata('Rut');
+            $data['Curso'] = $this->session->userdata("NombreCurso");
+            $this->load->view('VistaAP',$data);
+        }else{
+            $this->load->view('VistaLogin');
+        }
+    }
+
+    public function CargarVistaAA(){
+        if($this->session->userdata("logged_in")){
+            $data['Rut'] = $this->session->userdata('Rut');
+            $data['Curso'] = $this->session->userdata("NombreCurso");
+            $this->load->view('VistaAA',$data);
+        }else{
+            $this->load->view('VistaLogin');
+        }
+    }
+
+    public function CargarVistaAC(){
+        if($this->session->userdata("logged_in")){
+            $data['Rut'] = $this->session->userdata('Rut');
+            $data['Curso'] = $this->session->userdata("NombreCurso");
+            $this->load->view('VistaAC',$data);
+        }else{
+            $this->load->view('VistaLogin');
+        }
+    }
     
     function CargarAlumnos(){
         echo json_encode($this->GestionModel->ConsultarAlumno($this->session->userdata("idCurso")));
@@ -246,7 +276,7 @@ class Welcome extends CI_Controller {
             $data['idCurso'] = $this->session->userdata("idCurso");
             //Carga la vista del Administrador descomentar
             if ($Estado == 100) {
-            $this->load->view("VistaDocenteAlumnosAdministrador", $data);
+            $this->load->view("VistaAP", $data);
             }else{
                 //Cargar vista docente
             $this->load->view("VistaDPrincipal",$data);
@@ -362,6 +392,13 @@ class Welcome extends CI_Controller {
     public function GetReporteAlumnos(){
         $idCurso = $this->session->userdata("idCurso");
         echo json_encode($this->GestionModel->ConsultaRepAlumnos($idCurso));
+    }
+
+    function EnviarReporte(){
+        $id = $this->input->post("id");
+        $Motivo = $this->input->post("Motivo");
+        $res = $this->GestionModel->AgregarReporte($Motivo,$id);
+        echo json_encode($res);
     }
 
 }
