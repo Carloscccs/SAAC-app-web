@@ -364,4 +364,11 @@ class Welcome extends CI_Controller {
         echo json_encode($this->GestionModel->ConsultaRepAlumnos($idCurso));
     }
 
+    function EnviarReporte(){
+        $id = $this->input->post("id");
+        $Motivo = $this->input->post("Motivo");
+        $res = $this->GestionModel->AgregarReporte($Motivo,$id);
+        echo json_encode($res);
+    }
+
 }

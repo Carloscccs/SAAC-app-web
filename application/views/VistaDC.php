@@ -302,7 +302,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									</div>
 									<div class="modal-body">
 										<table class="table-responsive">
-											<thead><th class="text-center">1</th><th class="text-center">2</th><th class="text-center">3</th><th class="text-center">4</th></thead>
+											<thead>
+												<th class="text-center">1</th>
+												<th class="text-center">2</th>
+												<th class="text-center">3</th>
+												<th class="text-center">4</th>
+											</thead>
 											<tbody id="tbodyalternativas"></tbody>
 										</table>
 									</div>
@@ -333,6 +338,40 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									<div class="modal-footer">
 										<button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
 										<button type="button" class="btn btn-danger" id="btnDeshActividad">Si</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- Modal -->
+						<div class="modal" tabindex="-1" role="dialog" id="modalReporte">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title">Reporte</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<input type="hidden" id="idPictoReporte">
+										<p>Este pictograma:</p>
+										<div class="input-group mb-3">
+											<div class="input-group-prepend">
+												<label class="input-group-text" for="selectReporte">Motivos</label>
+											</div>
+											<select class="custom-select" id="selectReporte">
+												<option disabled="true" value="0" selected>Seleccione...</option>
+												<option value="Imagen no relacionada con contenido">Imagen no relacionada con contenido</option>
+												<option value="Contenido inapropiado">Contenido inapropiado</option>
+												<option value="Informacion incompleta o incorrecta">Informacion incompleta o incorrecta</option>
+												<option value="No es un pictograma">No es un pictograma</option>
+												<option value="Otro motivo">Otro motivo</option>
+											</select>
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+										<button type="button" class="btn btn-success" id="btnEnviarReporte">Enviar</button>
 									</div>
 								</div>
 							</div>
@@ -392,8 +431,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						image.setAttribute("class", "card-img-top");
 						x += "<td class='text-center'><div class='card bg-light mx-auto' style='width: 18rem;'>" + image.outerHTML +
 							"<div class='card-body'><h5 class='card-title'>" + o.Nombre + " </h5><p class='card-text'>" + o.Descripcion +
-							"</p></div><div class='card-body'><a href='#' class='card-link text-light bg-dark'>" + o.RutDocente +
-							"</a><a href='#' class='card-link text-danger'>Reportar</a></div></div></td>";
+							"</p><p>Ejemplo: <i>" + o.Ejemplo +
+							"</i></p></div><div class='card-body'><a href='#' class='card-link text-light bg-dark mr-4'>" + o.RutDocente +
+							"</a><button id='Reporte' value='" + o.idPictograma +
+							"' class='btn btn-danger btn-sm ml-4'>Reportar</button></div></div></td>";
 						i = i + 1;
 						if (i == 3) {
 							x += "</tr><tr>";
@@ -419,6 +460,41 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						alert('Uncaught Error: ' + jqXHR.responseText);
 					}
 				});
+			});
+
+			$("#tbodyPictogramas").on("click", "#Reporte", function (e) {
+				e.preventDefault();
+				var id = $(this).val();
+				$("#idPictoReporte").val(id);
+				$("#modalReporte").modal("show");
+			});
+
+			$("#btnEnviarReporte").click(function () {
+				var idOculto = $("#idPictoReporte").val();
+				var Motivo = $("#selectReporte").val();
+				console.log("idPictograma: "+idOculto);
+				console.log("Motivo: "+Motivo);
+				if (Motivo == null) {
+					alert("Seleccione un motivo");
+				} else {
+					console.log("Procesando...");
+					var formData = new FormData();
+					formData.append("id", idOculto);
+					formData.append("Motivo", Motivo);
+					$.ajax({
+						url: "<?php echo site_url()?>/ER",
+						data: formData,
+						type: 'POST',
+						contentType: false,
+						processData: false,
+						success: function (resultados) {
+							console.log(resultados);
+							CargarActividades();
+							$("#modalReporte").modal("hide");
+							MostrarMensaje("Reporte enviado", 3000);
+						}
+					});
+				}
 			});
 
 			$("#btnSubir").click(function () {
@@ -523,10 +599,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						var nombre3 = o['pic3nombre'];
 						var nombre4 = o['pic4nombre'];
 						x = "<tr>";
-						x += "<td><img class='img-thumbnail' src='"+src1+"'/><p class='text-center'>"+nombre1+"</p></td>";
-						x += "<td><img class='img-thumbnail' src='"+src2+"'/><p class='text-center'>"+nombre2+"</p></td>";
-						x += "<td><img class='img-thumbnail' src='"+src3+"'/><p class='text-center'>"+nombre3+"</p></td>";
-						x += "<td><img class='img-thumbnail' src='"+src4+"'/><p class='text-center'>"+nombre4+"</p></td>";
+						x += "<td><img class='img-thumbnail' src='" + src1 + "'/><p class='text-center'>" + nombre1 + "</p></td>";
+						x += "<td><img class='img-thumbnail' src='" + src2 + "'/><p class='text-center'>" + nombre2 + "</p></td>";
+						x += "<td><img class='img-thumbnail' src='" + src3 + "'/><p class='text-center'>" + nombre3 + "</p></td>";
+						x += "<td><img class='img-thumbnail' src='" + src4 + "'/><p class='text-center'>" + nombre4 + "</p></td>";
 						x += "</tr>";
 						/*
 						x += "<option data-img-src='" + src1 + "' value='1' data-img-class='selectimage1' >" + nombre1 +
@@ -562,7 +638,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					$.each(JSON.parse(obj), function (i, o) {
 						var src = "<?php echo base_url(); ?>" + o[0].img;
 						//x += "<option data-img-src='" + src + "' value='" + i + "' data-img-class='selectimage1 ' >" + i +"</option>";
-						x += "<td><p class='text-center'>"+(i+1)+"</p><img class='img-thumbnail' src='"+src+"' /><td>";
+						x += "<td><p class='text-center'>" + (i + 1) + "</p><img class='img-thumbnail' src='" + src + "' /><td>";
 					});
 					x += "</tr>";
 					$("#tbodyvistaOracion").empty();
