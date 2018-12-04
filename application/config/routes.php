@@ -94,3 +94,7 @@ $route['CVDA'] = 'welcome/CargarVistaDA';
 $route['CVDR'] = 'welcome/CargarVistaDR';
 $route['CVDC'] = 'welcome/CargarVistaDC';
 $route['GR'] = 'welcome/GetReporteAlumnos';
+$route['ER'] = 'welcome/EnviarReporte';
+$route["CVAP"] = 'welcome/CargarVistaAP';
+$route["CVAA"] = 'welcome/CargarVistaAA';
+$route["CVAC"] = 'welcome/CargarVistaAC';
