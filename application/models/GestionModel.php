@@ -106,12 +106,14 @@ function ConsultaCursoAdministrador(){
     }
 
     function AgregarPictograma($Nombre,$Descripcion,$Ejemplo,$Tags,$imgRuta,$idCategoria,$RutDocente){
+        $Estado = "Activo";
         $datos = array(
             "Nombre"=>$Nombre,
             "Descripcion"=>$Descripcion,
             "Ejemplo"=>$Ejemplo,
             "Tags"=>$Tags,
             "img"=>$imgRuta,
+            "Estado"=>$Estado,
             "idCategoria"=>$idCategoria,
             "RutDocente"=>$RutDocente
         );
