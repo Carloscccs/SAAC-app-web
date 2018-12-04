@@ -98,7 +98,7 @@ function ConsultaCursoAdministrador(){
         return $this->db->get()->result();
     }
     function ObtenerAlumnoCurso($id){
-        $this->db->select("Rut,Nombre,idCurso");
+        $this->db->select("Rut,Nombre,Edad,Descripcion,Estado,idCurso");
         $this->db->from("alumno");
         $this->db->where("idCurso",$id);
         $this->db->where("Estado !=","Inactivo");
