@@ -72,7 +72,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="device">
                   <div class="screen">
                     <!-- Demo image for screen mockup, you can put an image here, some HTML, an animation, video, or anything else! -->
-                    <img src="<?php echo base_url();?>img/demo-screen-1.jpg" class="img-fluid" alt="">
+                    <img src="<?php echo base_url();?>img/screen-1-temporal.jpg" class="img-fluid" alt="">
                   </div>
                   <div class="button">
                     <!-- You can hook the "home button" to some JavaScript events or just remove it -->
@@ -113,7 +113,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="device">
                   <div class="screen">
                     <!-- Demo image for screen mockup, you can put an image here, some HTML, an animation, video, or anything else! -->
-                    <img src="<?php echo base_url();?>img/demo-screen-1.jpg" class="img-fluid" alt="">
+                    <img src="<?php echo base_url();?>img/screen-1-temporal.jpg" class="img-fluid" alt="">
                   </div>
                   <div class="button">
                     <!-- You can hook the "home button" to some JavaScript events or just remove it -->
@@ -145,7 +145,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <div class="feature-item">
                     <i class="fas fa-mobile text-primary"></i>
                     <h3>Personalizable</h3>
-                    <p class="text-muted">Cree actividades personalizadas y controle lo que ven sus estundiantes en la aplicacion</p>
+                    <p class="text-muted">Cree actividades personalizadas y controle lo que ven sus estudiantes en la aplicacion</p>
                   </div>
                 </div>
                 <div class="col-lg-6">
