@@ -522,6 +522,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				}).done(function (obj) {
 					$("#TablaAlumnos").empty();
 					$.each(JSON.parse(obj), function (i, o) {
+						console.log(o);
+						console.log(o.Edad);
 						var x = "<tr><td>" + o.Rut + "</td>";
 						x += "<td>" + o.Nombre + "</td>";
 						x += "<td>" + o.Edad + "</td>";
