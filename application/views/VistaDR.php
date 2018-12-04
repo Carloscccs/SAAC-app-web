@@ -55,7 +55,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				</li>
 				<li><a href="<?php echo site_url();?>/CVDR"><i class="fa fa-fw fa-chart-line"></i> Reportes</a></li>
 				<li><a href="<?php echo site_url();?>/CVDC"><i class="fa fa-fw fa-images"></i> Gestion de contenidos</a></li>
-				<li><a href="#"><i class="fa fa-fw fa-clock"></i> Pendiente</a></li>
 			</ul>
 		</div>
 

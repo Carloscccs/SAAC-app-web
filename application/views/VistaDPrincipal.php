@@ -52,7 +52,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </li>
             <li><a href="<?php echo site_url();?>/CVDR"><i class="fa fa-fw fa-chart-line"></i> Reportes</a></li>
             <li><a href="<?php echo site_url();?>/CVDC"><i class="fa fa-fw fa-images"></i> Gestion de contenidos</a></li>
-            <li><a href="#"><i class="fa fa-fw fa-clock"></i> Pendiente</a></li>
         </ul>
     </div>
 
@@ -61,7 +60,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
         <div class="card mb-4">
             <div class="card-body">
-                <i>This is a blank page you can use as a starting point.</i><br>
                 <div class="text-center">
                     <img src="<?php echo base_url();?>img/logo.png" class="" width="20%" heigth="20%"/>
                 </div>
