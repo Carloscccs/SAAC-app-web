@@ -73,7 +73,7 @@ class gestionModel extends CI_Model {
         $this->db->where("Nombre !=", "Administrador");
         return $this->db->get()->result();
     }
-function ConsultaCursoAdministrador(){
+    function ConsultaCursoAdministrador(){
         $this->db->select("*");
         $this->db->from("curso");
         $this->db->where("Nombre !=", "Administrador");
@@ -362,5 +362,25 @@ function ConsultaCursoAdministrador(){
             $resultado= "Reporte no Ingresado";
         }
             return $resultado;
+    }
+
+    function ConsultarReportes(){
+        $this->db->select("*");
+        $this->db->from("reporte");
+        return $this->db->get()->result();
+    }
+
+    function ActualizarReporte($idReporte,$Estado){
+        $this->db->where("idReporte",$idReporte);
+        $datos = array(
+            "Estado"=>$Estado
+        );
+        $respuesta = "error inesperado";
+        if($this->db->update("reporte",$datos)){
+            $respuesta = "Reporte actualizado";
+        }else{
+            $respuesta = "Error al actualizar el reporte";
+        }
+        return $respuesta;
     }
 }

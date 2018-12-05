@@ -98,3 +98,6 @@ $route['ER'] = 'welcome/EnviarReporte';
 $route["CVAP"] = 'welcome/CargarVistaAP';
 $route["CVAA"] = 'welcome/CargarVistaAA';
 $route["CVAC"] = 'welcome/CargarVistaAC';
+$route["GRP"] = 'welcome/GetReportesPictogramas';
+$route["CVAR"] = 'welcome/CargarVistaAR';
+$route["ARP"] = 'welcome/ActualizarReporte';
