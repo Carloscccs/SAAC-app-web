@@ -146,6 +146,16 @@ class Welcome extends CI_Controller {
             $this->load->view('VistaLogin');
         }
     }
+
+    public function CargarVistaAR(){
+        if($this->session->userdata("logged_in")){
+            $data['Rut'] = $this->session->userdata('Rut');
+            $data['Curso'] = $this->session->userdata("NombreCurso");
+            $this->load->view('VistaAR',$data);
+        }else{
+            $this->load->view('VistaLogin');
+        }
+    }
     
     function CargarAlumnos(){
         echo json_encode($this->GestionModel->ConsultarAlumno($this->session->userdata("idCurso")));
@@ -399,6 +409,16 @@ class Welcome extends CI_Controller {
         $Motivo = $this->input->post("Motivo");
         $res = $this->GestionModel->AgregarReporte($Motivo,$id);
         echo json_encode($res);
+    }
+
+    public function GetReportesPictogramas(){
+        echo json_encode($this->GestionModel->ConsultarReportes());
+    }
+
+    function ActualizarReporte(){
+        $id = $this->input->post("id");
+        $estado = $this->input->post("estado");
+        echo json_encode($this->GestionModel->ActualizarReporte($id,$estado));
     }
 
 }

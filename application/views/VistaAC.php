@@ -56,6 +56,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             -->
 				</li>
 				<li><a href="<?php echo site_url();?>/CVAC"><i class="fa fa-fw fa-images"></i> Pictogramas</a></li>
+				<li><a href="<?php echo site_url();?>/CVAR"><i class="fa fa-fw fa-images"></i> Reportes pictogramas</a></li>
 			</ul>
 		</div>
 
