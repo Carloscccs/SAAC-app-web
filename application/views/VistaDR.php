@@ -102,6 +102,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<script src="<?php echo base_url();?>lib/js/jquery-3.1.1.min.js"></script>
 	<script src="<?php echo base_url();?>lib/js/bootstrap.bundle.min.js"></script>
 	<script src="<?php echo base_url();?>lib/js/bootadmin.min.js"></script>
+	<script src="<?php echo base_url();?>lib/js/bootstrap-notify.js"></script>
 	<script type="text/javascript">
 		$(function () {
 			SelectAlumnos();
