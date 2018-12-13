@@ -11,7 +11,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<link rel="stylesheet" href="<?php echo base_url();?>lib/css/bootstrap.min.css">
 	<link rel="stylesheet" href="<?php echo base_url();?>lib/css/fontawesome-all.min.css">
 	<link rel="stylesheet" href="<?php echo base_url();?>lib/css/bootadmin.min.css">
-    <link href="<?php echo base_url();?>lib/css/image-picker.css" rel="stylesheet">
+	<link href="<?php echo base_url();?>lib/css/image-picker.css" rel="stylesheet">
 	<link href="<?php echo base_url();?>lib/css/snackbar.css" rel="stylesheet">
 
 	<title>Administrador SAAC Movil</title>
@@ -354,7 +354,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<script src="<?php echo base_url();?>lib/js/jquery-3.1.1.min.js"></script>
 	<script src="<?php echo base_url();?>lib/js/bootstrap.bundle.min.js"></script>
 	<script src="<?php echo base_url();?>lib/js/bootadmin.min.js"></script>
-    <script src="<?php echo base_url();?>lib/js/image-picker.min.js"></script>
+	<script src="<?php echo base_url();?>lib/js/image-picker.min.js"></script>
+	<script src="<?php echo base_url();?>lib/js/bootstrap-notify.js"></script>
 	<script>
 		$(function () {
 			CargarArrays();
@@ -458,7 +459,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							console.log(resultados);
 							CargarActividades();
 							$("#modalReporte").modal("hide");
-							MostrarMensaje("Reporte enviado", 3000);
+							$.notify({
+								// options
+								message: 'Reporte enviado exitosamente'
+							}, {
+								// settings
+								type: 'success',
+								z_index: 1041,
+								placement: {
+									from: "top",
+									align: "right"
+								}
+							});
 						}
 					});
 				}
@@ -493,7 +505,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						success: function (resultados) {
 							console.log("Petición terminada. Resultados", resultados);
 							$('#exampleModal').modal('hide')
-							MostrarMensaje("Pictograma agregado", 4000);
+							$.notify({
+								// options
+								message: 'Pictograma agregado correctamente'
+							}, {
+								// settings
+								type: 'success',
+								z_index: 1041,
+								placement: {
+									from: "top",
+									align: "right"
+								}
+							});
 							$("#txtNombrePicto").val("");
 							$("#txtDescPicto").val("");
 							$("#txtEjemPicto").val("");
@@ -507,8 +530,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					});
 
 				} else {
-					MostrarMensaje("No deben de haber campos vacios.", 3000);
-					alert("No deben de haber campos vacios");
+					$.notify({
+						// options
+						message: 'No deben existir campos vacios'
+					}, {
+						// settings
+						type: 'danger',
+						z_index: 1041,
+						placement: {
+							from: "top",
+							align: "right"
+						}
+					});
 				}
 			});
 
@@ -816,7 +849,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								$("#txtPosRes").val("");
 								$("#selectCreaVista").empty();
 								$('#AgregarActividad').modal('hide')
-								MostrarMensaje("Actividad agregada", 3000);
+								$.notify({
+									// options
+									message: 'Actividad agregada exitosamente'
+								}, {
+									// settings
+									type: 'success',
+									z_index: 1041,
+									placement: {
+										from: "top",
+										align: "right"
+									}
+								});
 							}
 
 						});
@@ -825,7 +869,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					}
 				} else {
 					console.log("NO ENTRA");
-					MostrarMensaje("Faltan datos", 3000);
+					$.notify({
+						// options
+						message: 'No deben existir campos vacios'
+					}, {
+						// settings
+						type: 'success',
+						z_index: 1041,
+						placement: {
+							from: "top",
+							align: "right"
+						}
+					});
 				}
 			});
 
@@ -843,7 +898,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						console.log(resultados);
 						CargarActividades();
 						$("#modaldeshactividad").modal("hide");
-						MostrarMensaje("Deshabilitada", 3000);
+						$.notify({
+							// options
+							message: 'Actividad deshabilitada exitosamente'
+						}, {
+							// settings
+							type: 'success',
+							z_index: 1041,
+							placement: {
+								from: "top",
+								align: "right"
+							}
+						});
 					}
 				});
 			});

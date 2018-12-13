@@ -57,7 +57,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				</li>
 				<li><a href="<?php echo site_url();?>/CVDR"><i class="fa fa-fw fa-chart-line"></i> Reportes</a></li>
 				<li><a href="<?php echo site_url();?>/CVDC"><i class="fa fa-fw fa-images"></i> Gestion de contenidos</a></li>
-				<li><a href="#"><i class="fa fa-fw fa-clock"></i> Pendiente</a></li>
 			</ul>
 		</div>
 
@@ -388,6 +387,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<script src="<?php echo base_url();?>lib/js/bootstrap.bundle.min.js"></script>
 	<script src="<?php echo base_url();?>lib/js/bootadmin.min.js"></script>
 	<script src="<?php echo base_url();?>lib/js/image-picker.min.js"></script>
+	<script src="<?php echo base_url();?>lib/js/bootstrap-notify.js"></script>
 	<script>
 		$(function () {
 			CargarArrays();
@@ -472,8 +472,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			$("#btnEnviarReporte").click(function () {
 				var idOculto = $("#idPictoReporte").val();
 				var Motivo = $("#selectReporte").val();
-				console.log("idPictograma: "+idOculto);
-				console.log("Motivo: "+Motivo);
+				console.log("idPictograma: " + idOculto);
+				console.log("Motivo: " + Motivo);
 				if (Motivo == null) {
 					alert("Seleccione un motivo");
 				} else {
@@ -491,7 +491,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							console.log(resultados);
 							CargarActividades();
 							$("#modalReporte").modal("hide");
-							MostrarMensaje("Reporte enviado", 3000);
+							$.notify({
+								// options
+								message: 'Reporte enviado exitosamente'
+							}, {
+								// settings
+								type: 'success',
+								z_index: 1041,
+								placement: {
+									from: "top",
+									align: "right"
+								}
+							});
 						}
 					});
 				}
@@ -526,7 +537,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						success: function (resultados) {
 							console.log("Petición terminada. Resultados", resultados);
 							$('#exampleModal').modal('hide')
-							MostrarMensaje("Pictograma agregado", 4000);
+							$.notify({
+								// options
+								message: 'Pictograma agregado exitosamente'
+							}, {
+								// settings
+								type: 'success',
+								z_index: 1041,
+								placement: {
+									from: "top",
+									align: "right"
+								}
+							});
 							$("#txtNombrePicto").val("");
 							$("#txtDescPicto").val("");
 							$("#txtEjemPicto").val("");
@@ -540,8 +562,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					});
 
 				} else {
-					MostrarMensaje("No deben de haber campos vacios.", 3000);
-					alert("No deben de haber campos vacios");
+					$.notify({
+						// options
+						message: 'No deben de haber campos vacios'
+					}, {
+						// settings
+						type: 'success',
+						z_index: 1041,
+						placement: {
+							from: "top",
+							align: "right"
+						}
+					});
 				}
 			});
 
@@ -849,7 +881,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								$("#txtPosRes").val("");
 								$("#selectCreaVista").empty();
 								$('#AgregarActividad').modal('hide')
-								MostrarMensaje("Actividad agregada", 3000);
+								$.notify({
+									// options
+									message: 'Actividad agregada exitosamente'
+								}, {
+									// settings
+									type: 'success',
+									z_index: 1041,
+									placement: {
+										from: "top",
+										align: "right"
+									}
+								});
 							}
 
 						});
@@ -858,7 +901,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					}
 				} else {
 					console.log("NO ENTRA");
-					MostrarMensaje("Faltan datos", 3000);
+					$.notify({
+						// options
+						message: 'Faltan datos'
+					}, {
+						// settings
+						type: 'danger',
+						z_index: 1041,
+						placement: {
+							from: "top",
+							align: "right"
+						}
+					});
 				}
 			});
 
@@ -876,7 +930,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						console.log(resultados);
 						CargarActividades();
 						$("#modaldeshactividad").modal("hide");
-						MostrarMensaje("Deshabilitada", 3000);
+						$.notify({
+							// options
+							message: 'Actividad deshabilidata exitosamente'
+						}, {
+							// settings
+							type: 'success',
+							z_index: 1041,
+							placement: {
+								from: "top",
+								align: "right"
+							}
+						});
 					}
 				});
 			});

@@ -407,6 +407,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<script src="<?php echo base_url();?>lib/js/jquery-3.1.1.min.js"></script>
 	<script src="<?php echo base_url();?>lib/js/bootstrap.bundle.min.js"></script>
 	<script src="<?php echo base_url();?>lib/js/bootadmin.min.js"></script>
+	<script src="<?php echo base_url();?>lib/js/bootstrap-notify.js"></script>
 	<script type="text/javascript">
 		$(function () {
 			var idcur = 0;
@@ -564,7 +565,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						"idCurso": id
 					}
 				}).done(function (obj) {
-					MostrarMensaje("Curso inactivo", 3000);
+					$.notify({
+						// options
+						message: 'Curso deshabilitado exitosamente'
+					}, {
+						// settings
+						type: 'success',
+						z_index: 1041,
+						placement: {
+							from: "top",
+							align: "right"
+						}
+					});
 					cargaDeCursos();
 					$("#ModalEliminarCurso").modal("hide");
 
@@ -581,7 +593,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						"rut": rut
 					}
 				}).done(function (obj) {
-					MostrarMensaje("Profesor inactivo", 3000);
+					$.notify({
+						// options
+						message: 'Profesor deshabilitado exitosamente'
+					}, {
+						// settings
+						type: 'success',
+						z_index: 1041,
+						placement: {
+							from: "top",
+							align: "right"
+						}
+					});
 					cargaDocente();
 					$("#ModalEliminarProfesor").modal("hide");
 
@@ -599,7 +622,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					}
 
 				}).done(function (obj) {
-					MostrarMensaje("Alumno inactivo", 3000);
+					$.notify({
+						// options
+						message: 'Alumno deshabilitado exitosamente'
+					}, {
+						// settings
+						type: 'success',
+						z_index: 1041,
+						placement: {
+							from: "top",
+							align: "right"
+						}
+					});
 					cargarUsuarios();
 					$("#ModalEliminar").modal("hide");
 
@@ -667,14 +701,36 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						$("#txtEstado").val("");
 						$("#selectColegio").val(0);
 						$("#selectProfesor").val(0);
-						MostrarMensaje("Curso ingresado", 3000);
+						$.notify({
+							// options
+							message: 'Estado agregado exitosamente'
+						}, {
+							// settings
+							type: 'success',
+							z_index: 1041,
+							placement: {
+								from: "top",
+								align: "right"
+							}
+						});
 						cargaDeCursos();
 
 
 					});
 
 				} else {
-					MostrarMensaje("No deben de haber campos vacios.", 3000)
+					$.notify({
+						// options
+						message: 'No deben existir campos vacios'
+					}, {
+						// settings
+						type: 'danger',
+						z_index: 1041,
+						placement: {
+							from: "top",
+							align: "right"
+						}
+					});
 				}
 			});
 			$("#btnIngresar").click(function () {
@@ -704,14 +760,36 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						$("#txtEdad").val("");
 						$("#txtDescripcion").val("");
 						$("#txtEstado").val("");
-						MostrarMensaje("Alumno Ingresado", 3000);
+						$.notify({
+							// options
+							message: 'Alumno agregado exitosamente'
+						}, {
+							// settings
+							type: 'success',
+							z_index: 1041,
+							placement: {
+								from: "top",
+								align: "right"
+							}
+						});
 						cargarUsuarios();
 
 
 					});
 
 				} else {
-					MostrarMensaje("No deben de haber campos vacios.", 3000)
+					$.notify({
+						// options
+						message: 'No deben existir campos vacios'
+					}, {
+						// settings
+						type: 'danger',
+						z_index: 1041,
+						placement: {
+							from: "top",
+							align: "right"
+						}
+					});
 				}
 			});
 
@@ -745,12 +823,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							$("#txtActEstadoC").val("");
 							$("#selectColegioA").val(0);
 							$("#selectProfesorA").val(0);
-							MostrarMensaje("Curso Actualizado", 3000);
+							$.notify({
+								// options
+								message: 'Curso actualizado exitosamente'
+							}, {
+								// settings
+								type: 'success',
+								z_index: 1041,
+								placement: {
+									from: "top",
+									align: "right"
+								}
+							});
 							cargaDeCursos();
 						}
 					});
 				} else {
-					MostrarMensaje("No deben de haber campos vacios.", 3000)
+					$.notify({
+						// options
+						message: 'No deben existir campos vacios'
+					}, {
+						// settings
+						type: 'danger',
+						z_index: 1041,
+						placement: {
+							from: "top",
+							align: "right"
+						}
+					});
 				}
 
 			});
@@ -784,12 +884,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							$("#txtActEdad").val("");
 							$("#txtActDescripcion").val("");
 							$("#txtActEstado").val("");
-							MostrarMensaje("Alumno Actualizado", 3000);
+							$.notify({
+								// options
+								message: 'Alumno actualizado exitosamente'
+							}, {
+								// settings
+								type: 'success',
+								z_index: 1041,
+								placement: {
+									from: "top",
+									align: "right"
+								}
+							});
 							cargarUsuarios();
 						}
 					});
 				} else {
-					MostrarMensaje("No deben de haber campos vacios.", 3000)
+					$.notify({
+						// options
+						message: 'No deben existir campos vacios'
+					}, {
+						// settings
+						type: 'danger',
+						z_index: 1041,
+						placement: {
+							from: "top",
+							align: "right"
+						}
+					});
 				}
 
 			});
@@ -817,12 +939,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							$("#txtActNombreP").val("");
 							$("#txtActDescripcionP").val("");
 							$("#txtActEstadoP").val("");
-							MostrarMensaje("Profesor Actualizado", 3000);
+							$.notify({
+								// options
+								message: 'Profesor actualizado exitosamente'
+							}, {
+								// settings
+								type: 'success',
+								z_index: 1041,
+								placement: {
+									from: "top",
+									align: "right"
+								}
+							});
 							cargaDocente();
 						}
 					});
 				} else {
-					MostrarMensaje("No deben de haber campos vacios.", 3000)
+					$.notify({
+						// options
+						message: 'No deben existir campos vacios'
+					}, {
+						// settings
+						type: 'success',
+						z_index: 1041,
+						placement: {
+							from: "top",
+							align: "right"
+						}
+					});
 				}
 
 			});
