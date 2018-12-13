@@ -67,7 +67,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 			<div class="card mb-4">
 				<div class="card-body">
-					<i>Gestiones las actividades que realizaran sus alumnos y aporte a la base de datos comunitaria de pictogramas:
+					<i>Aporte a la base de datos comunitaria de pictogramas:
 					</i><br>
 					<div class="container">
 						<div class="row mt-2">

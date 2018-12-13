@@ -1,6 +1,6 @@
 <?php
-require(APPPATH.'libraries\REST_Controller.php');
-require(APPPATH.'libraries\Format.php');
+require(APPPATH.'libraries/REST_Controller.php');
+require(APPPATH.'libraries/Format.php');
 use Restserver\Libraries\REST_Controller;
 class Api extends REST_Controller
 {
@@ -58,6 +58,24 @@ class Api extends REST_Controller
         else
         {
             $this->response(NULL, 404);
+        }
+    }
+    function categorias_get(){
+        $categoria = $this->GestionModel->ConsultarCategorias();
+        if($categoria){
+            $this->response($categoria,200);
+        }
+        else{
+            $this->response(NULL,404);
+        }
+    }
+    function pictogramas_get(){
+        $pictograma = $this->GestionModel->ConsultarPictogramas();
+        if($pictograma){
+            $this->response($pictograma,200);
+        }
+        else{
+            $this->response(NULL,404);
         }
     }
      

@@ -52,16 +52,35 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <li><a href="#">Submenu Item</a></li>
                 </ul>
             -->
-				</li>
-				<li><a href="<?php echo site_url();?>/CVDR"><i class="fa fa-fw fa-chart-line"></i> Reportes</a></li>
-				<li><a href="<?php echo site_url();?>/CVDC"><i class="fa fa-fw fa-images"></i> Gestion de contenidos</a></li>
-			</ul>
-		</div>
+            </li>
+            <li><a href="<?php echo site_url();?>/CVDR"><i class="fa fa-fw fa-chart-line"></i> Reportes</a></li>
+            <li><a href="<?php echo site_url();?>/CVDC"><i class="fa fa-fw fa-images"></i> Gestion de contenidos</a></li>
+        </ul>
+    </div>
 
-		<div class="content p-4">
-			<h2 class="mb-4">Bienvenido docente del curso:
-				<?=$Curso ?>
-			</h2>
+    <div class="content p-4">
+        <h2 class="mb-4">Bienvenido docente del curso: <?=$Curso ?> </h2>
+
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="text-center">
+                    <img src="<?php echo base_url();?>img/logo.png" class="" width="20%" heigth="20%"/>
+                </div>
+                <p class="font-weight-normal">Bienvenido al sistema de administracion de la aplicacion "SAAC movil", aqui
+                usted podra:</p>
+                <ul>
+                    <li>Gestion los contenidos que ven sus alumnos</li>
+                    <li>Ver los avances en las actividades</li>
+                    <li>Agregar/modificar contenidos:</li>
+                    <ul>
+                        <li>Actividades</li>
+                        <li>Pictogramas</li>
+                    </ul>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 
 			<div class="card mb-4">
 				<div class="card-body">

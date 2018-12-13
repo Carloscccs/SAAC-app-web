@@ -37,7 +37,7 @@ class gestionModel extends CI_Model {
         $this->db->where("RutDocente",$Rut);
         return $this->db->get();
     }
-    function ConsultaAlumnoContenido(){
+        function ConsultaAlumnoContenido(){
         $this->db->select("Rut, Nombre");
         $this->db->from("alumno");
         return $this->db->get()->result();
@@ -67,6 +67,11 @@ class gestionModel extends CI_Model {
         $this->db->from("categoria");
         return $this->db->get()->result();
     }
+    function ConsultarPictogramas(){
+        $this->db->select("*");
+        $this->db->from("pictograma");
+        return $this->db->get()->result();
+    }
     function ConsultarCursos(){
         $this->db->select("idCurso, Nombre");
         $this->db->from("curso");
@@ -93,19 +98,22 @@ class gestionModel extends CI_Model {
         return $this->db->get()->result();
     }
     function ObtenerAlumnoCurso($id){
-        $this->db->select("*");
+        $this->db->select("Rut,Nombre,Edad,Descripcion,Estado,idCurso");
         $this->db->from("alumno");
         $this->db->where("idCurso",$id);
+        $this->db->where("Estado !=","Inactivo");
         return $this->db->get()->result();
     }
 
     function AgregarPictograma($Nombre,$Descripcion,$Ejemplo,$Tags,$imgRuta,$idCategoria,$RutDocente){
+        $Estado = "Activo";
         $datos = array(
             "Nombre"=>$Nombre,
             "Descripcion"=>$Descripcion,
             "Ejemplo"=>$Ejemplo,
             "Tags"=>$Tags,
             "img"=>$imgRuta,
+            "Estado"=>$Estado,
             "idCategoria"=>$idCategoria,
             "RutDocente"=>$RutDocente
         );
