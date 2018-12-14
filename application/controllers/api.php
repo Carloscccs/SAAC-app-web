@@ -69,7 +69,11 @@ class Api extends REST_Controller
             $this->response(NULL,404);
         }
     }
-    function piccat_get(){
+    function obtenerPicCat_get(){
+        if(!$this->get('idCategoria'))
+        {
+            $this->response(NULL, 400);
+        }
         $pictograma = $this->GestionModel->ConsultarPictogramaporCat($this->get('idCategoria'));
         if($pictograma){
             $this->response($pictograma,200);
