@@ -14,12 +14,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<link href="<?php echo base_url();?>lib/css/image-picker.css" rel="stylesheet">
 	<link href="<?php echo base_url();?>lib/css/snackbar.css" rel="stylesheet">
 
-	<title>Docente SAAC Movil</title>
+	<title>Administrador SAAC Movil</title>
 </head>
 
 <body class="bg-light">
 
-	<nav class="navbar navbar-expand navbar-light bg-warning text-dark">
+	<nav class="navbar navbar-expand navbar-light bg-info text-dark">
 		<a class="sidebar-toggle mr-3" href="#"><i class="fa fa-bars"></i></a>
 		<a class="navbar-brand" href="#">SAAC movil</a>
 
@@ -43,7 +43,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<div class="d-flex">
 		<div class="sidebar sidebar-dark bg-secondary">
 			<ul class="list-unstyled">
-				<li><a href="<?php echo site_url();?>/CVDA"><i class="fa fa-fw fa-user"></i> Gestion de alumnos</a></li>
+				<li><a href="<?php echo site_url();?>/CVAA"><i class="fa fa-fw fa-user"></i> Gestion de usuarios/cursos</a></li>
 				<!--CON SUB-ITEMS
             <li>
                 <a href="#sm_expand_1" data-toggle="collapse">
@@ -55,64 +55,33 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </ul>
             -->
 				</li>
-				<li><a href="<?php echo site_url();?>/CVDR"><i class="fa fa-fw fa-chart-line"></i> Reportes</a></li>
-				<li><a href="<?php echo site_url();?>/CVDC"><i class="fa fa-fw fa-images"></i> Gestion de contenidos</a></li>
+				<li><a href="<?php echo site_url();?>/CVAC"><i class="fa fa-fw fa-images"></i> Pictogramas</a></li>
+				<li><a href="<?php echo site_url();?>/CVAR"><i class="fa fa-fw fa-images"></i> Reportes pictogramas</a></li>
 			</ul>
 		</div>
 
 		<div class="content p-4">
-			<h2 class="mb-4">Bienvenido docente del curso:
+			<h2 class="mb-4">Bienvenido:
 				<?=$Curso ?>
 			</h2>
 
 			<div class="card mb-4">
 				<div class="card-body">
-					<i>Gestiones las actividades que realizaran sus alumnos y aporte a la base de datos comunitaria de pictogramas:
+					<i>Aporte a la base de datos comunitaria de pictogramas:
 					</i><br>
 					<div class="container">
 						<div class="row mt-2">
 							<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
 								<li class="nav-item">
-									<a class="nav-link active" id="pills-Actividades-tab" data-toggle="pill" href="#pills-Actividades" role="tab"
-									 aria-controls="pills-home" aria-selected="true">Actividades</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" id="pills-Pictogramas-tab" data-toggle="pill" href="#pills-Pictogramas" role="tab"
-									 aria-controls="pills-profile" aria-selected="false">Pictogramas</a>
+									<a class="nav-link active" id="pills-Pictogramas-tab" data-toggle="pill" href="#pills-Pictogramas" role="tab"
+									 aria-controls="pills-home" aria-selected="true">Pictogramas</a>
 								</li>
 							</ul>
 						</div>
 						<div class="row">
 							<div class="col-12">
 								<div class="tab-content" id="pills-tabContent">
-									<div class="tab-pane fade show active" id="pills-Actividades" role="tabpanel" aria-labelledby="pills-home-tab">
-										<div class="row">
-											<div class="col-3 offset-9">
-												<button type="button" class="btn btn-success" data-toggle="modal" id="btnModalAgregarAct">
-													Agregar actividad
-												</button>
-											</div>
-										</div>
-										<div class="row">
-											<p></p>
-										</div>
-										<div class="row">
-											<div class="col-12">
-												<table class="table table-bordered">
-													<thead>
-														<th>Id</th>
-														<th>Oracion</th>
-														<th>Vista</th>
-														<th>Alternativas</th>
-														<th>Deshabilitar</th>
-													</thead>
-													<tbody id="tbodyactividades"></tbody>
-												</table>
-											</div>
-										</div>
-
-									</div>
-									<div class="tab-pane fade" id="pills-Pictogramas" role="tabpanel" aria-labelledby="pills-profile-tab">
+									<div class="tab-pane fade show active" id="pills-Pictogramas" role="tabpanel" aria-labelledby="pills-home-tab">
 										<div class="row">
 											<div class="col-4">
 												<select id="selectcategorias" class="custom-select-lg">
@@ -383,7 +352,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	</div>
 
 	<script src="<?php echo base_url();?>lib/js/jquery-3.1.1.min.js"></script>
-	<script src="<?php echo base_url();?>lib/js/popper.min.js"></script>
 	<script src="<?php echo base_url();?>lib/js/bootstrap.bundle.min.js"></script>
 	<script src="<?php echo base_url();?>lib/js/bootadmin.min.js"></script>
 	<script src="<?php echo base_url();?>lib/js/image-picker.min.js"></script>
@@ -539,7 +507,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							$('#exampleModal').modal('hide')
 							$.notify({
 								// options
-								message: 'Pictograma agregado exitosamente'
+								message: 'Pictograma agregado correctamente'
 							}, {
 								// settings
 								type: 'success',
@@ -564,10 +532,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				} else {
 					$.notify({
 						// options
-						message: 'No deben de haber campos vacios'
+						message: 'No deben existir campos vacios'
 					}, {
 						// settings
-						type: 'success',
+						type: 'danger',
 						z_index: 1041,
 						placement: {
 							from: "top",
@@ -903,10 +871,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					console.log("NO ENTRA");
 					$.notify({
 						// options
-						message: 'Faltan datos'
+						message: 'No deben existir campos vacios'
 					}, {
 						// settings
-						type: 'danger',
+						type: 'success',
 						z_index: 1041,
 						placement: {
 							from: "top",
@@ -932,7 +900,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						$("#modaldeshactividad").modal("hide");
 						$.notify({
 							// options
-							message: 'Actividad deshabilidata exitosamente'
+							message: 'Actividad deshabilitada exitosamente'
 						}, {
 							// settings
 							type: 'success',

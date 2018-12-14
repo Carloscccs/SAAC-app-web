@@ -56,7 +56,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				</li>
 				<li><a href="<?php echo site_url();?>/CVDR"><i class="fa fa-fw fa-chart-line"></i> Reportes</a></li>
 				<li><a href="<?php echo site_url();?>/CVDC"><i class="fa fa-fw fa-images"></i> Gestion de contenidos</a></li>
-				<li><a href="#"><i class="fa fa-fw fa-clock"></i> Pendiente</a></li>
 			</ul>
 		</div>
 
@@ -184,14 +183,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<script src="<?php echo base_url();?>lib/js/jquery-3.1.1.min.js"></script>
 	<script src="<?php echo base_url();?>lib/js/bootstrap.bundle.min.js"></script>
 	<script src="<?php echo base_url();?>lib/js/bootadmin.min.js"></script>
+	<script src="<?php echo base_url();?>lib/js/bootstrap-notify.js"></script>
 	<script type="text/javascript">
 		$(function () {
 			cargarUsuarios();
+
 			function cargarUsuarios() {
 				var url = "<?php echo site_url(); ?>/MostrarAlumnos";
+				console.log("Cargando alumnos...");
 				$("#TablaAlumnos").empty();
 				$.getJSON(url, function (res) {
 					$.each(res, function (i, o) {
+						console.log(o);
 						var x = "<tr><td>" + o.Rut + "</td>";
 						x += "<td>" + o.Nombre + "</td>";
 						x += "<td>" + o.Edad + "</td>";
@@ -224,7 +227,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					}
 
 				}).done(function (obj) {
-					MostrarMensaje("Alumno inactivo", 3000);
+					$.notify({
+						// options
+						message: 'Alumno deshabilitado'
+					}, {
+						// settings
+						type: 'success',
+						z_index: 1041,
+						placement: {
+							from: "bottom",
+							align: "center"
+						}
+					});
 					cargarUsuarios();
 					$("#ModalEliminar").modal("hide");
 
@@ -268,11 +282,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						$("#txtEdad").val("");
 						$("#txtDescripcion").val("");
 						$("#txtEstado").val("");
-						MostrarMensaje("Alumno Ingresado", 3000);
+						$.notify({
+							// options
+							message: 'Alumno agregado exitosamente'
+						}, {
+							// settings
+							type: 'success',
+							z_index: 1041,
+							placement: {
+								from: "top",
+								align: "right"
+							}
+						});
 						cargarUsuarios();
 					});
 				} else {
-					MostrarMensaje("No deben de haber campos vacios.", 3000)
+					$.notify({
+						// options
+						message: 'No deben haber campos vacios'
+					}, {
+						// settings
+						type: 'danger',
+						z_index: 1041,
+						placement: {
+							from: "top",
+							align: "right"
+						}
+					});
+
 				}
 			});
 
@@ -303,12 +340,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							$("#txtActEdad").val("");
 							$("#txtActDescripcion").val("");
 							$("#txtActEstado").val("");
-							MostrarMensaje("Alumno Actualizado", 3000);
+							$.notify({
+								// options
+								message: 'Alumno actualizado'
+							}, {
+								// settings
+								type: 'success',
+								z_index: 1041,
+								placement: {
+									from: "top",
+									align: "right"
+								}
+							});
 							cargarUsuarios();
 						}
 					});
 				} else {
-					MostrarMensaje("No deben de haber campos vacios.", 3000)
+					$.notify({
+						// options
+						message: 'No deben haber campos vacios'
+					}, {
+						// settings
+						type: 'danger',
+						z_index: 1041,
+						placement: {
+							from: "top",
+							align: "right"
+						}
+					});
 				}
 
 			});
@@ -327,6 +386,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				}, milisec);
 			}
 		});
+
 	</script>
 
 </body>

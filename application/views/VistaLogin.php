@@ -20,7 +20,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   </head>
   <body id="bodylogin" class="text-center">
 	<form class="form-signin bg-light rounded" method="post" action="<?php base_url();?>login">
-		<img class="mb-4" src="<?php echo base_url(); ?>img/logo-temporal.png" alt="" width="112" height="72">
+		<img class="mb-4" src="<?php echo base_url(); ?>img/logo.png" alt="" width="162" height="92">
 		<h1 class="h3 mb-3 font-weight-normal">Bienvenido</h1>
 		<label for="inputRut" class="sr-only">Rut</label>
 		<input type="text" name="rut" id="inputRut" class="form-control" placeholder="Rut" required autofocus>

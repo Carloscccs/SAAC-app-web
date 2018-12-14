@@ -83,7 +83,7 @@ class gestionModel extends CI_Model {
         $this->db->where("Nombre !=", "Administrador");
         return $this->db->get()->result();
     }
-function ConsultaCursoAdministrador(){
+    function ConsultaCursoAdministrador(){
         $this->db->select("*");
         $this->db->from("curso");
         $this->db->where("Nombre !=", "Administrador");
@@ -103,7 +103,7 @@ function ConsultaCursoAdministrador(){
         return $this->db->get()->result();
     }
     function ObtenerAlumnoCurso($id){
-        $this->db->select("Rut,Nombre,idCurso");
+        $this->db->select("Rut,Nombre,Edad,Descripcion,Estado,idCurso");
         $this->db->from("alumno");
         $this->db->where("idCurso",$id);
         $this->db->where("Estado !=","Inactivo");
@@ -111,12 +111,14 @@ function ConsultaCursoAdministrador(){
     }
 
     function AgregarPictograma($Nombre,$Descripcion,$Ejemplo,$Tags,$imgRuta,$idCategoria,$RutDocente){
+        $Estado = "Activo";
         $datos = array(
             "Nombre"=>$Nombre,
             "Descripcion"=>$Descripcion,
             "Ejemplo"=>$Ejemplo,
             "Tags"=>$Tags,
             "img"=>$imgRuta,
+            "Estado"=>$Estado,
             "idCategoria"=>$idCategoria,
             "RutDocente"=>$RutDocente
         );
@@ -356,5 +358,42 @@ function ConsultaCursoAdministrador(){
         $this->db->join("actividad a","a.idActividad = b.idActividad");
         $this->db->where("a.idCurso",$idCurso);
         return $this->db->get()->result();
+    }
+
+    function AgregarReporte($Motivo,$idPictograma){
+        $Estado = "Pendiente";
+        $RutDocente = $this->session->userdata("Rut");
+        $data = array(
+            "Motivo"=>$Motivo,
+            "Estado"=>$Estado,
+            "idPictograma"=>$idPictograma,
+            "RutDocente"=>$RutDocente
+        );
+        if($this->db->insert("reporte",$data)){
+            $resultado = "Reporte agregado";
+        }else{
+            $resultado= "Reporte no Ingresado";
+        }
+            return $resultado;
+    }
+
+    function ConsultarReportes(){
+        $this->db->select("*");
+        $this->db->from("reporte");
+        return $this->db->get()->result();
+    }
+
+    function ActualizarReporte($idReporte,$Estado){
+        $this->db->where("idReporte",$idReporte);
+        $datos = array(
+            "Estado"=>$Estado
+        );
+        $respuesta = "error inesperado";
+        if($this->db->update("reporte",$datos)){
+            $respuesta = "Reporte actualizado";
+        }else{
+            $respuesta = "Error al actualizar el reporte";
+        }
+        return $respuesta;
     }
 }
