@@ -72,6 +72,11 @@ class gestionModel extends CI_Model {
         $this->db->from("pictograma");
         return $this->db->get()->result();
     }
+    function ConsultarPictogramaporCat($idCategoria){
+        $this->db->select("Nombre,Descripcion,img");
+        $this->db->from("pictograma");
+        $this->db->where("idCategoria",$idCategoria);
+    }
     function ConsultarCursos(){
         $this->db->select("idCurso, Nombre");
         $this->db->from("curso");
