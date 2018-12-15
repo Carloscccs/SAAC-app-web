@@ -110,7 +110,7 @@ class Api extends REST_Controller
             $this->response(NULL, 400);
         }
         $actividad_alumno = $this->GestionModel->getRespuesta($this->get('RutAlumno'));
-        if($actividad){
+        if($actividad_alumno){
             $this->response($actividad_alumno,200);
         }
         else{
