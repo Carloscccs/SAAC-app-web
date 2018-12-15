@@ -268,7 +268,7 @@ class gestionModel extends CI_Model {
         return $this->db->get();
     }
     function getActividad($idCurso){
-        $this->db->select("*");
+        $this->db->select("idActividad,Oracion,COLUMN_JSON(PicsVista) as 'PicsVista',idPic1,idPic2,idPic3,idPic4,PosRespuesta,Estado,idCurso");
         $this->db->from("actividad");
         $this->db->where("Estado !=","Inactivo");
         $this->db->where("idCurso",$idCurso);
