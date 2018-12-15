@@ -105,6 +105,26 @@ class Api extends REST_Controller
         }
     }
 
+    function RutVisActividad_get(){
+        if(!$this->get('idActividad'))
+        {
+            $this->response(NULL, 400);
+        }
+        $vistasjson = $this->GestionModel->ObtenerVistaActividad($this->get('idActividad'))->Result();
+        $arrjson = json_decode($vistasjson[0]->PicsVista, true);
+        $vistarutas = array();
+        for ($i=0; $i < count($arrjson); $i++) { 
+            $n = $i + 1;
+            $ruta = $this->GestionModel->ObtenerRutaPictograma($arrjson['pic'.$n]);
+            $vistarutas[] = $ruta;
+        }
+        if($vistarutas){
+            $this->response($actividad,200);
+        }else{
+            $this->response(NULL,404);
+        }
+    }
+
     function insertRespuesta_get(){
         if(!$this->get('idActividadAlumno','Tiempo','Estado','RutAlumno','idActividad'))
         {
