@@ -119,7 +119,7 @@ class Api extends REST_Controller
             $vistarutas[] = $ruta;
         }
         if($vistarutas){
-            $this->response($actividad,200);
+            $this->response($vistarutas,200);
         }else{
             $this->response(NULL,404);
         }
