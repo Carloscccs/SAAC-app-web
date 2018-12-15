@@ -92,7 +92,11 @@ class Api extends REST_Controller
         }
     }
     function actividades_get(){
-        $actividad = $this->GestionModel->getActividad();
+        if(!$this->get('idCurso'))
+        {
+            $this->response(NULL, 400);
+        }
+        $actividad = $this->GestionModel->getActividad($this->get('idCurso'));
         if($actividad){
             $this->response($actividad,200);
         }
