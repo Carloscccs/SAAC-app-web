@@ -42,6 +42,12 @@ class gestionModel extends CI_Model {
         $this->db->from("alumno");
         return $this->db->get()->result();
     }
+    function getRespuesta($RutAlumno){
+        $this->db->select("*");
+        $this->db->from("actividad_alumno");
+        $this->db->where("RutAlumno", $RutAlumno);
+        return $this->db->get()->result();
+    }
     function ConsultaContenido($rut){
         $this->db->select("Tiempo, Estado, idActividad");
         $this->db->from("actividad_alumno");
