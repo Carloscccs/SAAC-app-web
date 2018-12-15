@@ -87,6 +87,15 @@ class Api extends REST_Controller
             $this->response(NULL,404);
         }
     }
+    function actividades_get(){
+        $actividad = $this->GestionModel->getActividad();
+        if($actividad){
+            $this->response($actividad,200);
+        }
+        else{
+            $this->response(NULL,404);
+        }
+    }
      
 }
 ?>
