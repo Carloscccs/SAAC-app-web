@@ -104,6 +104,23 @@ class Api extends REST_Controller
             $this->response(NULL,404);
         }
     }
+
+    function actividadesExp_get(){
+        if(!$this->get('idCurso'))
+        {
+            $this->response(NULL, 400);
+        }
+        $actividad = $this->GestionModel->getActividad($this->get('idCurso'));
+        $PicsVista = $actividad['PicsVista'];
+        $PicsVista2 = str_replace($PicsVista,'\ ',"");
+        $actividad['Experimento'] = $PicsVista2;
+        if($actividad){
+            $this->response($actividad,200);
+        }
+        else{
+            $this->response(NULL,404);
+        }
+    }
      
 }
 ?>
