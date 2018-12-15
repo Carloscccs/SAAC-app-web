@@ -104,6 +104,19 @@ class Api extends REST_Controller
             $this->response(NULL,404);
         }
     }
+    function insertRespuesta_get(){
+        if(!$this->get('idActividadAlumno','Tiempo','Estado','RutAlumno','idActividad'))
+        {
+            $this->response(NULL, 400);
+        }
+        $msn = $this->GestionModel->insertRespuesta($this->get('idActividadAlumno','Tiempo','Estado','RutAlumno','idActividad'));
+        if($msn){
+            $this->response($msn,200);
+        }
+        else{
+            $this->response(NULL,404);
+        }
+    }
      
 }
 ?>

@@ -305,6 +305,21 @@ class gestionModel extends CI_Model {
         $this->db->from("pictograma");
         return $this->db->get();
     }
+    function insertRespuesta($idActividadAlumno,$Tiempo,$Estado,$RutAlumno,$idActividad){
+        $data = array(
+            "idActividadAlumno"=>$idActividadAlumno,
+             "Tiempo"=>$Tiempo,
+             "Estado" => $Estado,
+             "RutAlumno"=>$RutAlumno,
+             "idActividad" => $idActividad
+        );
+        if($this->db->insert("actividad_alumno",$data)){
+            $resultado = "Respuesta Guardad";
+        }else{
+            $resultado= "No se registro";
+        }
+            return $resultado;
+    }
 
     function AgregarActividad($oracion,$arrvista,$pic1,$pic2,$pic3,$pic4,$posres){
         $PicsVista = "COLUMN_CREATE(";
