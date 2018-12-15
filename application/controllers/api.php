@@ -70,6 +70,10 @@ class Api extends REST_Controller
         }
     }
     function pictogramasporcategoria_get(){
+        if(!$this->get('idCategoria'))
+        {
+            $this->response(NULL, 400);
+        }
         $pictograma = $this->GestionModel->ConsultarPictogramaporCat($this->get('idCategoria'));
         if($pictograma){
             $this->response($pictograma,200);
