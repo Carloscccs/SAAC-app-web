@@ -319,7 +319,7 @@ class gestionModel extends CI_Model {
              "idActividad" => $idActividad
         );
         if($this->db->insert("actividad_alumno",$data)){
-            $resultado = "Respuesta Guardad";
+            $resultado = "Respuesta Guardada";
         }else{
             $resultado= "No se registro";
         }
