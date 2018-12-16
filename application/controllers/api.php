@@ -139,11 +139,11 @@ class Api extends REST_Controller
     }
 
     function insertRespuesta_get(){
-        if(!$this->get('idActividadAlumno','Tiempo','Estado','RutAlumno','idActividad'))
+        if(!$this->get('Tiempo','Estado','RutAlumno','idActividad'))
         {
             $this->response(NULL, 400);
         }
-        $msn = $this->GestionModel->insertRespuesta($this->get('idActividadAlumno','Tiempo','Estado','RutAlumno','idActividad'));
+        $msn = $this->GestionModel->insertRespuesta($this->get('Tiempo','Estado','RutAlumno','idActividad'));
         if($msn){
             $this->response($msn,200);
         }

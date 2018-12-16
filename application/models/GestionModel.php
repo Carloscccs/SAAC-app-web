@@ -311,9 +311,8 @@ class gestionModel extends CI_Model {
         $this->db->from("pictograma");
         return $this->db->get();
     }
-    function insertRespuesta($idActividadAlumno,$Tiempo,$Estado,$RutAlumno,$idActividad){
+    function insertRespuesta($Tiempo,$Estado,$RutAlumno,$idActividad){
         $data = array(
-            "idActividadAlumno"=>$idActividadAlumno,
              "Tiempo"=>$Tiempo,
              "Estado" => $Estado,
              "RutAlumno"=>$RutAlumno,
